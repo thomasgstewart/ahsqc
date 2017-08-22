@@ -1,9 +1,8 @@
 Package: ahsqc
 Title: Functions Specific to AHSQC Operations
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: person("Thomas", "Stewart", email = "thomas.stewart@vanderbilt.edu", role = c("aut", "cre"))
 Description: Provides a series of R functions to improve the efficiency and accuracy of data management tasks and statistical analyses within the AHSQC Data Coordination Center.
-Depends: R 
 License: GPL-3 
 Encoding: UTF-8
 LazyData: true

@@ -15,10 +15,14 @@
 #' # d0 <- ahs_get_data()
 
 ahs_get_data <- function(date = NULL, dir = NULL){
-  if(is.null(dir)) dir <- file.path("..","..","..","ahs-data")
+  dir <- if(is.null(dir)){ 
+    file.path("..","..","..","ahs-data","documentLibrary","data")
+  }else{
+    file.path(dir,"documentLibrary","data")
+  } 
   
   possible_dirs <- dir(
-    path = file.path(dir,"documentLibrary","data"),
+    path = dir,
     pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
   )
   
