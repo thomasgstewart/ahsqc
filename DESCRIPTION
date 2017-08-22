@@ -1,10 +1,10 @@
 Package: ahsqc
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.4.1)
-License: What license is it under?
+Title: Functions Specific to AHSQC Operations
+Version: 0.0.1
+Authors@R: person("Thomas", "Stewart", email = "thomas.stewart@vanderbilt.edu", role = c("aut", "cre"))
+Description: Provides a series of R functions to improve the efficiency and accuracy of data management tasks and statistical analyses within the AHSQC Data Coordination Center.
+Depends: R 
+License: GPL-3 
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1.9000

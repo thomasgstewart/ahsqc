@@ -9,7 +9,7 @@ ahs_get_data(date = NULL, dir = NULL)
 \arguments{
 \item{date}{NULL or character string of a date in the format "YYYY-MM-DD"}
 
-\item{dir}{NULL or character string of data location.}
+\item{dir}{NULL or character string with file path to ahs-data folder.}
 }
 \description{
 Retrieves the most recent download of AHSQC data or the download from a specific date.

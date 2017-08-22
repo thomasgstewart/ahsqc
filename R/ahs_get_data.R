@@ -2,7 +2,7 @@
 #'
 #' Retrieves the most recent download of AHSQC data or the download from a specific date.
 #' @param date NULL or character string of a date in the format "YYYY-MM-DD"
-#' @param dir NULL or character string of data location.
+#' @param dir NULL or character string with file path to ahs-data folder.
 #' @details If \code{date} = NULL, then the function will return the most recently downloaded dataset from the ahs-data folder. 
 #' 
 #'If \code{dir} = NULL, the function will assume that the command is being run in a working directory of the following type: ".../alfresco/Sites/[SITE NAME]/documentLibrary/code".
@@ -15,10 +15,10 @@
 #' # d0 <- ahs_get_data()
 
 ahs_get_data <- function(date = NULL, dir = NULL){
-  if(is.null(dir)) dir <- "../../../ahs-data/documentLibrary/data"
+  if(is.null(dir)) dir <- file.path("..","..","..","ahs-data")
   
   possible_dirs <- dir(
-    path = dir,
+    path = file.path(dir,"documentLibrary","data"),
     pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
   )
   
