@@ -314,7 +314,6 @@ generate_standard_tables <- function(
   out[[length(out)+1]] <- addout
   return(out)
   } "
-browser()
   ## individualize functions for specific y and specific dt
   fn2 <- gsub(", y ", paste0(", y = ", y) ,fn1)
   fn3 <- gsub(", dt ", paste0(", dt = ", dt), fn2)
