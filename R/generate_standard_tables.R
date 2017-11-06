@@ -411,7 +411,7 @@ generate_standard_tables <- function(
   ## start function coding here
   if(missing(y)) stop("Provide a y variable")
   if(missing(data)) stop("Provide a data table")
-  if(is.character(dt)) stop("data should be a data table, not a character string")
+  if(is.character(data)) stop("data should be a data table, not a character string")
   
   #dt <- deparse(substitute(data))
 
