@@ -25,7 +25,9 @@ generate_standard_tables <- function(
   , y 
   , data
 ){
-  
+  require(data.table)
+  require(dtplyr)
+  require(dplyr)
   ##########################################
   ## add helper functions
   `%ni%` <- function(a,b){!(a %in% b)}
