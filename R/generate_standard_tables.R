@@ -433,8 +433,7 @@ generate_standard_tables <- function(
     }
   } else {
     for(table in 1:9){
-      eval(parse(text = get_standard_table(table, data = data, print=TRUE)))
-    }
+      assign(paste0("tbl",table), eval(parse(text = get_standard_table(table, data = data, print=TRUE))))    }
   }
   
   for(tbl in 1:9){
