@@ -244,7 +244,7 @@ generate_standard_tables <- function(
   
   n_unique <- function(out, x, y = y_in, dt = data, xlab = NULL){
     #y = y_in
-    #browser()
+    browser()
     dt1 <- eval(substitute(dt[,.(unique(x), N = "N"), y][,table(N,y, useNA = "always")]))
     dimt <- dim(dt1)
     M <- dt1[-dimt[1],-dimt[2], drop = FALSE]
