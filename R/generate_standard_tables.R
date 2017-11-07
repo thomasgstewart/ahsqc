@@ -297,7 +297,7 @@ generate_standard_tables <- function(
     addout <- get_out(dimt[2] + 1, 2 + dimt[1] + dimt[1] - 1 + dimt[1])
     dima <- dim(addout)
     addout[1,1:dimt[1] + 2] <- d3[[1]]
-    addout[1:(dimt[2]-1) + 2, 1:dimt[1] + 2] <- round(t(as.matrix(d3[, -1])))
+    addout[1:(dimt[2]-1) + 2, 1:dimt[1] + 2] <- round(t(as.matrix(d3[, -1, with=FALSE])))
     addout[2,1] <- if(!is.null(xlab)){xlab}else{eval(substitute(label(dt[,.(x)][[1]])))}
     
     miss <- table(factor(1*is.na(d1[[1]]), 0:1, 0:1),d1[[2]])
