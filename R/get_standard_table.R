@@ -154,63 +154,63 @@ get_standard_table <- function(tbl = NULL
     binary_entry(
     array_other_procedures_system_hernia 
     , xlab = \"@@Hernia\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
     binary_entry(
     array_other_procedures_system_foregutendocrine 
     , xlab = \"@@Foregut/Endocrine\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
     binary_entry(
     array_other_procedures_system_hepatobiliarypancreatic
     , xlab = \"@@Hepatobiliary/Pancreatic\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
     binary_entry(
     array_other_procedures_system_small_intestine 
     , xlab = \"@@Small intestine\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
     binary_entry(
     array_other_procedures_system_colorectal
     , xlab = \"@@Colorectal\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
     binary_entry(
     array_other_procedures_system_obstetricgynecologic
     , xlab = \"@@Obstetric/Gynecologic\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
     binary_entry(
     array_other_procedures_system_urologic
     , xlab = \"@@Urologic\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
     binary_entry(
     array_other_procedures_system_vascular
     , xlab = \"@@Vascular\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
     binary_entry(
     array_other_procedures_system_soft_tissueplastics
     , xlab = \"@@Soft tissue/plastics\"
-    , dt = dt[flg_concomitant_proc == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_concomitant_proc == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 
@@ -218,34 +218,34 @@ get_standard_table <- function(tbl = NULL
     binary_entry(
     flg_fixation
     , xlab = \"Mesh fixation (among repairs using mesh)\"
-    , dt = dt[flg_mesh_used == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_mesh_used == \"Yes\")
     ) %>%
     empty_entry(fill = c(\"Mesh fixation type<sup>cata</sup>\",\"N\")) %>%
     binary_entry(
     e_fixation_type_adhesives
     , xlab = \"@@Adhesives\"
-    , dt = dt[flg_fixation == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>%
     binary_entry(
     e_fixation_type_staples
     , xlab = \"@@Staples\"
-    , dt = dt[flg_fixation == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>%
     binary_entry(
     e_fixation_type_sutures
     , xlab = \"@@Sutures\"
-    , dt = dt[flg_fixation == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>%
     binary_entry(
     e_fixation_type_tacks
     , xlab = \"@@Tacks\"
-    , dt = dt[flg_fixation == \"Yes\"]
+    , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>% 

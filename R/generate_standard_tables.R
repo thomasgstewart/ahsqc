@@ -7,6 +7,8 @@
 #' @param changes a boolean. Set to TRUE to indicate that changes have been made to at least one table.
 #' @param y a character string to indicate group variable for tables.
 #' @param data a data table.
+#' @param format a string that describes the output format. Currently only "shiny" or
+#'  "rmd". Default is "rmd"
 #' @details Function returns the standard set of tables for the AHSQC in HTML code.
 #' 
 #' If \code{changes = TRUE}, the code for each table should be in individual .R files 
@@ -24,6 +26,7 @@ generate_standard_tables <- function(
   changes = FALSE
   , y 
   , data
+  , format = "rmd"
 ){
   require(data.table)
   require(dtplyr)
@@ -414,7 +417,7 @@ generate_standard_tables <- function(
   if(missing(y)) stop("Provide a y variable")
   if(missing(data)) stop("Provide a data table")
   if(is.character(data)) stop("data should be a data table, not a character string")
-  
+  if(format %ni% c("shiny","rmd")) stop("format must be either \"shiny\" or \"rmd\"")
   #dt <- deparse(substitute(data))
 
 #browser()
@@ -424,7 +427,7 @@ generate_standard_tables <- function(
   # 
   # eval(parse(text = fn3))
   #####################################################
-  
+  #browser()
   if(changes == TRUE){
     for(table in 1:9){
       if(paste0("tbl",table,".R") %in% list.files()){
@@ -438,26 +441,49 @@ generate_standard_tables <- function(
       assign(paste0("tbl",table), eval(parse(text = get_standard_table(table, data = data, print=TRUE))))    }
   }
   
-  for(tbl in 1:9){
-    file <- get(paste0("tbl" ,tbl))
-    tbln <- file
-    
-    #assign(noquote("pop" %|% pop %|% "tbl" %|% tbl),tbl1)
-    cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|% "\n\n")
-    tbln <- tbln[,1:(length(unique(data[[y]]))+2)]
-    names(tbln) <- tbln[1,]
-    tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
-    
-    ncols <- ncol(tbln)
-    align <- c("l",rep("r", ncols - 1))
-    kable(
-      tbln[-1,]
-      , align = align
-      , format = "html"
-      , row.names = FALSE
-      , table.attr = "class=\"table table-condensed\""
-      , escape = FALSE
-    ) %>% 
-      print
-  } 
+  if(format %in% "shiny"){
+    return_list <- list()
+    for(tbl in 1:2){
+      file <- get(paste0("tbl" ,tbl))
+      tbln <- file
+      
+      #assign(noquote("pop" %|% pop %|% "tbl" %|% tbl),tbl1)
+      #cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|% "\n\n")
+      tbln <- tbln[,1:(length(unique(data[[y]]))+2)]
+      names(tbln) <- tbln[1,]
+      tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
+      
+      ncols <- ncol(tbln)
+      align <- c("l",rep("r", ncols - 1))
+      return_list[tbl] <- kable(
+        tbln[-1,]
+        , align = align
+        , format = "html"
+        , row.names = FALSE
+        , table.attr = "class=\"table table-condensed\""
+        , escape = FALSE
+      ) %>% 
+        toString 
+        
+    } 
+    return(return_list)
+  }
+  
+  if(format %in% "rmd"){
+    for (tbl in 1:9) {
+      file <- get(paste0("tbl", tbl))
+      tbln <- file
+      cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|% 
+            "\n\n")
+      tbln <- tbln[, 1:(length(unique(data[[y]])) + 2)]
+      names(tbln) <- tbln[1, ]
+      tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[, 
+                                                         1])
+      ncols <- ncol(tbln)
+      align <- c("l", rep("r", ncols - 1))
+      kable(tbln[-1, ], align = align, format = "html", row.names = FALSE, 
+            table.attr = "class=\"table table-condensed\"", escape = FALSE) %>% 
+        print
+    }
+  }
 }

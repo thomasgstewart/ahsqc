@@ -4,7 +4,7 @@
 \alias{generate_standard_tables}
 \title{Generate standard AHSQC tables}
 \usage{
-generate_standard_tables(changes = FALSE, y, data)
+generate_standard_tables(changes = FALSE, y, data, format = "rmd")
 }
 \arguments{
 \item{changes}{a boolean. Set to TRUE to indicate that changes have been made to at least one table.}
@@ -12,6 +12,9 @@ generate_standard_tables(changes = FALSE, y, data)
 \item{y}{a character string to indicate group variable for tables.}
 
 \item{data}{a data table.}
+
+\item{format}{a string that describes the output format. Currently only "shiny" or
+"rmd". Default is "rmd"}
 }
 \description{
 Generates standard AHSQC tables in HTML for .Rmd files. \code{generate_standard_tables}
