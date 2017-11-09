@@ -420,7 +420,7 @@ generate_standard_tables <- function(
   if(format %ni% c("shiny","rmd")) stop("format must be either \"shiny\" or \"rmd\"")
   #dt <- deparse(substitute(data))
 
-browser()
+#browser()
   # ## individualize functions for specific y and specific dt
   # fn2 <- gsub(", y ", paste0(", y = ", y) ,fn1)
   # fn3 <- gsub(", dt ", paste0(", dt = ", dt), fn2)
