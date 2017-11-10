@@ -443,7 +443,7 @@ generate_standard_tables <- function(
   
   if(format %in% "shiny"){
     return_list <- list()
-    for(tbl in 1:2){
+    for(tbl in 1:9){
       file <- get(paste0("tbl" ,tbl))
       tbln <- file
       
