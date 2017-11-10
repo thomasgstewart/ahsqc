@@ -126,13 +126,13 @@ generate_standard_tables <- function(
     if(is.numeric(x)) return(ifelse(is.na(x),0,x))
   } 
   
-  
-  
-  y_text <- y #rlang::sym(y)
+  y_in <- rlang::sym(y)
+  #y_in <- dt[[y]]
+  #y_text <- y
   cat_entry <- function(
     out
     , x
-    , y = y_text
+    , y = y_in
     , dt = data
     , xlab = NULL
     , pvalue = TRUE
@@ -141,8 +141,8 @@ generate_standard_tables <- function(
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
     }
   ){
-   # browser()
-    y <- rlang::sym(y)
+   #browser()
+    y = y_in
     d2 <- eval(substitute(dt[,.(x,y)]))
     tbl <- table(d2[[1]], d2[[2]], useNA = "always")
     #browser()
@@ -191,7 +191,7 @@ generate_standard_tables <- function(
   cat_entry_ <- function(
     out
     , x
-    , y = y_text
+    , y = y
     , dt = data
     , xlab = NULL
     , pvalue = TRUE
@@ -245,8 +245,8 @@ generate_standard_tables <- function(
     return(out)
   }
   
-  n_unique <- function(out, x, y = y_text, dt = data, xlab = NULL){
-    y <- rlang::sym(y)
+  n_unique <- function(out, x, y = y_in, dt = data, xlab = NULL){
+    #y = y_in
     #browser()
     dt1 <- eval(substitute(dt[,.(unique(x), N = "N"), y][,table(N,y, useNA = "always")]))
     dimt <- dim(dt1)
@@ -279,14 +279,14 @@ generate_standard_tables <- function(
   cont_entry <- function(
     out
     , x
-    , y = y_text
+    , y = y_in
     , dt = data
     , xlab = NULL
     , pvalue_fmt = function(x, test_method){
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
     }
   ){
-    y <- rlang::sym(y)
+    y = y_in
   #  browser()
     d1 <- eval(substitute(dt[,.(x,y)])) ## mao: changed data[,.(x,y)] to dt[.(x,y)]
     d2 <- d1[complete.cases(d1)]
@@ -327,7 +327,7 @@ generate_standard_tables <- function(
   binary_entry <- function(
     out
     , x
-    , y = y_text
+    , y = y_in
     , dt = data
     , xlab = NULL
     , level = c("Yes", "1")
@@ -337,7 +337,7 @@ generate_standard_tables <- function(
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
     }
   ){
-    y <- rlang::sym(y)
+    y = y_in
    # browser()
     cat <- eval(substitute(cat_entry(
       list()
@@ -366,7 +366,7 @@ generate_standard_tables <- function(
   binary_entry_ <- function(
     out
     , x
-    , y = y_text
+    , y = y
     , dt = data
     , xlab = NULL
     , level = c("Yes", "1")
@@ -393,10 +393,10 @@ generate_standard_tables <- function(
   
   empty_entry <- function(
     out
-    , y = y_text
+    , y = y_in
     , dt = data
     , fill = ""){
-    y <- rlang::sym(y)
+    y = y_in
     d2 <- eval(substitute(dt[,.(j = 1, y)]))
     label(d2[[1]]) <- "J"
     d2[[1]][1] <- 0
@@ -443,7 +443,7 @@ generate_standard_tables <- function(
   
   if(format %in% "shiny"){
     return_list <- list()
-    for(tbl in 1:9){
+    for(tbl in 1:2){
       file <- get(paste0("tbl" ,tbl))
       tbln <- file
       

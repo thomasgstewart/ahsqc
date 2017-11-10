@@ -665,64 +665,64 @@ get_standard_table <- function(tbl = NULL
     empty_entry(
     fill = c(\"Treatments administered for SSI/O<sup>cata</sup>\",\"N\")) %>%
     binary_entry(
-    1*(array_sso_treatments_oral_antibiotics %in% \"Yes\" |
-    array_ssi_treatments_oral_antibiotics %in% \"Yes\") %>% factor(0:1)
+    (1*(array_sso_treatments_oral_antibiotics %in% \"Yes\" |
+    array_ssi_treatments_oral_antibiotics %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Oral antibiotics\"
     , dt = dt[ssi_sso_treatment == 1]
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    1*(array_sso_treatments_iv_antibiotics %in% \"Yes\" |
-    array_ssi_treatments_iv_antibiotics %in% \"Yes\") %>% factor(0:1)
+    (1*(array_sso_treatments_iv_antibiotics %in% \"Yes\" |
+    array_ssi_treatments_iv_antibiotics %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@IV antibiotics\"
     , dt = dt[ssi_sso_treatment == 1]
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    1*(array_sso_treatments_wound_opening %in% \"Yes\" |
-    array_ssi_treatments_wound_opening %in% \"Yes\") %>% factor(0:1)
+    (1*(array_sso_treatments_wound_opening %in% \"Yes\" |
+    array_ssi_treatments_wound_opening %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Wound opening\"
     , dt = dt[ssi_sso_treatment == 1]
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    1*(array_sso_treatments_wound_debridement %in% \"Yes\" |
-    array_ssi_treatments_wound_debridement %in% \"Yes\") %>% factor(0:1)
+    (1*(array_sso_treatments_wound_debridement %in% \"Yes\" |
+    array_ssi_treatments_wound_debridement %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Wound debridement\"
     , dt = dt[ssi_sso_treatment == 1]
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    1*(array_sso_treatments_suture_excision %in% \"Yes\" |
-    array_ssi_treatments_suture_excision %in% \"Yes\") %>% factor(0:1)
+    (1*(array_sso_treatments_suture_excision %in% \"Yes\" |
+    array_ssi_treatments_suture_excision %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Suture excision\"
     , dt = dt[ssi_sso_treatment == 1]
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    1*(array_sso_treatments_percutaneous_drainage %in% \"Yes\" |
-    array_ssi_treatments_percutaneous_drainage %in% \"Yes\") %>% factor(0:1)
+    (1*(array_sso_treatments_percutaneous_drainage %in% \"Yes\" |
+    array_ssi_treatments_percutaneous_drainage %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Percutaneous drainage\"
     , dt = dt[ssi_sso_treatment == 1]
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    1*(array_sso_treatments_partial_mesh_removal %in% \"Yes\" |
-    array_ssi_treatments_partial_mesh_removal %in% \"Yes\") %>% factor(0:1)
+    (1*(array_sso_treatments_partial_mesh_removal %in% \"Yes\" |
+    array_ssi_treatments_partial_mesh_removal %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Partial mesh removal\"
     , dt = dt[ssi_sso_treatment == 1]
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    1*(array_sso_treatments_complete_mesh_removal %in% \"Yes\" |
-    array_ssi_treatments_complete_mesh_removal %in% \"Yes\") %>% factor(0:1)
+    (1*(array_sso_treatments_complete_mesh_removal %in% \"Yes\" |
+    array_ssi_treatments_complete_mesh_removal %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Complete mesh removal\"
     , dt = dt[ssi_sso_treatment == 1]
     , pvalue = FALSE
@@ -1101,64 +1101,64 @@ get_standard_table <- function(tbl = NULL
   empty_entry(
   fill = c(\"Treatments administered for SSI/O<sup>cata</sup>\",\"N\")) %>%
   binary_entry(
-  1*(array_sso_treatments_oral_antibiotics %in% \"Yes\" |
-  array_ssi_treatments_oral_antibiotics %in% \"Yes\") %>% factor(0:1)
+  (1*(array_sso_treatments_oral_antibiotics %in% \"Yes\" |
+  array_ssi_treatments_oral_antibiotics %in% \"Yes\")) %>% factor(0:1)
   , xlab = \"@@Oral antibiotics\"
   , dt = dt[ssi_sso_treatment == 1]
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  1*(array_sso_treatments_iv_antibiotics %in% \"Yes\" |
-  array_ssi_treatments_iv_antibiotics %in% \"Yes\") %>% factor(0:1)
+  (1*(array_sso_treatments_iv_antibiotics %in% \"Yes\" |
+  array_ssi_treatments_iv_antibiotics %in% \"Yes\")) %>% factor(0:1)
   , xlab = \"@@IV antibiotics\"
   , dt = dt[ssi_sso_treatment == 1]
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  1*(array_sso_treatments_wound_opening %in% \"Yes\" |
-  array_ssi_treatments_wound_opening %in% \"Yes\") %>% factor(0:1)
+  (1*(array_sso_treatments_wound_opening %in% \"Yes\" |
+  array_ssi_treatments_wound_opening %in% \"Yes\")) %>% factor(0:1)
   , xlab = \"@@Wound opening\"
   , dt = dt[ssi_sso_treatment == 1]
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  1*(array_sso_treatments_wound_debridement %in% \"Yes\" |
-  array_ssi_treatments_wound_debridement %in% \"Yes\") %>% factor(0:1)
+  (1*(array_sso_treatments_wound_debridement %in% \"Yes\" |
+  array_ssi_treatments_wound_debridement %in% \"Yes\")) %>% factor(0:1)
   , xlab = \"@@Wound debridement\"
   , dt = dt[ssi_sso_treatment == 1]
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  1*(array_sso_treatments_suture_excision %in% \"Yes\" |
-  array_ssi_treatments_suture_excision %in% \"Yes\") %>% factor(0:1)
+  (1*(array_sso_treatments_suture_excision %in% \"Yes\" |
+  array_ssi_treatments_suture_excision %in% \"Yes\")) %>% factor(0:1)
   , xlab = \"@@Suture excision\"
   , dt = dt[ssi_sso_treatment == 1]
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  1*(array_sso_treatments_percutaneous_drainage %in% \"Yes\" |
-  array_ssi_treatments_percutaneous_drainage %in% \"Yes\") %>% factor(0:1)
+  (1*(array_sso_treatments_percutaneous_drainage %in% \"Yes\" |
+  array_ssi_treatments_percutaneous_drainage %in% \"Yes\")) %>% factor(0:1)
   , xlab = \"@@Percutaneous drainage\"
   , dt = dt[ssi_sso_treatment == 1]
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  1*(array_sso_treatments_partial_mesh_removal %in% \"Yes\" |
-  array_ssi_treatments_partial_mesh_removal %in% \"Yes\") %>% factor(0:1)
+  (1*(array_sso_treatments_partial_mesh_removal %in% \"Yes\" |
+  array_ssi_treatments_partial_mesh_removal %in% \"Yes\")) %>% factor(0:1)
   , xlab = \"@@Partial mesh removal\"
   , dt = dt[ssi_sso_treatment == 1]
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  1*(array_sso_treatments_complete_mesh_removal %in% \"Yes\" |
-  array_ssi_treatments_complete_mesh_removal %in% \"Yes\") %>% factor(0:1)
+  (1*(array_sso_treatments_complete_mesh_removal %in% \"Yes\" |
+  array_ssi_treatments_complete_mesh_removal %in% \"Yes\")) %>% factor(0:1)
   , xlab = \"@@Complete mesh removal\"
   , dt = dt[ssi_sso_treatment == 1]
   , pvalue = FALSE
