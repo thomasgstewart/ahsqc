@@ -309,14 +309,14 @@ generate_standard_tables <- function(
     
     addout[1:(dimt[2]-1) + 2, 2] <- names(d3)[-1]
     
-    for(j in 2:dimt[1]){
-      holdin <- d3[[1]][c(1,j)]
-      d4 <- eval(substitute(d2 %>% filter(y %in% holdin)))
-      wt1 <- eval(substitute(wilcox.test(x ~ y, data = d4)))
-      addout[2, 2 + dimt[1] + j - 1] <- pvalue_fmt(wt1$p.value, test_method = "WR")
-      addout[1, 2 + dimt[1] + j - 1] <- "p-value: " %|%
-        addout[1, 2 + 1] %|% " vs " %|%  addout[1, 2 + j]
-    }
+    # for(j in 2:dimt[1]){
+    #   holdin <- d3[[1]][c(1,j)]
+    #   d4 <- eval(substitute(d2 %>% filter(y %in% holdin)))
+    #   wt1 <- eval(substitute(wilcox.test(x ~ y, data = d4)))
+    #   addout[2, 2 + dimt[1] + j - 1] <- pvalue_fmt(wt1$p.value, test_method = "WR")
+    #   addout[1, 2 + dimt[1] + j - 1] <- "p-value: " %|%
+    #     addout[1, 2 + 1] %|% " vs " %|%  addout[1, 2 + j]
+    # }
     
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
