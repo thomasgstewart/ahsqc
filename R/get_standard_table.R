@@ -447,7 +447,7 @@ get_standard_table <- function(tbl = NULL
     binary_entry(
     flg_bleeding_transfusion
     , xlab = \"@@Post-op bleeding transfusion\"
-    , pvalue = TRUE
+    , pvalue = FALSE
     , fmt = count_fmt
     , pvalue_fmt = garbage_pvalue
     ) %>%

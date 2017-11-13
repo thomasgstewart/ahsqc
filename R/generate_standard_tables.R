@@ -135,7 +135,7 @@ generate_standard_tables <- function(
     , y = y_in
     , dt = data
     , xlab = NULL
-    , pvalue = TRUE
+    , pvalue = FALSE
     , fmt = "%1.0f (%s)%s"
     , pvalue_fmt = function(x, test_method){
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
@@ -194,7 +194,7 @@ generate_standard_tables <- function(
     , y = y
     , dt = data
     , xlab = NULL
-    , pvalue = TRUE
+    , pvalue = FALSE
     , fmt = "%1.0f (%s)%s"
     , pvalue_fmt = function(x, test_method){
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
@@ -331,7 +331,7 @@ generate_standard_tables <- function(
     , dt = data
     , xlab = NULL
     , level = c("Yes", "1")
-    , pvalue = TRUE
+    , pvalue = FALSE
     , fmt = "%1.0f (%s)%s"
     , pvalue_fmt = function(x, test_method){
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
@@ -370,7 +370,7 @@ generate_standard_tables <- function(
     , dt = data
     , xlab = NULL
     , level = c("Yes", "1")
-    , pvalue = TRUE
+    , pvalue = FALSE
     , fmt = "%1.0f (%s)%s"
     , pvalue_fmt = function(x, test_method){
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
