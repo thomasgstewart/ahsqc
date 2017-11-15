@@ -279,6 +279,7 @@ generate_standard_tables <- function(
                            formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% 
                              "</sup>"
                          }) {
+    y = y_in
     d1 <- eval(substitute(dt[, .(x, y)]))
     d2 <- d1[complete.cases(d1)]
     #browser()
