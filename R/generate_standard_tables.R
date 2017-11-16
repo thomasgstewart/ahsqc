@@ -449,9 +449,7 @@ generate_standard_tables <- function(
     for(tbl in 1:9){
       file <- get(paste0("tbl" ,tbl))
       tbln <- file
-      
-      #assign(noquote("pop" %|% pop %|% "tbl" %|% tbl),tbl1)
-      #cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|% "\n\n")
+      title <- attr(tbln, "title")
       tbln <- tbln[,1:(length(levels(data[[y]]))+2)]
       names(tbln) <- tbln[1,]
       tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
@@ -465,6 +463,7 @@ generate_standard_tables <- function(
         , row.names = FALSE
         , table.attr = "class=\"table table-condensed\""
         , escape = FALSE
+        , caption = paste0("Table",tbl,": ", title)
       ) %>% 
         toString 
         
