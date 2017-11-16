@@ -296,10 +296,11 @@ generate_standard_tables <- function(
     e2[,initial_approach := empty_names]
     e2[,N := 0]
     
+    if(dim(e2)[1] > 0){
     e3 <- rbind(d3,e2)
     e4 <- merge(e3, forder, by.x = names(e3)[1], by.y = "V1")
     d3 <- e4[order(V2)][, V2 := NULL]
-    
+    }
     dimt <- dim(d3)
     addout <- get_out(dimt[2] + 1, 2 + dimt[1] + dimt[1] - 
                         1 + dimt[1])
