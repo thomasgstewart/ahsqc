@@ -489,21 +489,21 @@ get_standard_table <- function(tbl = NULL
     binary_entry(
     array_ssi_comp_type_superficial_surgical_site_infection
     , xlab = \"@@Superficial SSI\"
-    , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\)
+    , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\")
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_comp_type_deep_incisional_surgical_site_infection
     , xlab = \"@@Deep incisional SSI\"
-    , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\)
+    , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\")
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_comp_type_organ_space_surgical_site_infection
     , xlab = \"@@Organ space SSI\"
-    , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\)
+    , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\")
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
