@@ -283,7 +283,7 @@ generate_standard_tables <- function(
     d1 <- eval(substitute(dt[, .(x, y)]))
     d2 <- d1[complete.cases(d1)]
     #browser()
-    d3 <- eval(substitute(d2[, .(N = .N, Mean = mean(x), 
+    d3 <- eval(substitute(d2[, .(N = .N, Mean = as.numeric(mean(x)), 
                                  SD = sd(x), Q1 = as.numeric(quantile(x, 0.25)), Median = as.numeric(median(x)), 
                                  Q3 = as.numeric(quantile(x, 0.75))), y] %>% arrange(y)))
     
@@ -293,10 +293,14 @@ generate_standard_tables <- function(
     forder <- data.table(V1 = names(e1), V2 = 1:length(e1))
     e2 <- d3[rep(1,sum(e1==0))]
     e2[] <- NA
-    e2[,initial_approach := empty_names]
+    eval(substitute(e2[,y := empty_names]))
     e2[,N := 0]
     
     if(dim(e2)[1] > 0){
+      for(i in 2:ncol(d3)){
+        d3[[i]] <- as.numeric(d3[[i]])
+        e2[[i]] <- as.numeric(e2[[i]])
+      }
     e3 <- rbind(d3,e2)
     e4 <- merge(e3, forder, by.x = names(e3)[1], by.y = "V1")
     d3 <- e4[order(V2)][, V2 := NULL]
