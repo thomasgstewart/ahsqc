@@ -3,4 +3,5 @@
 export(ahs_get_data)
 export(generate_standard_tables)
 export(get_standard_table)
+export(get_standard_table_inguinal)
 export(rand_identifier)
