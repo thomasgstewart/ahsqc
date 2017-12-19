@@ -456,7 +456,7 @@ if(module == "ventral"){
       file <- get(paste0("tbl" ,tbl))
       tbln <- file
       title <- attr(tbln, "title")
-      tbln <- tbln[,1:(length(levels(data[[y]]))+2)]
+      tbln <- tbln[,1:(length(unique(data[[y]]))+2)]
       names(tbln) <- tbln[1,]
       tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
 
