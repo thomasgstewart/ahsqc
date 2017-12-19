@@ -483,7 +483,7 @@ if(module == "ventral"){
       tbln <- file
       cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
             "\n\n")
-      tbln <- tbln[, 1:(length(levels(data[[y]])) + 2)]
+      tbln <- tbln[, 1:(length(unique(data[[y]])) + 2)]
       names(tbln) <- tbln[1, ]
       tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
                                                          1])
@@ -518,7 +518,7 @@ if(module == "ventral"){
         file <- get(paste0("ing_tbl" ,tbl))
         tbln <- file
         title <- attr(tbln, "title")
-        tbln <- tbln[,1:(length(levels(data[[y]]))+2)]
+        tbln <- tbln[,1:(length(unique(data[[y]]))+2)]
         names(tbln) <- tbln[1,]
         tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
 
@@ -545,7 +545,7 @@ if(module == "ventral"){
         tbln <- file
         cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
               "\n\n")
-        tbln <- tbln[, 1:(length(levels(data[[y]])) + 2)]
+        tbln <- tbln[, 1:(length(unique(data[[y]])) + 2)]
         names(tbln) <- tbln[1, ]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
                                                            1])
