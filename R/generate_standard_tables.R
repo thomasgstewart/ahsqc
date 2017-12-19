@@ -35,6 +35,8 @@ generate_standard_tables <- function(
   require(data.table)
   require(dtplyr)
   require(dplyr)
+  require(knitr)
+  require(kableExtra)
   ##########################################
   ## add helper functions
   `%ni%` <- function(a,b){!(a %in% b)}
