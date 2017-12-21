@@ -107,7 +107,7 @@ generate_standard_tables <- function(
   {
     p <- ifelse(is.na(x), NA, ifelse(round(x, digits) < 1/(10^digits),
                                      "< " %|% sprintf("%4." %|%
-                                      digits %|% "f", 1/(10^digits)),
+                                                        digits %|% "f", 1/(10^digits)),
                                      sprintf("%4." %|% digits %|% "f", x)))
     p <- ifelse(is.na(x), NA, ifelse(x < sig, sig_marker[1] %|%
                                        p %|% sig_marker[2], p))
@@ -147,7 +147,7 @@ generate_standard_tables <- function(
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
     }
   ){
-   #browser()
+    #browser()
     y = y_in
     d2 <- eval(substitute(dt[,.(x,y)]))
     tbl <- table(d2[[1]], d2[[2]], useNA = "always")
@@ -307,9 +307,9 @@ generate_standard_tables <- function(
         d3[[i]] <- as.numeric(d3[[i]])
         e2[[i]] <- as.numeric(e2[[i]])
       }
-    e3 <- rbind(d3,e2)
-    e4 <- merge(e3, forder, by.x = names(e3)[1], by.y = "V1")
-    d3 <- e4[order(V2)][, V2 := NULL]
+      e3 <- rbind(d3,e2)
+      e4 <- merge(e3, forder, by.x = names(e3)[1], by.y = "V1")
+      d3 <- e4[order(V2)][, V2 := NULL]
     }
     dimt <- dim(d3)
     addout <- get_out(dimt[2] + 1, 2 + dimt[1] + dimt[1] -
@@ -351,7 +351,7 @@ generate_standard_tables <- function(
     }
   ){
     y = y_in
-   # browser()
+    # browser()
     cat <- eval(substitute(cat_entry(
       list()
       , x
@@ -434,67 +434,67 @@ generate_standard_tables <- function(
   if(module %ni% c("ventral","inguinal")) stop("module must be either \"ventral\" or \"inguinal\" ")
   #dt <- deparse(substitute(data))
 
-if(module == "ventral"){
-  if(changes == TRUE){
-    for(table in 1:9){
-      if(paste0("tbl",table,".R") %in% list.files()){
-        source(paste0("tbl",table,".R"))
-      } else{
+  if(module == "ventral"){
+    if(changes == TRUE){
+      for(table in 1:9){
+        if(paste0("tbl",table,".R") %in% list.files()){
+          source(paste0("tbl",table,".R"))
+        } else{
+          assign(paste0("tbl",table),
+                 eval(parse(text = get_standard_table(table, data = data, print=TRUE))))
+        }
+      }
+    } else {
+      for(table in 1:9){
         assign(paste0("tbl",table),
-               eval(parse(text = get_standard_table(table, data = data, print=TRUE))))
+               eval(parse(text = get_standard_table(table, data = data, print=TRUE))))    }
+    }
+
+    if(format %in% "shiny"){
+      return_list <- list()
+      for(tbl in 1:9){
+        file <- get(paste0("tbl" ,tbl))
+        tbln <- file
+        title <- attr(tbln, "title")
+        tbln <- tbln[,1:(length(unique(data[[y]]))+2)]
+        names(tbln) <- tbln[1,]
+        tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
+
+        ncols <- ncol(tbln)
+        align <- c("l",rep("r", ncols - 1))
+        return_list[tbl] <- kable(
+          tbln[-1,]
+          , align = align
+          , format = "html"
+          , row.names = FALSE
+          , table.attr = "class=\"table table-condensed\""
+          , escape = FALSE
+          , caption = paste0("Table",tbl,": ", title)
+        ) %>%
+          toString
+
+      }
+      return(return_list)
+    }
+
+    if(format %in% "rmd"){
+      for (tbl in 1:9) {
+        file <- get(paste0("tbl", tbl))
+        tbln <- file
+        cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
+              "\n\n")
+        tbln <- tbln[, 1:(length(unique(data[[y]])) + 2)]
+        names(tbln) <- tbln[1, ]
+        tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
+                                                           1])
+        ncols <- ncol(tbln)
+        align <- c("l", rep("r", ncols - 1))
+        kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
+              table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
+          print
       }
     }
-  } else {
-    for(table in 1:9){
-      assign(paste0("tbl",table),
-             eval(parse(text = get_standard_table(table, data = data, print=TRUE))))    }
   }
-
-  if(format %in% "shiny"){
-    return_list <- list()
-    for(tbl in 1:9){
-      file <- get(paste0("tbl" ,tbl))
-      tbln <- file
-      title <- attr(tbln, "title")
-      tbln <- tbln[,1:(length(unique(data[[y]]))+2)]
-      names(tbln) <- tbln[1,]
-      tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
-
-      ncols <- ncol(tbln)
-      align <- c("l",rep("r", ncols - 1))
-      return_list[tbl] <- kable(
-        tbln[-1,]
-        , align = align
-        , format = "html"
-        , row.names = FALSE
-        , table.attr = "class=\"table table-condensed\""
-        , escape = FALSE
-        , caption = paste0("Table",tbl,": ", title)
-      ) %>%
-        toString
-
-    }
-    return(return_list)
-  }
-
-  if(format %in% "rmd"){
-    for (tbl in 1:9) {
-      file <- get(paste0("tbl", tbl))
-      tbln <- file
-      cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
-            "\n\n")
-      tbln <- tbln[, 1:(length(unique(data[[y]])) + 2)]
-      names(tbln) <- tbln[1, ]
-      tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
-                                                         1])
-      ncols <- ncol(tbln)
-      align <- c("l", rep("r", ncols - 1))
-      kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
-            table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
-        print
-    }
-  }
-}
 
   if(module == "inguinal"){
     if(changes == TRUE){

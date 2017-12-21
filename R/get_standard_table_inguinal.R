@@ -5,12 +5,12 @@
 #' @param tbl NULL or integer (1-9) to identify which table to return.
 #' @param data a data table
 #' @param print a boolean. If TRUE, the code for specified table will be returned
-#' in a tet string. If FALSE, the code for specified table will be written to a 
+#' in a tet string. If FALSE, the code for specified table will be written to a
 #' separate .R file in the working directory with \code{tbl}n\code{.R} nomenclature.
-#' @param overwrite a boolean. If a .R file already exists for the table specified and set to TRUE, the file will be overwritten with original code. 
-#' @details If \code{overwrite} = FALSE and a .R file exists for the specified table, the function will throw an error. 
-#' 
-#'If \code{print} = TRUE, the \code{overwrite} argument will be ignored. 
+#' @param overwrite a boolean. If a .R file already exists for the table specified and set to TRUE, the file will be overwritten with original code.
+#' @details If \code{overwrite} = FALSE and a .R file exists for the specified table, the function will throw an error.
+#'
+#'If \code{print} = TRUE, the \code{overwrite} argument will be ignored.
 #'
 #' @keywords AHSQC
 #' @export
@@ -26,22 +26,33 @@ get_standard_table_inguinal <- function(tbl = NULL
                                , data
                                , print = FALSE
                                , overwrite = FALSE){
-  
+
   if(is.character(data)) stop("data should be a data table, not a character string")
-  
+
   if(is.null(tbl)) return(message("tbl is NULL"))
-  
+
   dt <- deparse(substitute(data))
   table_list <- list(
   "tbl1 <- list() %>%
-  n_unique(patientid, xlab = \"N\") %>% 
-  cat_entry(recurrent) %>% 
+  binary_entry(
+  ing_left_mesh_e
+  , xlab = \"Left mesh\"
+  , pvalue = FALSE
+  , fmt = count_fmt
+  ) %>%
+  binary_entry(
+  ing_right_mesh_e
+  , xlab = \"Right mesh\"
+  , pvalue = FALSE
+  , fmt = count_fmt
+  ) %>%
+  cat_entry(recurrent) %>%
   cat_entry(
     prior_repairs
     , dt = data %>% filter(recurrent == \"Recurrent\")
-  ) %>% 
-  rbindlist %>% 
-  as.data.frame %>% 
+  ) %>%
+  rbindlist %>%
+  as.data.frame %>%
   `attr<-`(\"title\",\"Cohort volume and prior repairs\")"
 
   , "tbl2 <- list() %>%
@@ -56,7 +67,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   rbindlist %>%
   as.data.frame %>%
   `attr<-`(\"title\",\"Surgeon and site volume\")"
-  
+
  , "tbl3 <- list() %>%
       cont_entry(
   val_age_new
@@ -126,7 +137,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   rbindlist %>%
   as.data.frame %>%
   `attr<-`(\"title\",\"Demographics\")"
-  
+
   , "tbl4 <- list() %>%
     binary_entry(any_comorbidities
   , xlab = \"Prevalence of comborbidities\"
@@ -201,9 +212,9 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   rbindlist %>%
   as.data.frame %>%
-  `attr<-`(\"title\",\"Comorbidities\")"  
-    
-  
+  `attr<-`(\"title\",\"Comorbidities\")"
+
+
   , "tbl5 <- list() %>%
     cat_entry(operative_time) %>%
   binary_entry(planned_concomitant_procedure ) %>%
@@ -325,17 +336,17 @@ get_standard_table_inguinal <- function(tbl = NULL
   tbl5[V1 == \"Conversion to open\", V4 := \"\"]
   tbl5 <- tbl5 %>% as.data.frame %>%
   `attr<-`(\"title\",\"Operative characteristics\")"
-    
-  , "tbl6 <- list() %>% 
+
+  , "tbl6 <- list() %>%
     binary_entry(
   flg_intraop_complication
   , xlab = \"Any intra-op complications\"
-  ) %>% 
+  ) %>%
   empty_entry(
   fill = c(
   \"Specific complications<sup>cata</sup>\",
   \"N (%)\")
-  ) %>% 
+  ) %>%
   binary_entry(
   array_intraop_complication_type_hemorrhage_requiring_transfusion %>% factor(levels=c(\"No\",\"Yes\"))
   , xlab = \"@@Hemorrhage requiring transfusion\"
@@ -349,7 +360,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   , dt = data %>% filter(flg_intraop_complication == \"Yes\")
   , pvalue = FALSE
   , fmt = count_fmt
-  ) %>% 
+  ) %>%
   binary_entry(
   array_intraop_complication_type_bowel_injury
   , xlab = \"@@Bowel injury\"
@@ -392,16 +403,16 @@ get_standard_table_inguinal <- function(tbl = NULL
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
-  rbindlist %>% 
-  as.data.frame %>% 
+  rbindlist %>%
+  as.data.frame %>%
   `attr<-`(\"title\",\"Intra-operative complications\")"
-  
-  , "tbl7 <- list() %>% 
+
+  , "tbl7 <- list() %>%
     binary_entry(
   flg_cmp_postop_any
   , xlab = \"Subjects reporting any complication\"
   , pvalue = FALSE
-  ) %>% 
+  ) %>%
   binary_entry(
   flg_other_nsqip_comp
   , xlab = \"Non-wound/other complications\"
@@ -409,7 +420,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   empty_entry(
   fill = c(\"Specific non-wound/other complication\",\"N\")
-  ) %>% 
+  ) %>%
   binary_entry(
   flg_pe %>% factor(levels=c(\"No\",\"Yes\"))
   , xlab = \"@@Pulmonary embolism\"
@@ -524,12 +535,12 @@ get_standard_table_inguinal <- function(tbl = NULL
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
-  cat_entry(death_30_days, pvalue = FALSE) %>% 
-  rbindlist %>% 
-  as.data.frame %>% 
+  cat_entry(death_30_days, pvalue = FALSE) %>%
+  rbindlist %>%
+  as.data.frame %>%
   `attr<-`(\"title\",\"Post-operative complications, mortality, follow-up\")"
- 
-  ,"tbl8 <- list() %>% 
+
+  ,"tbl8 <- list() %>%
     binary_entry(
   flg_cmp_postop_ssi
   , pvalue = FALSE
@@ -667,7 +678,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  sso_treatment 
+  sso_treatment
   , xlab = \"SSO-EI requiring treatment\"
   , dt = data %>% filter(flg_sso_comps == \"Yes\")
   , pvalue = FALSE
@@ -762,7 +773,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   binary_entry(
   (1*(array_sso_treatments_oral_antibiotics %in% \"Yes\" |
-  array_ssi_treatments_oral_antibiotics %in% \"Yes\"))%>% factor(levels = c(0,1)) 
+  array_ssi_treatments_oral_antibiotics %in% \"Yes\"))%>% factor(levels = c(0,1))
   , xlab = \"@@Oral antibiotics\"
   , dt = data %>% filter(ssi_sso_treatment == 1)
   , pvalue = FALSE
@@ -770,7 +781,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   binary_entry(
   (1*(array_sso_treatments_iv_antibiotics %in% \"Yes\" |
-  array_ssi_treatments_iv_antibiotics %in% \"Yes\"))%>% factor(levels = c(0,1)) 
+  array_ssi_treatments_iv_antibiotics %in% \"Yes\"))%>% factor(levels = c(0,1))
   , xlab = \"@@IV antibiotics\"
   , dt = data %>% filter(ssi_sso_treatment == 1)
   , pvalue = FALSE
@@ -778,7 +789,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   binary_entry(
   (1*(array_sso_treatments_wound_opening %in% \"Yes\" |
-  array_ssi_treatments_wound_opening %in% \"Yes\"))%>% factor(levels = c(0,1)) 
+  array_ssi_treatments_wound_opening %in% \"Yes\"))%>% factor(levels = c(0,1))
   , xlab = \"@@Wound opening\"
   , dt = data %>% filter(ssi_sso_treatment == 1)
   , pvalue = FALSE
@@ -786,7 +797,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   binary_entry(
   (1*(array_sso_treatments_wound_debridement %in% \"Yes\" |
-  array_ssi_treatments_wound_debridement %in% \"Yes\"))%>% factor(levels = c(0,1)) 
+  array_ssi_treatments_wound_debridement %in% \"Yes\"))%>% factor(levels = c(0,1))
   , xlab = \"@@Wound debridement\"
   , dt = data %>% filter(ssi_sso_treatment == 1)
   , pvalue = FALSE
@@ -794,7 +805,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   binary_entry(
   (1*(array_sso_treatments_suture_excision %in% \"Yes\" |
-  array_ssi_treatments_suture_excision %in% \"Yes\"))%>% factor(levels = c(0,1)) 
+  array_ssi_treatments_suture_excision %in% \"Yes\"))%>% factor(levels = c(0,1))
   , xlab = \"@@Suture excision\"
   , dt = data %>% filter(ssi_sso_treatment == 1)
   , pvalue = FALSE
@@ -802,7 +813,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   binary_entry(
   (1*(array_sso_treatments_percutaneous_drainage %in% \"Yes\" |
-  array_ssi_treatments_percutaneous_drainage %in% \"Yes\"))%>% factor(levels = c(0,1)) 
+  array_ssi_treatments_percutaneous_drainage %in% \"Yes\"))%>% factor(levels = c(0,1))
   , xlab = \"@@Percutaneous drainage\"
   , dt = data %>% filter(ssi_sso_treatment == 1)
   , pvalue = FALSE
@@ -810,7 +821,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   binary_entry(
   (1*(array_sso_treatments_partial_mesh_removal %in% \"Yes\" |
-  array_ssi_treatments_partial_mesh_removal %in% \"Yes\"))%>% factor(levels = c(0,1)) 
+  array_ssi_treatments_partial_mesh_removal %in% \"Yes\"))%>% factor(levels = c(0,1))
   , xlab = \"@@Partial mesh removal\"
   , dt = data %>% filter(ssi_sso_treatment == 1)
   , pvalue = FALSE
@@ -818,20 +829,20 @@ get_standard_table_inguinal <- function(tbl = NULL
   ) %>%
   binary_entry(
   (1*(array_sso_treatments_complete_mesh_removal %in% \"Yes\" |
-  array_ssi_treatments_complete_mesh_removal %in% \"Yes\")) %>% factor(levels = c(0,1)) 
+  array_ssi_treatments_complete_mesh_removal %in% \"Yes\")) %>% factor(levels = c(0,1))
   , xlab = \"@@Complete mesh removal\"
   , dt = data %>% filter(ssi_sso_treatment == 1)
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
-  rbindlist %>% 
-  as.data.frame %>% 
+  rbindlist %>%
+  as.data.frame %>%
   `attr<-`(\"title\",\"SSI/SSO outcomes\")"
-    
-  , "tbl9 <- list() %>% 
+
+  , "tbl9 <- list() %>%
     empty_entry(
   fill = c(\"Subject re-encounters<sup>cata</sup>\",\"N (%)\")
-  ) %>% 
+  ) %>%
   binary_entry(
   e_between_visit_clinic
   , xlab = \"@@Clinic\"
@@ -848,7 +859,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   , pvalue = FALSE
   ) %>%
   empty_entry(fill = c(\"Reported reasons for re-admission<sup>cata</sup>\",\"N\")
-  ) %>% 
+  ) %>%
   binary_entry(
   array_readmission_reason_pain
   , xlab = \"@@Pain\"
@@ -862,7 +873,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   , dt = data %>% filter(flg_readmission == \"Yes\")
   , pvalue = FALSE
   , fmt = count_fmt
-  , y = lateral_type_approach 
+  , y = lateral_type_approach
   ) %>%
   binary_entry(
   array_readmission_reason_wound_complication %>% factor(levels = c(\"No\",\"Yes\"))
@@ -893,12 +904,12 @@ get_standard_table_inguinal <- function(tbl = NULL
   , fmt = count_fmt
   ) %>%
   empty_entry(fill = \"@@Other (NOT AVAILABLE)\"
-  ) %>% 
+  ) %>%
   binary_entry(
   flg_reoperation
   , xlab = \"Reoperation\"
   , pvalue = FALSE
-  ) %>% 
+  ) %>%
   empty_entry(fill = c(\"Reoperation type<sup>cata</sup>\", \"N\")
   ) %>%
   binary_entry(
@@ -954,14 +965,14 @@ get_standard_table_inguinal <- function(tbl = NULL
   flg_recurrence%>% factor(levels = c(\"No\",\"Yes\"))
   , pvalue = FALSE
   ) %>%
-  rbindlist %>% 
-  as.data.frame %>% 
+  rbindlist %>%
+  as.data.frame %>%
   `attr<-`(\"title\",\"Post-operative through 30 day outcomes\")"
   )
-  
-  
+
+
   table_list <- lapply(table_list, gsub, pattern = "= dt", replacement = paste0("= ", dt))
-  
+
   if(print == FALSE){
     assign(paste0("ing_tbl",tbl), as.character(table_list[tbl]))
     if((paste0("ing_tbl",tbl,".R") %in% list.files()) & overwrite == FALSE){
