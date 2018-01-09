@@ -13,7 +13,7 @@ get_standard_table_inguinal(tbl = NULL, data, print = FALSE,
 \item{data}{a data table}
 
 \item{print}{a boolean. If TRUE, the code for specified table will be returned
-in a tet string. If FALSE, the code for specified table will be written to a 
+in a tet string. If FALSE, the code for specified table will be written to a
 separate .R file in the working directory with \code{tbl}n\code{.R} nomenclature.}
 
 \item{overwrite}{a boolean. If a .R file already exists for the table specified and set to TRUE, the file will be overwritten with original code.}
@@ -23,7 +23,7 @@ Retrieves the code for the standard AHSQC table for inguinal patients specified 
 a separate file or through a text string. Data must have appropriate derived variables.
 }
 \details{
-If \code{overwrite} = FALSE and a .R file exists for the specified table, the function will throw an error. 
+If \code{overwrite} = FALSE and a .R file exists for the specified table, the function will throw an error.
 
 If \code{print} = TRUE, the \code{overwrite} argument will be ignored.
 }
