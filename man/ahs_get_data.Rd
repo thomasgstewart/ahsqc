@@ -15,7 +15,7 @@ ahs_get_data(date = NULL, dir = NULL)
 Retrieves the most recent download of AHSQC data or the download from a specific date.
 }
 \details{
-If \code{date} = NULL, then the function will return the most recently downloaded dataset from the ahs-data folder. 
+If \code{date} = NULL, then the function will return the most recently downloaded dataset from the ahs-data folder.
 
 If \code{dir} = NULL, the function will assume that the command is being run in a working directory of the following type: ".../alfresco/Sites/[SITE NAME]/documentLibrary/code".
 
