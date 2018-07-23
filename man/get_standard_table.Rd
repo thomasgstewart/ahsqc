@@ -4,7 +4,8 @@
 \alias{get_standard_table}
 \title{Get an individual standard table for AHSQC}
 \usage{
-get_standard_table(tbl = NULL, data, print = FALSE, overwrite = FALSE)
+get_standard_table(tbl = NULL, data, print = FALSE, overwrite = FALSE,
+  pval = FALSE)
 }
 \arguments{
 \item{tbl}{NULL or integer (1-9) to identify which table to return.}
@@ -16,6 +17,8 @@ in a tet string. If FALSE, the code for specified table will be written to a
 separate .R file in the working directory with \code{tbl}n\code{.R} nomenclature.}
 
 \item{overwrite}{a boolean. If a .R file already exists for the table specified and set to TRUE, the file will be overwritten with original code.}
+
+\item{pval}{a boolean. Set to TRUE if pvalues are desired for table.}
 }
 \description{
 Retrieves the code for the standard AHSQC table specified and returns it in either
