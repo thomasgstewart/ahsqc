@@ -23,9 +23,9 @@
 #' # Not run:
 #' # d0 <- ahs_get_data()
 #' # d1 <- d0[["analyticview"]]
-#' # generate_standard_tables(dt = d1, y = "e_gender")
+#' # generate_standard_tables_count(dt = d1, y = "e_gender")
 
-generate_standard_tables <- function(
+generate_standard_tables_count <- function(
   changes = FALSE
   , y
   , data
