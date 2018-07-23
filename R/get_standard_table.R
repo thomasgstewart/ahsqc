@@ -939,7 +939,7 @@ get_standard_table <- function(tbl = NULL
 
 
   table_list <- lapply(table_list, gsub, pattern = "= dt", replacement = paste0("= ", dt))
-  table_list <- lapply(table_list, gsub, pattern = "pvalue = FALSE", replacement = paste0("pvalue = ", pval))
+  table_list <- lapply(table_list, gsub, pattern = "pvalue = FALSE", replacement = paste0("pvalue = ", pval," "))
   if(print == FALSE){
     assign(paste0("tbl",tbl), as.character(table_list[tbl]))
     if((paste0("tbl",tbl,".R") %in% list.files()) & overwrite == FALSE){

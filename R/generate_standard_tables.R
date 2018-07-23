@@ -166,26 +166,26 @@ generate_standard_tables <- function(
     addout[1, (dima[2] - dimm[2]+1):dima[2]] <- "Missing: " %|% dimnames(M)[[2]]
     addout[2, (dima[2] - dimm[2]+1):dima[2]] <- miss[2,]
 
-    # for(j in 2:dimm[2]){
-    #   M_compare <- M[,c(1,j)]
-    #   addout[1, dimt[2] + j] <- "p-value: " %|%
-    #     dimnames(M)[[2]][1] %|% " vs " %|% dimnames(M)[[2]][j]
-    #   if(sum(M_compare)==0 | !pvalue) next
-    #   E_compare <- rowSums(M_compare) %*% t(colSums(M_compare)) / sum(M_compare)
-    #   smallest_expected_cell <- min(E_compare)
-    #
-    #   if(smallest_expected_cell >= 1 | sum(M_compare)>2000){
-    #     withCallingHandlers(cst <- chisq.test(M_compare, correct = FALSE), warning = chi_approx)
-    #     stat <- cst$statistic * (sum(M_compare) - 1)/sum(M_compare)
-    #     pval <- pchisq(stat, cst$parameter, lower.tail = FALSE)
-    #     test_method <- "EP"
-    #   }else{
-    #     pval <- fisher.test(M_compare)$p.value
-    #     test_method <- "FE"
-    #   }
-    #
-    #   addout[2, dimt[2] + j] <- pvalue_fmt(pval, test_method)
-    # }
+    for(j in 2:dimm[2]){
+      M_compare <- M[,c(1,j)]
+      addout[1, dimt[2] + j] <- "p-value: " %|%
+        dimnames(M)[[2]][1] %|% " vs " %|% dimnames(M)[[2]][j]
+      if(sum(M_compare)==0 | !pvalue) next
+      E_compare <- rowSums(M_compare) %*% t(colSums(M_compare)) / sum(M_compare)
+      smallest_expected_cell <- min(E_compare)
+
+      if(smallest_expected_cell >= 1 | sum(M_compare)>2000){
+        withCallingHandlers(cst <- chisq.test(M_compare, correct = FALSE), warning = chi_approx)
+        stat <- cst$statistic * (sum(M_compare) - 1)/sum(M_compare)
+        pval <- pchisq(stat, cst$parameter, lower.tail = FALSE)
+        test_method <- "EP"
+      }else{
+        pval <- fisher.test(M_compare)$p.value
+        test_method <- "FE"
+      }
+
+      addout[2, dimt[2] + j] <- pvalue_fmt(pval, test_method)
+    }
 
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
@@ -267,10 +267,10 @@ generate_standard_tables <- function(
     addout[2, (dima[2] - dimm[2] + 1):dima[2]] <- dt1[dimt[1],-dimt[2]]
     addout[2,2] <- "N"
 
-    # for(j in 2:dimm[2]){
-    #   addout[1, 2 + dimm[2] + j - 1] <- "p-value: " %|%
-    #     addout[1, 2 + 1] %|% " vs " %|%  addout[1, 2 + j]
-    # }
+    for(j in 2:dimm[2]){
+      addout[1, 2 + dimm[2] + j - 1] <- "p-value: " %|%
+        addout[1, 2 + 1] %|% " vs " %|%  addout[1, 2 + j]
+    }
 
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
@@ -443,6 +443,7 @@ generate_standard_tables <- function(
         }
       }
     } else {
+      browser()
       for(table in 1:9){
         assign(paste0("tbl",table),
                eval(parse(text = get_standard_table(table, data = data, print=TRUE, pval = pvalue))))    }
