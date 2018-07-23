@@ -37,12 +37,13 @@ get_standard_table <- function(tbl = NULL
   table_list <- list(
     "tbl1 <- list() %>%
     n_unique(patientid, xlab = \"N\") %>%
-    #cat_entry(e_procedure_category) %>%
-    cat_entry(recurrent) %>%
+    #cat_entry(e_procedure_category, pvalue = FALSE) %>%
+    cat_entry(recurrent, pvalue = FALSE) %>%
     cat_entry(
     prior_repairs
     , xlab = \"Number of prior repairs\"
     , dt = data %>% filter(recurrent == \"Recurrent\")
+    , pvalue = FALSE
     ) %>%
     rbindlist %>%
     as.data.frame %>%
@@ -61,14 +62,14 @@ get_standard_table <- function(tbl = NULL
     `attr<-`(\"title\",\"Surgeon and site volume\")"
 
     , "tbl3 <- list() %>%
-    cont_entry(val_age_new, xlab = \"Age (years; capped at 90)\") %>%
-    cat_entry(e_gender) %>%
-    cont_entry(val_calc_bmi2, xlab = \"BMI (kg/m<sup>2</sup>; capped at 15, 60)\") %>%
-    cat_entry(bmi_cat, xlab = \"BMI categories\") %>%
-    cat_entry(e_asaclass, xlab = \"ASA class\") %>%
-    cat_entry(wound_class, xlab = \"Wound class distribution\") %>%
-    cat_entry(vhwg, xlab = \"Hernia Grade\") %>%
-    cont_entry(val_hern_width, xlab = \"Hernia width (cm)\") %>%
+    cont_entry(val_age_new, xlab = \"Age (years; capped at 90)\", pvalue = FALSE) %>%
+    cat_entry(e_gender, pvalue = FALSE) %>%
+    cont_entry(val_calc_bmi2, xlab = \"BMI (kg/m<sup>2</sup>; capped at 15, 60)\", pvalue = FALSE) %>%
+    cat_entry(bmi_cat, xlab = \"BMI categories\", pvalue = FALSE) %>%
+    cat_entry(e_asaclass, xlab = \"ASA class\", pvalue = FALSE) %>%
+    cat_entry(wound_class, xlab = \"Wound class distribution\", pvalue = FALSE) %>%
+    cat_entry(vhwg, xlab = \"Hernia Grade\", pvalue = FALSE) %>%
+    cont_entry(val_hern_width, xlab = \"Hernia width (cm)\", pvalue = FALSE) %>%
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Demographics\")"
@@ -147,9 +148,9 @@ get_standard_table <- function(tbl = NULL
     `attr<-`(\"title\",\"Comorbidities\")"
 
     , "tbl5 <- list() %>%
-    cat_entry(operative_time, pvalue_fmt = garbage_pvalue) %>%
-    binary_entry(planned_concomitant_procedure) %>%
-    binary_entry(flg_concomitant_proc, xlab = \"Any concomitant procedure\") %>%
+    cat_entry(operative_time, pvalue_fmt = garbage_pvalue, pvalue = FALSE) %>%
+    binary_entry(planned_concomitant_procedure, pvalue = FALSE) %>%
+    binary_entry(flg_concomitant_proc, xlab = \"Any concomitant procedure\", pvalue = FALSE) %>%
     empty_entry(
     fill = c(
     \"Concomitant procedures<sup>cata</sup>\",
@@ -258,7 +259,7 @@ get_standard_table <- function(tbl = NULL
     , xlab = \"Length of stay (days)\"
     , pvalue_fmt = garbage_pvalue
     ) %>%
-    binary_entry(convert_to_open, xlab = \"Conversion to open\", pvalue_fmt = garbage_pvalue) %>%
+    binary_entry(convert_to_open, xlab = \"Conversion to open\", pvalue_fmt = garbage_pvalue, pvalue = FALSE) %>%
     rbindlist
 
     tbl5[V1 == \"Conversion to open\", V2 := \"N (%)\"]
@@ -273,7 +274,7 @@ get_standard_table <- function(tbl = NULL
     , "tbl6 <- list() %>%
     binary_entry(
     flg_intraop_complication
-    , xlab = \"Any intra-op complications\"
+    , xlab = \"Any intra-op complications\", pvalue = FALSE
     ) %>%
     empty_entry(
     fill = c(
@@ -348,12 +349,12 @@ get_standard_table <- function(tbl = NULL
     binary_entry(
     flg_cmp_postop_any
     , xlab = \"Subjects reporting any complication\"
-    , pvalue_fmt = garbage_pvalue
+    , pvalue_fmt = garbage_pvalue, pvalue = FALSE
     ) %>%
     binary_entry(
     flg_other_nsqip_comp
     , xlab = \"Non-wound/other complications\"
-    , pvalue_fmt = garbage_pvalue
+    , pvalue_fmt = garbage_pvalue, pvalue = FALSE
     ) %>%
     empty_entry(
     fill = c(\"Specific non-wound/other complication\",\"N\")
