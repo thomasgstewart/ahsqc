@@ -278,35 +278,56 @@ generate_standard_tables <- function(
   }
 
 
-  cont_entry <- function(
-    out
-    , x
-    , y = y_in
-    , dt = data
-    , xlab = NULL
-    , pvalue_fmt = function(x, test_method){
-      formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
-    }
-  ){
-    d1 <- eval(substitute(dt[,.(x,y)])) ## mao: changed data[,.(x,y)] to dt[.(x,y)]
+  cont_entry <- function(out, x, y = y_in, dt = data, xlab = NULL,
+                         pvalue_fmt = function(x, test_method) {
+                           formatp(x, digits = 3) %|% "<sup>" %|% test_method %|%
+                             "</sup>"
+                         }) {
+    y = y_in
+    d1 <- eval(substitute(dt[, .(x, y)]))
     d2 <- d1[complete.cases(d1)]
-    d3 <- eval(substitute(
-      d2[,.(N = .N, Mean = mean(x), SD = sd(x), Q1 = as.numeric(quantile(x, .25)), Median = as.numeric(median(x)), Q3 = as.numeric(quantile(x, .75))), y] %>%
-        arrange(y)
-    ))
+    #browser()
+    d3 <- eval(substitute(d2[, .(N = .N, Mean = as.numeric(mean(x)),
+                                 SD = sd(x), Q1 = as.numeric(quantile(x, 0.25)), Median = as.numeric(median(x)),
+                                 Q3 = as.numeric(quantile(x, 0.75))), y] %>% arrange(y)))
 
+    e1 <- eval(substitute(d2[,table(y)]))
+    empty_idx <- which(e1 == 0)
+    empty_names <- names(e1)[empty_idx]
+    forder <- data.table(V1 = names(e1), V2 = 1:length(e1))
+    e2 <- d3[rep(1,sum(e1==0))]
+    e2[] <- NA
+    eval(substitute(e2[,y := empty_names]))
+    e2[,N := 0]
+
+    if(dim(e2)[1] > 0){
+      for(i in 2:ncol(d3)){
+        d3[[i]] <- as.numeric(d3[[i]])
+        e2[[i]] <- as.numeric(e2[[i]])
+      }
+      e3 <- rbind(d3,e2)
+      e4 <- merge(e3, forder, by.x = names(e3)[1], by.y = "V1")
+      d3 <- e4[order(V2)][, V2 := NULL]
+    }
     dimt <- dim(d3)
-    addout <- get_out(dimt[2] + 1, 2 + dimt[1] + dimt[1] - 1 + dimt[1])
+    addout <- get_out(dimt[2] + 1, 2 + dimt[1] + dimt[1] -
+                        1 + dimt[1])
     dima <- dim(addout)
-    addout[1,1:dimt[1] + 2] <- d3[[1]]
-    addout[1:(dimt[2]-1) + 2, 1:dimt[1] + 2] <- round(t(as.matrix(d3[, -1, with=FALSE])))
-    addout[2,1] <- if(!is.null(xlab)){xlab}else{eval(substitute(label(dt[,.(x)][[1]])))}
-
-    miss <- table(factor(1*is.na(d1[[1]]), 0:1, 0:1),d1[[2]])
-    addout[1,(dima[2] - dimt[1] + 1):(dima[2])] <- "Missing: " %|% dimnames(miss)[[2]]
-    addout[2,(dima[2] - dimt[1] + 1):(dima[2])] <- formatpct(miss)[2,]
-
-    addout[1:(dimt[2]-1) + 2, 2] <- names(d3)[-1]
+    addout[1, 1:dimt[1] + 2] <- d3[[1]]
+    addout[1:(dimt[2] - 1) + 2, 1:dimt[1] + 2] <- round(t(as.matrix(d3[,
+                                                                       -1, with = FALSE])))
+    addout[2, 1] <- if (!is.null(xlab)) {
+      xlab
+    }
+    else {
+      eval(substitute(label(dt[, .(x)][[1]])))
+    }
+    miss <- table(factor(1 * is.na(d1[[1]]), 0:1, 0:1), d1[[2]])
+    addout[1, (dima[2] - dimt[1] + 1):(dima[2])] <- "Missing: " %|%
+      dimnames(miss)[[2]]
+    addout[2, (dima[2] - dimt[1] + 1):(dima[2])] <- formatpct(miss)[2,
+                                                                    ]
+    addout[1:(dimt[2] - 1) + 2, 2] <- names(d3)[-1]
 
     for(j in 2:dimt[1]){
       holdin <- d3[[1]][c(1,j)]
@@ -317,8 +338,10 @@ generate_standard_tables <- function(
         addout[1, 2 + 1] %|% " vs " %|%  addout[1, 2 + j]
     }
 
-    if(length(out)>0) addout <- addout[-1,]
-    out[[length(out)+1]] <- addout
+
+    if (length(out) > 0)
+      addout <- addout[-1, ]
+    out[[length(out) + 1]] <- addout
     return(out)
   }
 
@@ -431,7 +454,6 @@ generate_standard_tables <- function(
         }
       }
     } else {
-      browser()
       for(table in 1:9){
         assign(paste0("tbl",table),
                eval(parse(text = get_standard_table(table, data = data, print=TRUE, pval = pvalue))))    }
