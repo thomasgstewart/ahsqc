@@ -333,7 +333,8 @@ generate_standard_tables <- function(
       holdin <- d3[[1]][c(1,j)]
       d4 <- eval(substitute(d2 %>% filter(y %in% holdin)))
       wt1 <- eval(substitute(wilcox.test(x ~ y, data = d4)))
-      addout[2, 2 + dimt[1] + j - 1] <- pvalue_fmt(wt1$p.value, test_method = "WR")
+      addout[2, 2 + dimt[1] + j - 1] <- formatp(wt1$p.value, digits = 3) %|% "<sup>" %|% "WR" %|%
+        "</sup>"
       addout[1, 2 + dimt[1] + j - 1] <- "p-value: " %|%
         addout[1, 2 + 1] %|% " vs " %|%  addout[1, 2 + j]
     }
