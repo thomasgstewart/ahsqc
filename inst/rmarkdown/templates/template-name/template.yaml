@@ -1,0 +1,4 @@
+name: AHSQC Analyses
+description: >
+   This template is for AHSQC analysis requests
+create_dir: FALSE

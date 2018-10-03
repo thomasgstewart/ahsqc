@@ -1,0 +1,54 @@
+---
+title: ""
+output: 
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: yes
+    number_sections: false
+    code_folding: hide
+    css: https://biostatdata.app.vumc.org/tgs/misc/rmarkdown.css
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(error = FALSE)
+```
+
+```{r, packages}
+require(ahsqc)
+require(tgsify)
+require(Hmisc)
+require(rms)
+require(kableExtra)
+require(knitr)
+require(boot)
+require(data.table)
+require(dplyr)
+require(dtplyr)
+require(tableone)
+```
+
+```{r, functions}
+'%nin%' <- function(x,y) !('%in%'(x,y))
+```
+
+# Project Proposal
+
+
+# Study Population: Inclusion/Exclusion Criteria
+
+```{r}
+data <- ahsqc:::ahs_get_data(date = "2018-06-30")
+date <- data$date
+
+d0 <- data$analyticview_deriv %>%
+  mutate(female = 1*(e_gender == "Female")) %>%
+  mutate(consort = 
+  )
+          
+
+d0 %>% doj(consort) %>% two_column_consort("AHSQC Repairs*")
+legend("bottomright",legend = "* As of " %|% date, bty = "n")
+```
+
