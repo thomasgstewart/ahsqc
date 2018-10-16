@@ -10,6 +10,54 @@ output:
     css: https://biostatdata.app.vumc.org/tgs/misc/rmarkdown.css
 ---
 
+<style type="text/css">
+ #TOC{
+   position:fixed;
+   top:0;
+   // left:0;
+   right:0;
+   margin: 32px 20px 20px 20px;
+   z-index: 9;
+   // display:none;
+  }
+  #toc-toggle{
+    position:fixed;
+    top:0;
+    // left:0;
+    right:0;
+    margin: 5px 20px 5px 20px;
+  }
+  .col-md-3{
+    width: 0%;
+  }
+  .col-md-9{
+    width: 100%;
+  }
+  div.container-fluid.main-container{
+    max-width:none;
+    margin-left:0px;
+    margin-right:none;
+  }
+  p{
+  max-width:70ex;
+  font-size:16pt;
+  }
+  p img{
+  max-width:none;
+  }
+  .title{
+  max-width:65ex;
+  }
+</style>
+
+<button id="toc-toggle" type="button" class="btn btn-default btn-xs code-folding-btn pull-right collapsed" onclick="toggletoc()"><span>Table of Contents</span></button>
+
+<script>
+function toggletoc(){
+$("#TOC").toggle();
+}
+</script>
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 knitr::opts_chunk$set(error = FALSE)
