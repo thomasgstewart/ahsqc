@@ -531,6 +531,13 @@ generate_standard_tables <- function(
 
         ncols <- ncol(tbln)
         align <- c("l",rep("r", ncols - 1))
+        
+        if(!pvalue){
+          tbln <- tbln %>%
+            `[`(,!lgrep(tbl %>% names, "p-value"))
+        }
+        
+        
         return_list[tbl] <- kable(
           tbln[-1,]
           , align = align
@@ -553,11 +560,17 @@ generate_standard_tables <- function(
         cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
               "\n\n")
         names(tbln) <- tbln[1, ]
+        tbln <- tbln[-1,]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
                                                            1])
         ncols <- ncol(tbln)
         align <- c("l", rep("r", ncols - 1))
-        kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
+        if(!pvalue){
+          tbln <- tbln %>%
+            `[`(,!lgrep(tbl %>% names, "p-value"))
+        }
+         
+        kable(tbln, align = align, format = "html", row.names = FALSE,
               table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
           print
       }
