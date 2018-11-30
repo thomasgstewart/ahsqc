@@ -468,6 +468,12 @@ generate_standard_tables <- function(
         title <- attr(tbln, "title")
         names(tbln) <- tbln[1,]
         tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
+        
+        if(!pvalue){
+          tbln <- tbln %>%
+            `[`(,!lgrep(tbln %>% names, "p-value")) %>%
+            rename(" " = ".1")
+        }
 
         ncols <- ncol(tbln)
         align <- c("l",rep("r", ncols - 1))
@@ -494,7 +500,15 @@ generate_standard_tables <- function(
               "\n\n")
         names(tbln) <- tbln[1, ]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
-                                                           1])
+                                                       1])
+        
+        if(!pvalue){
+          tbln <- tbln %>%
+            `[`(,!lgrep(tbln %>% names, "p-value")) %>%
+            rename(" " = ".1")
+        }
+        
+        
         ncols <- ncol(tbln)
         align <- c("l", rep("r", ncols - 1))
         kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
@@ -534,7 +548,8 @@ generate_standard_tables <- function(
         
         if(!pvalue){
           tbln <- tbln %>%
-            `[`(,!lgrep(tbl %>% names, "p-value"))
+            `[`(,!lgrep(tbln %>% names, "p-value")) %>%
+            rename(" " = ".1")
         }
         
         
@@ -567,7 +582,8 @@ generate_standard_tables <- function(
         align <- c("l", rep("r", ncols - 1))
         if(!pvalue){
           tbln <- tbln %>%
-            `[`(,!lgrep(tbl %>% names, "p-value"))
+            `[`(,!lgrep(tbln %>% names, "p-value")) %>%
+            rename(" " = ".1")
         }
          
         kable(tbln, align = align, format = "html", row.names = FALSE,
