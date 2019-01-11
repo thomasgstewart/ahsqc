@@ -355,7 +355,7 @@ generate_standard_tables_all <- function(
         names(tbln) <- tbln[1,]
         tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
         
-        if(ncol ==5) tbln <- tbln[-5]
+        if(ncol(tbln) == 5) tbln <- tbln[-5]
         
         ncols <- ncol(tbln)
         align <- c("l",rep("r", ncols - 1))
@@ -382,7 +382,7 @@ generate_standard_tables_all <- function(
         names(tbln) <- tbln[1, ]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
                                                            1])
-        if(ncol ==5) tbln <- tbln[-5]
+        if(ncol(tbln) == 5) tbln <- tbln[-5]
         
         ncols <- ncol(tbln)
         align <- c("l", rep("r", ncols - 1))
