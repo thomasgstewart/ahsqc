@@ -5,8 +5,8 @@
 \title{Creates a continuous entry for a table}
 \usage{
 cont_entry(out, x, y, dt, xlab = NULL, pvalue = TRUE,
-  pvalue_fmt = function(x, test_method) {     formatp(x, digits = 3) \%|\%
-  "<sup>" \%|\% test_method \%|\% "</sup>" })
+  pvalue_fmt = function(x, test_method) {     formatp(x, digits = 3)
+  \%|\% "<sup>" \%|\% test_method \%|\% "</sup>" })
 }
 \arguments{
 \item{out}{empty vector}
