@@ -65,7 +65,8 @@ get_standard_table <- function(tbl = NULL
     cont_entry(val_age_new, xlab = \"Age (years; capped at 90)\", pvalue = FALSE) %>%
     cat_entry(e_gender, pvalue = FALSE) %>%
     cont_entry(val_calc_bmi2, xlab = \"BMI (kg/m<sup>2</sup>; capped at 15, 60)\", pvalue = FALSE) %>%
-    cat_entry(bmi_cat, xlab = \"BMI categories\", pvalue = FALSE) %>%
+    cat_entry(bmi_cat %>% factor(levels = c(\"< 30\", \">= 30\")
+          , xlab = \"BMI categories\", pvalue = FALSE) %>%
     cat_entry(e_asaclass, xlab = \"ASA class\", pvalue = FALSE) %>%
     cat_entry(wound_class, xlab = \"Wound class distribution\", pvalue = FALSE) %>%
     cat_entry(vhwg, xlab = \"Hernia Grade\", pvalue = FALSE) %>%
@@ -427,32 +428,32 @@ get_standard_table <- function(tbl = NULL
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    flg_ventilator 
+    flg_ventilator %>% factor(levels = c(0,1))
     , xlab = \"@@Ventilator > 48 hrs\"
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    flg_coma 
+    flg_coma %>% factor(levels = c(0,1))
     , xlab = \"@@Coma > 24 hrs\"
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    flg_nerve_injury
+    flg_nerve_injury %>% factor(levels = c(0,1))
     , xlab = \"@@Peripheral nerve injury\"
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
-    flg_bleeding_transfusion
+    flg_bleeding_transfusion %>% factor(levels = c(0,1))
     , xlab = \"@@Post-op bleeding transfusion\"
     , pvalue = FALSE
     , fmt = count_fmt
     , pvalue_fmt = garbage_pvalue
     ) %>%
     binary_entry(
-    flg_graft_prosthesis_flap_fail
+    flg_graft_prosthesis_flap_fail %>% factor(levels = c(0,1))
     , xlab = \"@@Graft/prosthesis/flap failure\"
     , pvalue = FALSE
     , fmt = count_fmt
@@ -470,7 +471,7 @@ get_standard_table <- function(tbl = NULL
     , fmt = count_fmt
     ) %>%
     cat_entry(
-    death_30_days
+    death_30_days %>% factor(levels = c(0,1))
     , pvalue = FALSE
     ) %>%
     rbindlist %>%
