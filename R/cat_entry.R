@@ -34,7 +34,7 @@ cat_entry <- function(
   d2 <- eval(substitute(dt[,.(x,y)]))
   tbl <- table(d2[[1]], d2[[2]], useNA = "always")
   dimt <- dim(tbl)
-  M <- tbl[-dimt[1], -dimt[2]]
+  M <- tbl[-dimt[1], -dimt[2]] %>% as.data.frame %>% t
   
   dimm <- dimt-1
   addout <- get_out(dimt[1]+1, 2 + dimm[2] + dimm[2] - 1 + dimm[2])
