@@ -65,7 +65,7 @@ get_standard_table <- function(tbl = NULL
     cont_entry(val_age_new, xlab = \"Age (years; capped at 90)\", pvalue = FALSE) %>%
     cat_entry(e_gender, pvalue = FALSE) %>%
     cont_entry(val_calc_bmi2, xlab = \"BMI (kg/m<sup>2</sup>; capped at 15, 60)\", pvalue = FALSE) %>%
-    cat_entry(bmi_cat %>% factor(levels = c(\"< 30\", \">= 30\")
+    cat_entry(bmi_cat %>% factor(levels = c(\"< 30\", \">= 30\"))
           , xlab = \"BMI categories\", pvalue = FALSE) %>%
     cat_entry(e_asaclass, xlab = \"ASA class\", pvalue = FALSE) %>%
     cat_entry(wound_class, xlab = \"Wound class distribution\", pvalue = FALSE) %>%
