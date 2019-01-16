@@ -34,7 +34,6 @@ generate_standard_tables <- function(
   , module = "ventral"
   , pvalue = FALSE
 ){
-
   ##########################################
   ## add helper functions
   `%ni%` <- function(a,b){!(a %in% b)}
@@ -145,7 +144,6 @@ generate_standard_tables <- function(
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
     }
   ){
-    #browser()
     y = y_in
     d2 <- eval(substitute(dt[,.(x,y)]))
     tbl <- table(d2[[1]], d2[[2]], useNA = "always")
@@ -204,7 +202,7 @@ generate_standard_tables <- function(
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
     }
   ){
-
+  
     d2 <- dt[, c(x,y), with = FALSE]
     tbl <- table(d2[[1]], d2[[2]], useNA = "always")
     dimt <- dim(tbl)
@@ -399,7 +397,6 @@ generate_standard_tables <- function(
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
     }
   ){
-
     cat <- cat_entry_(list(),x,y,dt,xlab,pvalue = pvalue, fmt = fmt, pvalue_fmt = pvalue_fmt)
     ny <- length(unique(dt[[y]]))
     count_cols <- 1:ny + 2
@@ -448,8 +445,8 @@ generate_standard_tables <- function(
     if(changes == TRUE){
       for(table in 1:9){
         if(paste0("tbl",table,".R") %in% list.files()){
-          source(paste0("tbl",table,".R"))
-        } else{
+          source(paste0("tbl",table,".R"), local = T)
+        } else {
           assign(paste0("tbl",table),
                  eval(parse(text = get_standard_table(table, data = data, print=TRUE, pval = pvalue))))
         }
