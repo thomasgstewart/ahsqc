@@ -37,7 +37,7 @@ get_standard_table_all <- function(tbl = NULL
   table_list <- list(
     "tbl1 <- list() %>%
     n_unique_all(patientid, xlab = \"N\") %>%
-    #cat_entry_all(e_procedure_category, pvalue = FALSE) %>%
+    cat_entry_all(e_procedure_category, pvalue = FALSE) %>%
     cat_entry_all(recurrent, pvalue = FALSE) %>%
     cat_entry_all(
     prior_repairs
@@ -149,7 +149,8 @@ get_standard_table_all <- function(tbl = NULL
     
     , "tbl5 <- list() %>%
     cat_entry_all(operative_time, pvalue = FALSE) %>%
-    binary_entry_all(planned_concomitant_procedure %>% factor(levels = c(\"No\", \"Yes\")), pvalue = FALSE) %>%
+    binary_entry_all(planned_concomitant_procedure %>% factor(levels = c(\"No\", \"Yes\")), pvalue = FALSE, 
+    xlab = \"Planned concomitant procedure\") %>%
     binary_entry_all(flg_concomitant_proc %>% factor(levels = c(\"No\", \"Yes\")), xlab = \"Any concomitant procedure\", pvalue = FALSE) %>%
     empty_entry_all(
     fill = c(
@@ -468,8 +469,7 @@ get_standard_table_all <- function(tbl = NULL
     , fmt = count_fmt
     ) %>%
     cat_entry_all(
-    death_30_days
-    , pvalue = FALSE
+    death_30_days %>% factor(levels = c(\"Actively following\", \"Follow up ended\", \"Death after 30 days\", \"Death (no date reported)\", \"Death within 30 days\"))
     ) %>%
     rbindlist %>%
     as.data.frame %>%
@@ -849,8 +849,6 @@ get_standard_table_all <- function(tbl = NULL
     , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
-    empty_entry_all(
-    fill = \"@@Other (NOT AVAILABLE)\") %>%
     binary_entry_all(
     flg_reoperation %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Reoperation\"
