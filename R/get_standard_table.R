@@ -478,6 +478,7 @@ get_standard_table <- function(tbl = NULL
     flg_cmp_postop_ssi %>% factor(levels = c(\"No\", \"Yes\"))
     , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
+    , xlab = \"Surgical site infection (SSI)\"
     ) %>%
     empty_entry(
     fill = c(\"Infection type\", \"N\")
