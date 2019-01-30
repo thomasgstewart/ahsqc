@@ -76,72 +76,64 @@ get_standard_table <- function(tbl = NULL
     `attr<-`(\"title\",\"Demographics\")"
 
     , "tbl4 <- list() %>%
-    binary_entry(any_comorbidities %>% factor(levels = c(0,1)), xlab = \"Prevalence of comorbidities\") %>%
+    binary_entry(any_comorbidities %>% factor(levels = c(0,1))
+    , xlab = \"Prevalence of comorbidities\"
+    , pvalue = FALSE 
+    ) %>%
     empty_entry(fill = c(\"Comorbidities\",\"N\")) %>%
     binary_entry(
     flg_cmb_steroids %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Immunosuppressant\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     smoking_one_year %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Smoking (within 1 year)\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     nicotine_one_year %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Nicotine use (within 1 year)\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_cmb_hypertension %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Hypertension\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_cmb_diabetes %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Diabetes mellitus\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_cmb_dyspnea %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Dyspnea\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_cmb_copd %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@COPD\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_cmb_abdominal_wall_ssi_hx %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@History of abdominal wall surgical site infection\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_cmb_component_separation_hx %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@History of component separation\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_cmb_open_abdomen_hx %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@History of open abdomen\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     current_steroids %>% factor(levels = c(0,1))
     , xlab = \"@@Current steroid use\"
-    , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     rbindlist %>%
@@ -288,28 +280,28 @@ get_standard_table <- function(tbl = NULL
     factor(levels=c(\"No\",\"Yes\"))
     , xlab = \"@@Hemorrhage requiring transfusion\"
     , dt = data %>% dplyr:::filter(flg_intraop_complication == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_intraop_complication_type_peritoneal_access_injury %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Peritoneal access injury\"
     , dt = data %>% dplyr:::filter(flg_intraop_complication == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_intraop_complication_type_bowel_injury %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Bowel injury\"
     , dt = data %>% dplyr:::filter(flg_intraop_complication == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_intraop_complication_type_bladder_injury %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Bladder injury\"
     , dt = data %>% dplyr:::filter(flg_intraop_complication == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -317,7 +309,7 @@ get_standard_table <- function(tbl = NULL
     factor(levels=c(\"No\",\"Yes\"))
     , xlab = \"@@Liver injury\"
     , dt = data %>% dplyr:::filter(flg_intraop_complication == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -325,7 +317,7 @@ get_standard_table <- function(tbl = NULL
     factor(levels=c(\"No\",\"Yes\"))
     , xlab = \"@@Gastric injury\"
     , dt = data %>% dplyr:::filter(flg_intraop_complication == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -333,14 +325,14 @@ get_standard_table <- function(tbl = NULL
     %>% factor(levels=c(\"No\",\"Yes\"))
     , xlab = \"@@Major vascular injury requiring intervention\"
     , dt = data %>% dplyr:::filter(flg_intraop_complication == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_intraop_complication_type_other %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Other\"
     , dt = data %>% dplyr:::filter(flg_intraop_complication == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     rbindlist %>%
@@ -474,7 +466,7 @@ get_standard_table <- function(tbl = NULL
     cat_entry(
     death_30_days %>% factor(levels = c(\"Actively following\", \"Follow up ended\", \"Death after 30 days\", \"Death (no date reported)\", \"Death within 30 days\"))
     , pvalue = FALSE
-    , xlab
+    , xlab = \"Death 30 days\"
     ) %>%
     rbindlist %>%
     as.data.frame %>%
@@ -485,6 +477,7 @@ get_standard_table <- function(tbl = NULL
     binary_entry(
     flg_cmp_postop_ssi %>% factor(levels = c(\"No\", \"Yes\"))
     , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE
     ) %>%
     empty_entry(
     fill = c(\"Infection type\", \"N\")
@@ -493,21 +486,21 @@ get_standard_table <- function(tbl = NULL
     array_ssi_comp_type_superficial_surgical_site_infection %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Superficial SSI\"
     , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_comp_type_deep_incisional_surgical_site_infection %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Deep incisional SSI\"
     , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_comp_type_organ_space_surgical_site_infection %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Organ space SSI\"
     , dt = data %>% dplyr:::filter(flg_cmp_postop_ssi == \"Yes\")
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -552,62 +545,63 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_oral_antibiotics %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Oral antibiotics\"
     , dt = data %>% dplyr:::filter(ssi_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_treatments_iv_antibiotics %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@IV antibiotics\"
     , dt = data %>% dplyr:::filter(ssi_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_treatments_wound_opening %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Wound opening\"
     , dt = data %>% dplyr:::filter(ssi_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_treatments_wound_debridement %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Wound debridement\"
     , dt = data %>% dplyr:::filter(ssi_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_treatments_suture_excision %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Suture excision\"
     , dt = data %>% dplyr:::filter(ssi_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_treatments_percutaneous_drainage %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Percutaneous drainage\"
     , dt = data %>% dplyr:::filter(ssi_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_treatments_partial_mesh_removal %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Partial mesh removal\"
     , dt = data %>% dplyr:::filter(ssi_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_ssi_treatments_complete_mesh_removal %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Complete mesh removal\"
     , dt = data %>% dplyr:::filter(ssi_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_sso_comps %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Surgical site occurrences exclusive of SSI (SSO-EI)\"
     , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE
     ) %>%
     empty_entry(
     fill = c(\"SSO-EI complication type<sup>cata</sup>\", \"N\")
@@ -616,21 +610,21 @@ get_standard_table <- function(tbl = NULL
     array_sso_comp_type_seroma %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Seroma\"
     , dt = data %>% dplyr:::filter(flg_sso_comps == 'Yes')
-    , pvalue = FALSE
+    # , pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_comp_type_infected_seroma %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Infected Seroma\"
     , dt = data %>% dplyr:::filter(flg_sso_comps == 'Yes')
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_comp_type_hematoma %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Hematoma\"
     , dt = data %>% dplyr:::filter(flg_sso_comps == 'Yes')
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -638,7 +632,7 @@ get_standard_table <- function(tbl = NULL
      , xlab = \"SSO-EI requiring treatment\"
      , dt = data %>%
        dplyr:::mutate(sso_treatment = nazero(sso_treatment) %>% samena(flg_sso_comps))
-    # #, pvalue = FALSE
+     , pvalue = FALSE
     # #, fmt = count_fmt
      , pvalue_fmt = garbage_pvalue
      ) %>%
@@ -646,7 +640,7 @@ get_standard_table <- function(tbl = NULL
      sso_pi %>% factor(levels = c(0,1))
      , xlab = \"SSO-EI requiring procedural intervention\"
      , dt = data %>% dplyr:::mutate(sso_pi = samena(nazero(sso_pi),flg_sso_comps))
-     #, pvalue = FALSE
+     , pvalue = FALSE
      #, fmt = count_fmt
      , pvalue_fmt = garbage_pvalue
      ) %>%
@@ -654,7 +648,7 @@ get_standard_table <- function(tbl = NULL
     array_sso_comp_type_infected_hematoma %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Infected Hematoma\"
     , dt = data %>% dplyr:::filter(flg_sso_comps == 'Yes')
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     empty_entry(
@@ -663,76 +657,77 @@ get_standard_table <- function(tbl = NULL
     array_sso_treatments_oral_antibiotics %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Oral antibiotics\"
     , dt = data %>% dplyr:::filter(sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_treatments_iv_antibiotics %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@IV antibiotics\"
     , dt = data %>% dplyr:::filter(sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_treatments_wound_opening %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Wound opening\"
     , dt = data %>% dplyr:::filter(sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_treatments_wound_debridement %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Wound debridement\"
     , dt = data %>% dplyr:::filter(sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_treatments_suture_excision %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Suture excision\"
     , dt = data %>% dplyr:::filter(sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_treatments_percutaneous_drainage %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Percutaneous drainage\"
     , dt = data %>% dplyr:::filter(sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_treatments_partial_mesh_removal %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Partial mesh removal\"
     , dt = data %>% dplyr:::filter(sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     array_sso_treatments_complete_mesh_removal %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Complete mesh removal\"
     , dt = data %>% dplyr:::filter(sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
     flg_cmp_postop_sso_ssi %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Surgical site infection or occurrence (SSI/O)\"
     , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE
     ) %>%
      binary_entry(
       ssi_sso_treatment %>% factor(levels = c(0,1))
      , xlab = \"SSI/O requiring treatment\"
-     #, pvalue = FALSE
+     , pvalue = FALSE
      , dt = data %>%
       dplyr:::mutate(ssi_sso_treatment = samena(nazero(ssi_sso_treatment),flg_cmp_postop_sso_ssi))
     # #, fmt = count_fmt
-    # , pvalue_fmt = garbage_pvalue
+     , pvalue_fmt = garbage_pvalue
      ) %>%
      binary_entry(
      ssi_sso_pi %>% factor(levels = c(0,1))
      , xlab = \"SSI/O requiring procedural intervention\"
-     #, pvalue = FALSE
+     , pvalue = FALSE
      , dt = data %>%
      mutate(ssi_sso_pi = nazero(ssi_sso_pi) %>% samena(flg_cmp_postop_sso_ssi))
      #, fmt = count_fmt
@@ -745,7 +740,7 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_oral_antibiotics %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Oral antibiotics\"
     , dt = data %>% dplyr:::filter(ssi_sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -753,7 +748,7 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_iv_antibiotics %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@IV antibiotics\"
     , dt = data %>% dplyr:::filter(ssi_sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -761,7 +756,7 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_wound_opening %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Wound opening\"
     , dt = data %>% dplyr:::filter(ssi_sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -769,7 +764,7 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_wound_debridement %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Wound debridement\"
     , dt = data %>% dplyr:::filter(ssi_sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -777,7 +772,7 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_suture_excision %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Suture excision\"
     , dt = data %>% dplyr:::filter(ssi_sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -785,7 +780,7 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_percutaneous_drainage %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Percutaneous drainage\"
     , dt = data %>% dplyr:::filter(ssi_sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -793,7 +788,7 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_partial_mesh_removal %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Partial mesh removal\"
     , dt = data %>% dplyr:::filter(ssi_sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     binary_entry(
@@ -801,7 +796,7 @@ get_standard_table <- function(tbl = NULL
     array_ssi_treatments_complete_mesh_removal %in% \"Yes\")) %>% factor(0:1)
     , xlab = \"@@Complete mesh removal\"
     , dt = data %>% dplyr:::filter(ssi_sso_treatment == 1)
-    , pvalue = FALSE
+    #, pvalue = FALSE
     , fmt = count_fmt
     ) %>%
     rbindlist %>%
