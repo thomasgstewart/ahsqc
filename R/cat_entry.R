@@ -30,11 +30,10 @@ cat_entry <- function(
 ){
   if(fmt == "norm_fmt") fmt <- "%1.0f (%s)%s"
   if(fmt == "count_fmt" ) fmt <- "%1.0f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-  
   d2 <- eval(substitute(dt[,.(x,y)]))
   tbl <- table(d2[[1]], d2[[2]], useNA = "always")
   dimt <- dim(tbl)
-  M <- tbl[-dimt[1], -dimt[2]] %>% as.data.frame %>% t
+  M <- tbl[-dimt[1], -dimt[2]]
   
   dimm <- dimt-1
   addout <- get_out(dimt[1]+1, 2 + dimm[2] + dimm[2] - 1 + dimm[2])
