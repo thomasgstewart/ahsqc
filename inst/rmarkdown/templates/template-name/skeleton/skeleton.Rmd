@@ -77,9 +77,6 @@ require(dtplyr)
 require(tableone)
 ```
 
-```{r, functions}
-'%nin%' <- function(x,y) !('%in%'(x,y))
-```
 
 # Project Proposal
 
