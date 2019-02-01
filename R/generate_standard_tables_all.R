@@ -373,6 +373,8 @@ generate_standard_tables_all <- function(
       }
       return(return_list)
     }
+    
+   # browser()
     if(format %in% "rmd"){
       for (tbl in 1:9) {
         file <- get(paste0("tbl", tbl))
