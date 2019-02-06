@@ -38,7 +38,9 @@ get_standard_table <- function(tbl = NULL
     "tbl1 <- list() %>%
     n_unique(patientid, xlab = \"N\") %>%
     cat_entry(e_procedure_category, pvalue = FALSE) %>%
-    cat_entry(recurrent, pvalue = FALSE) %>%
+    cat_entry(
+      factor(recurrent, levels = c('Primary','Recurrent'))
+    , pvalue = FALSE) %>%
     cat_entry(
     prior_repairs
     , xlab = \"Number of prior repairs\"
