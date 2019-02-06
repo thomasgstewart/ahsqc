@@ -35,10 +35,11 @@ get_standard_table_inguinal <- function(tbl = NULL
   dt <- deparse(substitute(data))
   table_list <- list(
     "tbl1 <- list() %>%
-  cat_entry(ing_hernia_laterality_e %>% factor(levels = c(\"Bilateral\", \"Unilateral Left\", \"Unilateral Right\"))
+  cat_entry(
+  ing_hernia_laterality_e %>% factor(levels = c(\"Bilateral\", \"Unilateral Left\", \"Unilateral Right\"))
   , xlab = \"Laterality\"
   , pvalue = FALSE
-  )
+  ) %>%
   cat_entry(operative_approach_lateral %>% factor(levels = c(\"Hybrid\", \"Laparoscopic\", \"MIS Converted to Open\", \"Mixed-approach (bilateral)\", \"Open\", \"Robotic\"))
   , pvalue = FALSE
   , xlab = \"Operative approach\") %>% 
