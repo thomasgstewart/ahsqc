@@ -24,23 +24,26 @@
 #' # get_table(tbl = 9, d1, print = FALSE, overwrite = TRUE) ## will overwrite tbl9.R
 
 get_standard_table <- function(tbl = NULL
-                      , data
-                      , print = FALSE
-                      , overwrite = FALSE
-                      , pval = FALSE){
-
+                               , data
+                               , print = FALSE
+                               , overwrite = FALSE
+                               , pval = FALSE){
+  
   if(is.character(data)) stop("data should be a data table, not a character string")
-
+  
   if(is.null(tbl)) return(message("tbl is NULL"))
   dt <- deparse(substitute(data))
-
+  
   table_list <- list(
     "tbl1 <- list() %>%
     n_unique(patientid, xlab = \"N\") %>%
-    cat_entry(e_procedure_category, pvalue = FALSE) %>%
-    cat_entry(
-      factor(recurrent, levels = c('Primary','Recurrent'))
-    , pvalue = FALSE) %>%
+    cat_entry(e_procedure_category
+    , pvalue = FALSE
+    , xlab = \"Procedure category\"
+    ) %>%
+    cat_entry(recurrent 
+    , pvalue = FALSE
+    , xlab = \"Primary or recurrent hernia\") %>%
     cat_entry(
     prior_repairs
     , xlab = \"Number of prior repairs\"
@@ -50,33 +53,53 @@ get_standard_table <- function(tbl = NULL
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Cohort volume and prior repairs\")"
-
+    
     , "tbl2 <- list() %>%
-    n_unique(id_surgeon, xlab = \"Surgeons contributing data\") %>%
-    n_unique(id_site, xlab = \"Sites contributing data\") %>%
+    n_unique(id_surgeon
+    , xlab = \"Surgeons contributing data\") %>%
+    n_unique(id_site
+    , xlab = \"Sites contributing data\") %>%
     cat_entry(
-    e_surg_affiliation,
+    e_surg_affiliation
     , xlab = \"Primary surgeon affiliation\"
     , pvalue = FALSE
     ) %>%
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Surgeon and site volume\")"
-
+    
     , "tbl3 <- list() %>%
-    cont_entry(val_age_new, xlab = \"Age (years; capped at 90)\", pvalue = FALSE) %>%
-    cat_entry(e_gender, pvalue = FALSE) %>%
-    cont_entry(val_calc_bmi2, xlab = \"BMI (kg/m<sup>2</sup>; capped at 15, 60)\", pvalue = FALSE) %>%
+    cont_entry(val_age_new
+    , xlab = \"Age (years; capped at 90)\"
+    , pvalue = FALSE) %>%
+    cat_entry(female
+    , pvalue = FALSE
+    , xlab = \"Female\") %>%
+    cat_entry(e_race
+    , pvalue = FALSE
+    , xlab = \"Race\") %>%
+    cont_entry(val_calc_bmi2
+    , xlab = \"BMI (kg/m<sup>2</sup>; capped at 15, 60)\"
+    , pvalue = FALSE) %>%
     cat_entry(bmi_cat %>% factor(levels = c(\"< 30\", \">= 30\"))
-          , xlab = \"BMI categories\", pvalue = FALSE) %>%
-    cat_entry(e_asaclass, xlab = \"ASA class\", pvalue = FALSE) %>%
-    cat_entry(wound_class, xlab = \"Wound class distribution\", pvalue = FALSE) %>%
-    cat_entry(vhwg, xlab = \"Hernia Grade\", pvalue = FALSE) %>%
-    cont_entry(val_hern_width, xlab = \"Hernia width (cm)\", pvalue = FALSE) %>%
+          , xlab = \"BMI categories\"
+          , pvalue = FALSE) %>%
+    cat_entry(e_asaclass
+    , xlab = \"ASA class\"
+    , pvalue = FALSE) %>%
+    cat_entry(wound_class
+    , xlab = \"Wound class distribution\"
+    , pvalue = FALSE) %>%
+    cat_entry(vhwg
+    , xlab = \"Hernia Grade (VHWG)\"
+    , pvalue = FALSE) %>%
+    cont_entry(val_hern_width
+    , xlab = \"Hernia width (cm)\"
+    , pvalue = FALSE) %>%
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Demographics\")"
-
+    
     , "tbl4 <- list() %>%
     binary_entry(any_comorbidities %>% factor(levels = c(0,1))
     , xlab = \"Prevalence of comorbidities\"
@@ -141,12 +164,18 @@ get_standard_table <- function(tbl = NULL
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Comorbidities\")"
-
+    
     , "tbl5 <- list() %>%
-    cat_entry(operative_time, pvalue_fmt = garbage_pvalue, pvalue = FALSE) %>%
-    binary_entry(planned_concomitant_procedure %>% factor(levels = c(\"No\", \"Yes\")), 
-      xlab = \"Planned concomitant procedure\", pvalue = FALSE) %>%
-    binary_entry(flg_concomitant_proc %>% factor(levels = c(\"No\", \"Yes\")), xlab = \"Any concomitant procedure\", pvalue = FALSE) %>%
+    cat_entry(operative_time
+    , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE
+    , xlab = \"Operative time\") %>%
+    binary_entry(planned_concomitant_procedure %>% factor(levels = c(\"No\", \"Yes\"))
+      , xlab = \"Planned concomitant procedure\"
+      , pvalue = FALSE) %>%
+    binary_entry(flg_concomitant_proc %>% factor(levels = c(\"No\", \"Yes\"))
+    , xlab = \"Any concomitant procedure\"
+    , pvalue = FALSE) %>%
     empty_entry(
     fill = c(
     \"Concomitant procedures<sup>cata</sup>\",
@@ -220,6 +249,7 @@ get_standard_table <- function(tbl = NULL
     flg_fixation %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Mesh fixation (among repairs using mesh)\"
     , dt = data %>% dplyr:::filter(flg_mesh_used == \"Yes\")
+    , pvalue = FALSE
     ) %>%
     empty_entry(fill = c(\"Mesh fixation type<sup>cata</sup>\",\"N\")) %>%
     binary_entry(
@@ -227,35 +257,35 @@ get_standard_table <- function(tbl = NULL
     , xlab = \"@@Adhesives\"
     , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
-    , pvalue = FALSE
     ) %>%
     binary_entry(
     e_fixation_type_staples %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Staples\"
     , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
-    , pvalue = FALSE
     ) %>%
     binary_entry(
     e_fixation_type_sutures %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Sutures\"
     , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
-    , pvalue = FALSE
     ) %>%
     binary_entry(
     e_fixation_type_tacks %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Tacks\"
     , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
-    , pvalue = FALSE
     ) %>%
     cont_entry(
     val_util_los
     , xlab = \"Length of stay (days)\"
     , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE
     ) %>%
-    binary_entry(convert_to_open %>% factor(levels = c(0,1)), xlab = \"Conversion to open\", pvalue_fmt = garbage_pvalue, pvalue = FALSE) %>%
+    binary_entry(convert_to_open %>% factor(levels = c(0,1))
+    , xlab = \"Conversion to open\"
+    , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE) %>%
     rbindlist
 
     tbl5[V1 == \"Conversion to open\", V2 := \"N (%)\"]
@@ -266,11 +296,12 @@ get_standard_table <- function(tbl = NULL
 
     tbl5 <- tbl5 %>% as.data.frame %>%
     `attr<-`(\"title\",\"Operative characteristics\")"
-
+    
     , "tbl6 <- list() %>%
     binary_entry(
     flg_intraop_complication %>% factor(levels = c(\"No\", \"Yes\"))
-    , xlab = \"Any intra-op complications\", pvalue = FALSE
+    , xlab = \"Any intra-op complications\"
+    , pvalue = FALSE
     ) %>%
     empty_entry(
     fill = c(
@@ -340,12 +371,13 @@ get_standard_table <- function(tbl = NULL
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Intra-operative complications\")"
-
+    
     , "tbl7 <- list() %>%
     binary_entry(
     flg_cmp_postop_any %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Subjects reporting any complication\"
-    , pvalue_fmt = garbage_pvalue, pvalue = FALSE
+    , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE
     ) %>%
     empty_entry(
     fill = c(\"Specific non-wound/other complication\",\"N\")
@@ -473,8 +505,8 @@ get_standard_table <- function(tbl = NULL
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Post-operative complications, mortality, follow-up\")"
-
-
+    
+    
     , "tbl8 <- list() %>%
     binary_entry(
     flg_cmp_postop_ssi %>% factor(levels = c(\"No\", \"Yes\"))
@@ -805,7 +837,7 @@ get_standard_table <- function(tbl = NULL
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"SSI/SSO outcomes\")"
-
+    
     , "tbl9 <- list() %>%
     empty_entry(fill = c(\"Subject re-encounters<sup>cata</sup>\",\"N (%)\")) %>%
     binary_entry(
@@ -925,15 +957,18 @@ get_standard_table <- function(tbl = NULL
     binary_entry(
     flg_recurrence %>% factor(levels = c(\"No\", \"Yes\"))
     , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE
     ) %>%
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Post-operative through 30 day outcomes\")"
-)
-
-
-
-  table_list <- lapply(table_list, gsub, pattern = "= dt", replacement = paste0("= ", dt))
+  )
+  
+  
+  
+  #table_list <- lapply(table_list, gsub, pattern = "= dt", replacement = paste0("= ", dt)) ## not sure why this was here..
+  
+  
   table_list <- lapply(table_list, gsub, pattern = "pvalue = FALSE", replacement = paste0("pvalue = ", pval," "))
   if(print == FALSE){
     assign(paste0("tbl",tbl), as.character(table_list[tbl]))
