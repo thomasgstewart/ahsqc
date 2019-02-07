@@ -41,7 +41,7 @@ get_standard_table <- function(tbl = NULL
     , pvalue = FALSE
     , xlab = \"Procedure category\"
     ) %>%
-    cat_entry(recurrent 
+    cat_entry(recurrent %>% factor(levels = c(\"Primary\", \"Recurrent\"))
     , pvalue = FALSE
     , xlab = \"Primary or recurrent hernia\") %>%
     cat_entry(
