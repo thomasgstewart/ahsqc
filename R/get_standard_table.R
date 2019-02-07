@@ -162,7 +162,8 @@ get_standard_table <- function(tbl = NULL
     , fmt = count_fmt
     ) %>%
     cat_entry(e_prior_mesh_excision %>% factor(levels = c(\"Complete\", \"Partial\", \"None\"))
-    
+    , xlab = \"Prior mesh excision\"
+    , pvalue = FALSE
     ) %>% 
     rbindlist %>%
     as.data.frame %>%
@@ -248,7 +249,7 @@ get_standard_table <- function(tbl = NULL
     , pvalue = FALSE
     ) %>%
     
-        binary_entry(flg_fascial_clsoure %>% factor(levels = c(\"No\", \"Yes\"))
+    binary_entry(flg_fascial_closure %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Fascial closure\"
     , pvalue = FALSE
     ) %>% 
