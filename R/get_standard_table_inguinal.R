@@ -47,7 +47,7 @@ get_standard_table_inguinal <- function(tbl = NULL
     , pvalue = FALSE
     , xlab = \"Primary or recurrent hernia\") %>%
   cat_entry(
-    prior_repairs
+    prior_repairs %>% factor(levels = c(\"1\", \"2\", \"3\", \"4\", \"5 +\"))
     , xlab = \"Number of prior repairs\"
     , dt = data %>% filter(recurrent == \"Recurrent\")
     , pvalue = FALSE
