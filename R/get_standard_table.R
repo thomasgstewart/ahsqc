@@ -161,6 +161,9 @@ get_standard_table <- function(tbl = NULL
     , xlab = \"@@Current steroid use\"
     , fmt = count_fmt
     ) %>%
+    cat_entry(e_prior_mesh_excision %>% factor(levels = c(\"Complete\", \"Partial\", \"None\"))
+    
+    ) %>% 
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Comorbidities\")"
@@ -244,7 +247,34 @@ get_standard_table <- function(tbl = NULL
     , fmt = count_fmt
     , pvalue = FALSE
     ) %>%
-    binary_entry(flg_mesh_used %>% factor(levels = c(\"No\", \"Yes\")), xlab = \"Mesh used\") %>%
+    
+        binary_entry(flg_fascial_clsoure %>% factor(levels = c(\"No\", \"Yes\"))
+    , xlab = \"Fascial closure\"
+    , pvalue = FALSE
+    ) %>% 
+    
+    binary_entry(flg_myofascial_release %>% factor(levels = c(\"No\", \"Yes\"))
+    , xlab = \"Myofascial release\"
+    , pvalue = FALSE
+    ) %>%
+    
+    
+    binary_entry(flg_mesh_used %>% factor(levels = c(\"No\", \"Yes\"))
+    , xlab = \"Mesh used\"
+    , pvalue = FALSE) %>%
+    
+    cat_entry(e_mesh_type4_1 %>% factor(levels = c(\"Permanent Synthetic\", \"Resorbable Synthetic\", \"Biological tissue-derived\", \"Other/Unknown\"))
+    , xlab = \"Mesh type (4)\"
+    , pvalue = FALSE
+    , dt = data %>% dplyr::filter(flg_mesh_used == \"Yes\")
+    ) %>% 
+    
+    cat_entry(e_mesh_location %>% factor(levels = c(\"Inlay\", \"Onlay\", \"Sublay\"))
+    , xlab = \"Mesh location\"
+    , pvalue = FALSE
+    , dt = data %>% dplyr::filter(flg_mesh_used == \"Yes\")
+    ) %>%
+    
     binary_entry(
     flg_fixation %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Mesh fixation (among repairs using mesh)\"
