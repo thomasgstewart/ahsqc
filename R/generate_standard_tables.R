@@ -351,7 +351,7 @@ generate_standard_tables <- function(
     , y = y_in
     , dt = data
     , xlab = NULL
-    , level = c("Yes", "1")
+    , level = c("Yes", "1", "TRUE")
     , pvalue = FALSE
     , fmt = "%1.0f (%s)%s"
     , pvalue_fmt = function(x, test_method){
