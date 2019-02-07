@@ -476,7 +476,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   , pvalue = FALSE
   ) %>%
   binary_entry(
-  flg_other_nsqip_comp %>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\")
+  flg_other_nsqip_comp %>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\"))
   , xlab = \"Non-wound/other complications\"
   , pvalue = FALSE
   ) %>%
@@ -556,31 +556,31 @@ get_standard_table_inguinal <- function(tbl = NULL
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_ventilator %>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\")
+  flg_ventilator %>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\"))
   , xlab = \"@@Ventilator > 48 hrs\"
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_coma%>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\")
+  flg_coma%>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\"))
   , xlab = \"@@Coma > 24 hrs\"
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_nerve_injury%>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\")
+  flg_nerve_injury%>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\"))
   , xlab = \"@@Peripheral nerve injury\"
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_bleeding_transfusion%>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\")
+  flg_bleeding_transfusion%>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\"))
   , xlab = \"@@Post-op bleeding transfusion\"
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_graft_prosthesis_flap_fail%>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\")
+  flg_graft_prosthesis_flap_fail%>% factor(levels=c(FALSE,TRUE), labels = c(\"FALSE\", \"TRUE\"))
   , xlab = \"@@Graft/prosthesis/flap failure\"
   , pvalue = FALSE
   , fmt = count_fmt
