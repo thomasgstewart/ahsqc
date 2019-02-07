@@ -279,7 +279,6 @@ get_standard_table <- function(tbl = NULL
     cont_entry(
     val_util_los
     , xlab = \"Length of stay (days)\"
-    , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
     ) %>%
     binary_entry(convert_to_open %>% factor(levels = c(0,1))
