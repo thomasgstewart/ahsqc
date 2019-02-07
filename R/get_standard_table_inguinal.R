@@ -79,7 +79,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   , xlab = \"Age (years; capped at 90)\"
   , pvalue = FALSE
     ) %>%
-  cat_entry(female
+  binary_entry(female
   , xlab = \"Female\"
   , pvalue = FALSE) %>%
   cat_entry(e_race
