@@ -33,6 +33,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   if(is.null(tbl)) return(message("tbl is NULL"))
   
   dt <- deparse(substitute(data))
+  
   table_list <- list(
     "tbl1 <- list() %>%
   cat_entry(
@@ -95,52 +96,52 @@ get_standard_table_inguinal <- function(tbl = NULL
   , xlab = \"ASA Class\"
   , pvalue = FALSE) %>%
   cat_entry(
-  wound_class
+  wound_class %>% factor(levels = c(\"Clean (Class 1)\", \"Clean-contaminated (Class 2)\", \"Contaminated (Class 3)\", \"Dirty/Infected (Class 4)\"))
   , xlab = \"Wound class distribution\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  vhwg
+  vhwg %>% factor(levels = c(\"Grade 1\", \"Grade 2\", \"Grade 3\"))
   , xlab = \"Hernia Grade (VHRI)\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  ing_femoral_left
+  ing_left_hernia_femoral_e %>% factor(levels = c(\"I (<1.5cm or <1 fingertip)\", \"II (1.5-3cm or 1-2 fingertips)\", \"III (>3cm or >2 fingertips)\", \"No Hernia\"))
   , xlab = \"Left femoral hernia width\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  ing_femoral_right
+  ing_right_hernia_femoral_e %>% factor(levels = c(\"I (<1.5cm or <1 fingertip)\", \"II (1.5-3cm or 1-2 fingertips)\", \"III (>3cm or >2 fingertips)\", \"No Hernia\"))
   , xlab = \"Right femoral hernia width\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  ing_medial_left
+  ing_left_hernia_medial_e %>% factor(levels = c(\"I (<1.5cm or <1 fingertip)\", \"II (1.5-3cm or 1-2 fingertips)\", \"III (>3cm or >2 fingertips)\", \"No Hernia\"))
   , xlab = \"Left medial hernia width\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  ing_medial_right
+  ing_right_hernia_medial_e %>% factor(levels = c(\"I (<1.5cm or <1 fingertip)\", \"II (1.5-3cm or 1-2 fingertips)\", \"III (>3cm or >2 fingertips)\", \"No Hernia\"))
   , xlab = \"Right femoral hernia width\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  ing_lateral_left
+  ing_left_hernia_lateral_e %>% factor(levels = c(\"I (<1.5cm or <1 fingertip)\", \"II (1.5-3cm or 1-2 fingertips)\", \"III (>3cm or >2 fingertips)\", \"No Hernia\"))
   , xlab = \"Left lateral hernia width\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  ing_lateral_right
+  ing_right_hernia_lateral_e %>% factor(levels = c(\"I (<1.5cm or <1 fingertip)\", \"II (1.5-3cm or 1-2 fingertips)\", \"III (>3cm or >2 fingertips)\", \"No Hernia\"))
   , xlab = \"Right lateral hernia width\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  ing_obturator_left
+  ing_left_obturator_e %>% factor(levels = c(\"I (<1.5cm or <1 fingertip)\", \"II (1.5-3cm or 1-2 fingertips)\", \"III (>3cm or >2 fingertips)\", \"No Hernia\"))
   , xlab = \"Left obturator hernia width\"
   , pvalue = FALSE
   ) %>%
   cat_entry(
-  ing_obturator_right
+  ing_right_obturator_e %>% factor(levels = c(\"I (<1.5cm or <1 fingertip)\", \"II (1.5-3cm or 1-2 fingertips)\", \"III (>3cm or >2 fingertips)\", \"No Hernia\"))
   , xlab = \"Right obturator hernia width\"
   , pvalue = FALSE
   ) %>%
@@ -317,70 +318,68 @@ get_standard_table_inguinal <- function(tbl = NULL
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
-  binary_entry(
-  ing_left_fixation_e %>% factor(levels = c(\"No\", \"Yes\"))
-  , xlab = \"Left mesh fixation (among repairs using mesh)\"
-  , dt = data %>% filter(ing_left_mesh_e == \"Yes\")
-  , pvalue = FALSE
-  , fmt = count_fmt
-  ) %>%
-  binary_entry(
-  ing_right_fixation_e %>% factor(levels = c(\"No\", \"Yes\"))
-  , xlab = \"Right mesh fixation (among repairs using mesh)\"
-  , dt = data %>% filter(ing_right_mesh_e == \"Yes\")
-  , pvalue = FALSE
-  , fmt = count_fmt
-  ) %>%
   
   empty_entry(fill = c(\"Mesh fixation type<sup>cata</sup>\",\"N\")) %>%
   
   binary_entry(
+  ing_left_mesh_fixation_e_none %>% factor(levels = c(\"No\", \"Yes\"))
+  , xlab = \"@@No Left Fixation\"
+  , dt = data 
+  , fmt = count_fmt
+  ) %>%
+  binary_entry(
   ing_left_mesh_fixation_e_adhesives %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Left Adhesives\"
-  , dt = data %>% filter(ing_left_fixation_e == \"Yes\")
+  , dt = data 
   , fmt = count_fmt
   ) %>%
    binary_entry(
   ing_left_mesh_fixation_e_staples %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Left Staples\"
-  , dt = data %>% filter(ing_left_fixation_e == \"Yes\")
+  , dt = data
   , fmt = count_fmt
   ) %>%
    binary_entry(
   ing_left_mesh_fixation_e_suture %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Left Sutures\"
-  , dt = data %>% filter(ing_left_fixation_e == \"Yes\")
+  , dt = data 
   , fmt = count_fmt
   ) %>%
    binary_entry(
   ing_left_mesh_fixation_e_tacks %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Left Tacks\"
-  , dt = data %>% filter(ing_left_fixation_e == \"Yes\")
+  , dt = data
   , fmt = count_fmt
   ) %>%
   
     binary_entry(
+  ing_right_mesh_fixation_e_none %>% factor(levels = c(\"No\", \"Yes\"))
+  , xlab = \"@@No Right Fixation\"
+  , dt = data 
+  , fmt = count_fmt
+  ) %>%
+    binary_entry(
   ing_right_mesh_fixation_e_adhesives %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Right Adhesives\"
-  , dt = data %>% filter(ing_right_fixation_e == \"Yes\")
+  , dt = data 
   , fmt = count_fmt
   ) %>%
    binary_entry(
   ing_right_mesh_fixation_e_staples %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Right Staples\"
-  , dt = data %>% filter(ing_right_fixation_e == \"Yes\")
+  , dt = data 
   , fmt = count_fmt
   ) %>%
    binary_entry(
   ing_right_mesh_fixation_e_suture %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Right Sutures\"
-  , dt = data %>% filter(ing_right_fixation_e == \"Yes\")
+  , dt = data
   , fmt = count_fmt
   ) %>%
    binary_entry(
   ing_right_mesh_fixation_e_tacks %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Right Tacks\"
-  , dt = data %>% filter(ing_right_fixation_e == \"Yes\")
+  , dt = data 
   , fmt = count_fmt
   ) %>%
 
