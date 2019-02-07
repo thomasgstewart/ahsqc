@@ -441,7 +441,7 @@ generate_standard_tables <- function(
   if(module %ni% c("ventral","inguinal")) stop("module must be either \"ventral\" or \"inguinal\" ")
   #dt <- deparse(substitute(data))
 
-  if(class(dt[[y_in]]) != "factor") stop("y must be a factor")
+  if(class(data[[y]]) != "factor") stop("y must be a factor")
   
   if(module == "ventral"){
     if(changes == TRUE){
