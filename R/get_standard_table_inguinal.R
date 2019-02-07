@@ -249,63 +249,63 @@ get_standard_table_inguinal <- function(tbl = NULL
   , xlab = \"@@Hernia\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   array_other_procedures_system_foregutendocrine %>% factor(levels = c(\"No\",\"Yes\"))
   , xlab = \"@@Foregut/Endocrine\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   array_other_procedures_system_hepatobiliarypancreatic %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Hepatobiliary/Pancreatic\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   array_other_procedures_system_small_intestine %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Small intestine\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   array_other_procedures_system_colorectal %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Colorectal\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   array_other_procedures_system_obstetricgynecologic %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Obstetric/Gynecologic\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   array_other_procedures_system_urologic %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Urologic\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   )%>%
   binary_entry(
   array_other_procedures_system_vascular %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Vascular\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   array_other_procedures_system_soft_tissueplastics %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Soft tissue/plastics\"
   , dt = data %>% filter(flg_concomitant_proc == \"Yes\")
   , fmt = count_fmt
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
    binary_entry(
   ing_left_mesh_e %>% factor(levels = c(\"No\", \"Yes\"))
@@ -520,7 +520,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_renal_insuff%>% factor(levels=c(\"No\",\"Yes\"))
+  flg_renal_insuff%>% factor(levels=c(0:1))
   , xlab = \"@@Renal insufficiency\"
   , pvalue = FALSE
   , fmt = count_fmt
@@ -544,31 +544,31 @@ get_standard_table_inguinal <- function(tbl = NULL
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_ventilator%>% factor(levels=c(\"No\",\"Yes\"))
+  flg_ventilator %>% factor(levels=c(\"FALSE\",\"TRUE\"))
   , xlab = \"@@Ventilator > 48 hrs\"
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_coma%>% factor(levels=c(\"No\",\"Yes\"))
+  flg_coma%>% factor(levels=c(\"FALSE\",\"TRUE\"))
   , xlab = \"@@Coma > 24 hrs\"
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_nerve_injury%>% factor(levels=c(\"No\",\"Yes\"))
+  flg_nerve_injury%>% factor(levels=c(\"FALSE\",\"TRUE\"))
   , xlab = \"@@Peripheral nerve injury\"
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_bleeding_transfusion%>% factor(levels=c(\"No\",\"Yes\"))
+  flg_bleeding_transfusion%>% factor(levels=c(\"FALSE\",\"TRUE\"))
   , xlab = \"@@Post-op bleeding transfusion\"
   , pvalue = FALSE
   , fmt = count_fmt
   ) %>%
   binary_entry(
-  flg_graft_prosthesis_flap_fail%>% factor(levels=c(\"No\",\"Yes\"))
+  flg_graft_prosthesis_flap_fail%>% factor(levels=c(\"FALSE\",\"TRUE\"))
   , xlab = \"@@Graft/prosthesis/flap failure\"
   , pvalue = FALSE
   , fmt = count_fmt
@@ -628,6 +628,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   ssi_treatment  %>% factor(levels = c(0,1))
   , xlab = \"Surgical site infection requiring treatment\"
   , dt = data %>% filter(flg_cmp_postop_ssi == \"Yes\")
+  , pvalue = FALSE
   #, fmt = count_fmt
   ) %>%
   binary_entry(
@@ -872,12 +873,12 @@ get_standard_table_inguinal <- function(tbl = NULL
   binary_entry(
   e_between_visit_clinic %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Clinic\"
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   e_between_visit_emergency_room %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Emergency room\"
-  , pvalue = FALSE
+  #, pvalue = FALSE
   ) %>%
   binary_entry(
   flg_readmission %>% factor(levels = c(\"No\", \"Yes\"))
