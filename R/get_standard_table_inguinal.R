@@ -483,6 +483,21 @@ get_standard_table_inguinal <- function(tbl = NULL
   empty_entry(
   fill = c(\"Specific non-wound/other complication\",\"N\")
   ) %>%
+  
+  binary_entry(
+  val_ileus_e %>% factor(levels=c(\"No\",\"Yes\"))
+  , xlab = \"@@Ileus\"
+  , pvalue = FALSE
+  , fmt = count_fmt
+  ) %>%
+  
+  binary_entry(
+  val_bowel_obstruction_e %>% factor(levels=c(\"No\",\"Yes\"))
+  , xlab = \"@@Bowel obstruction\"
+  , pvalue = FALSE
+  , fmt = count_fmt
+  ) %>%
+  
   binary_entry(
   flg_pe %>% factor(levels=c(\"No\",\"Yes\"))
   , xlab = \"@@Pulmonary embolism\"
