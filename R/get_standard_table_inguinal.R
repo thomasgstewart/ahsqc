@@ -36,6 +36,7 @@ get_standard_table_inguinal <- function(tbl = NULL
   
   table_list <- list(
     "tbl1 <- list() %>%
+    n_unique(patientid, xlab = \"N (patients)\") %>%
   cat_entry(
   ing_hernia_laterality_e %>% factor(levels = c(\"Bilateral\", \"Unilateral Left\", \"Unilateral Right\"))
   , xlab = \"Laterality\"
