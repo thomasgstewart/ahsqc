@@ -412,6 +412,18 @@ get_standard_table_inguinal <- function(tbl = NULL
   , fmt = count_fmt
   ) %>%
   binary_entry(
+  array_intraop_complication_type_spermatic_cord_injury %>% factor(levels=c(\"No\",\"Yes\"))
+  , xlab = \"@@Spermatic cord injury\"
+  , dt = data %>% filter(flg_intraop_complication == \"Yes\")
+  , fmt = count_fmt
+  ) %>%
+  binary_entry(
+  array_intraop_complication_type_testicular_injury %>% factor(levels=c(\"No\",\"Yes\"))
+  , xlab = \"@@Testicular injury\"
+  , dt = data %>% filter(flg_intraop_complication == \"Yes\")
+  , fmt = count_fmt
+  ) %>%
+  binary_entry(
   array_intraop_complication_type_peritoneal_access_injury %>% factor(levels = c(\"No\", \"Yes\"))
   , xlab = \"@@Peritoneal access injury\"
   , dt = data %>% filter(flg_intraop_complication == \"Yes\")
