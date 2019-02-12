@@ -5,7 +5,7 @@
 \title{Get an individual standard table for inguinal patients for AHSQC}
 \usage{
 get_standard_table_inguinal(tbl = NULL, data, print = FALSE,
-  overwrite = FALSE)
+  overwrite = FALSE, pval = FALSE)
 }
 \arguments{
 \item{tbl}{NULL or integer (1-9) to identify which table to return.}
