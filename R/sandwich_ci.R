@@ -29,8 +29,8 @@ sandwich_ci <- function(fit,
   if(is.null(exposure) & !is.null(outcome)) stop("Please supply expsoure variable")
   
   
-  est <- coef(fit) 
-  se <- sqrt(diag(fit[["var"]]))
+  est <- coef(fit)[!grepl("y>", names(coef(fit)))] 
+  se <- sqrt(diag(fit[["var"]]))[!grepl("y>", names(diag(fit[["var"]])))] 
   lb <- est - 1.96*se
   ub <- est + 1.96*se
   if(antilog){
