@@ -64,7 +64,7 @@ sandwich_ci <- function(fit,
   )
   
   if(!is.null(exposure)){
-    rownum <- which(grepl(exposure, names(coef(fit))))
+    rownum <- which(grepl(exposure, names(coef(fit))[!grepl("y>", names(coef(fit)))]))
     out <- out[rownum,]
     if(vnames %in% "labels") out$var <- getlab(outcome)
     if(vnames %in% "names") out$var <- outcome
