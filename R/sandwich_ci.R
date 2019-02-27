@@ -28,7 +28,6 @@ sandwich_ci <- function(fit,
   if(is.null(outcome) & !is.null(exposure)) stop("Please supply outcome variable")
   if(is.null(exposure) & !is.null(outcome)) stop("Please supply expsoure variable")
   
-  
   est <- coef(fit)[!grepl("y>", names(coef(fit)))] 
   se <- sqrt(diag(fit[["var"]]))[!grepl("y>", names(diag(fit[["var"]])))] 
   lb <- est - 1.96*se
@@ -51,7 +50,7 @@ sandwich_ci <- function(fit,
   }
   
   if(vnames %in% "labels") nms <- purrr::map(.x = names(coef(fit))[!grepl("y>", names(coef(fit)))] , .f = getlab) %>% unlist
-  if(vnames %in% "names") nms <- names(coef(fit))
+  if(vnames %in% "names") nms <- names(coef(fit))[!grepl("y>", names(coef(fit)))]
   
   out <- data.frame(
     var = nms,
