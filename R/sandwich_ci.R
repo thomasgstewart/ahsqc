@@ -50,7 +50,7 @@ sandwich_ci <- function(fit,
     return(ifelse(subs == "", xx, subs))
   }
   
-  if(vnames %in% "labels") nms <- purrr::map(.x = names(coef(fit)[!grepl("y>", names(coef(fit)))] , .f = getlab) %>% unlist
+  if(vnames %in% "labels") nms <- purrr::map(.x = names(coef(fit))[!grepl("y>", names(coef(fit)))] , .f = getlab) %>% unlist
   if(vnames %in% "names") nms <- names(coef(fit))
   
   out <- data.frame(
