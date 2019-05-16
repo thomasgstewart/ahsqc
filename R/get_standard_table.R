@@ -72,7 +72,7 @@ get_standard_table <- function(tbl = NULL
     cont_entry(val_age_new
     , xlab = \"Age (years; capped at 90)\"
     , pvalue = FALSE) %>%
-    cat_entry(female
+    binary_entry(female
     , pvalue = FALSE
     , xlab = \"Female\") %>%
     cat_entry(e_race
@@ -586,24 +586,6 @@ get_standard_table <- function(tbl = NULL
      #, fmt = count_fmt
      , pvalue_fmt = garbage_pvalue
      ) %>%
-binary_entry(
-     ssi_treatment %>% factor(levels = c(0,1))
-    , xlab = \"Surgical site infection requiring treatment\"
-    , dt = data %>%
-    dplyr:::mutate(ssi_treatment = nazero(ssi_treatment) %>% samena(flg_cmp_postop_ssi))
-    #, pvalue = FALSE
-    #, fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
-  ) %>%
-    binary_entry(
-    ssi_pi %>% factor(levels = c(0,1))
-    , xlab = \"Surgical site infection requiring procedural intervention\"
-    , dt = data %>%
-    dplyr:::mutate(ssi_pi = nazero(ssi_pi) %>% samena(flg_cmp_postop_ssi))
-    #, pvalue = FALSE
-    #, fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
-    ) %>%
     empty_entry(
     fill = c(\"Treatments administered for SSI<sup>cata</sup>\",\"N\")) %>%
     binary_entry(
