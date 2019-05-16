@@ -33,13 +33,14 @@ generate_standard_tables <- function(
   , format = "rmd"
   , module = "ventral"
   , pvalue = FALSE
+  , display = TRUE
 ){
   ##########################################
   ## add helper functions
   `%ni%` <- function(a,b){!(a %in% b)}
   # --- %|%
   `%|%` <- function(a,b) paste0(a,b)
-
+  
   # --- varlabify
   varlabify <- function(df){
     for(i in seq_along(df)){
@@ -49,10 +50,10 @@ generate_standard_tables <- function(
     }
     return(df)
   }
-
+  
   # --- `label<-`
   `label<-` <- function(x, value){attributes(x)$label <- value; x}
-
+  
   # --- label
   label <- function(x){
     out <- attributes(x)$label
@@ -66,19 +67,19 @@ generate_standard_tables <- function(
   empty_pvalue <- function(x, test_method){""}
   # ---  count_fmt
   count_fmt <- "%1.0f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-
+  
   # --- chi_approx
   chi_approx <- function(w){
     if(any(grepl( "Chi-squared approximation may be incorrect", w))){
       invokeRestart("muffleWarning")
     }
   }
-
+  
   # --- get_out
   get_out <- function(nrow,ncol){
     as.data.frame(array("",dim=c(nrow,ncol)), stringsAsFactors = FALSE)
   }
-
+  
   # --- formatpct
   formatpct <- function(M, fmt = "%1.0f (%s)%s"){
     dm <- dim(M)
@@ -115,7 +116,7 @@ generate_standard_tables <- function(
     x[is.na(y)] <- NA
     x
   }
-
+  
   # ---- nazero
   nazero <- function(x){
     if(is.factor(x)){
@@ -128,7 +129,7 @@ generate_standard_tables <- function(
     }
     if(is.numeric(x)) return(ifelse(is.na(x),0,x))
   }
-
+  
   y_in <- rlang::sym(y)
   #y_in <- dt[[y]]
   #y_text <- y
@@ -150,7 +151,7 @@ generate_standard_tables <- function(
     #browser()
     dimt <- dim(tbl)
     M <- tbl[-dimt[1], -dimt[2]]
-
+    
     dimm <- dimt-1
     addout <- get_out(dimt[1]+1, 2 + dimm[2] + dimm[2] - 1 + dimm[2])
     dima <- dim(addout)
@@ -159,11 +160,11 @@ generate_standard_tables <- function(
     addout[2, 1] <- if(is.null(xlab)){label(d2[[1]])}else{xlab}
     addout[2, 2] <- "N (%)"
     addout[1,1:dimm[2] + 2] <- dimnames(M)[[2]]
-
+    
     miss <- formatpct(rbind(colSums(M),tbl[dimt[1],-dimt[2]]))
     addout[1, (dima[2] - dimm[2]+1):dima[2]] <- "Missing: " %|% dimnames(M)[[2]]
     addout[2, (dima[2] - dimm[2]+1):dima[2]] <- miss[2,]
-
+    
     for(j in 2:dimm[2]){
       M_compare <- M[,c(1,j)]
       addout[1, dimt[2] + j] <- "p-value: " %|%
@@ -171,7 +172,7 @@ generate_standard_tables <- function(
       if(sum(M_compare)==0 | !pvalue) next
       E_compare <- rowSums(M_compare) %*% t(colSums(M_compare)) / sum(M_compare)
       smallest_expected_cell <- min(E_compare)
-
+      
       if(smallest_expected_cell >= 1 | sum(M_compare)>2000){
         withCallingHandlers(cst <- chisq.test(M_compare, correct = FALSE), warning = chi_approx)
         stat <- cst$statistic * (sum(M_compare) - 1)/sum(M_compare)
@@ -181,15 +182,15 @@ generate_standard_tables <- function(
         pval <- fisher.test(M_compare)$p.value
         test_method <- "FE"
       }
-
+      
       addout[2, dimt[2] + j] <- pvalue_fmt(pval, test_method)
     }
-
+    
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
     return(out)
   }
-
+  
   cat_entry_ <- function(
     out
     , x
@@ -202,13 +203,13 @@ generate_standard_tables <- function(
       formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
     }
   ){
-  
+    
     d2 <- dt[, c(x,y), with = FALSE]
     tbl <- table(d2[[1]], d2[[2]], useNA = "always")
     dimt <- dim(tbl)
     M <- tbl[-dimt[1], -dimt[2]]
     dimm <- dimt-1
-
+    
     addout <- get_out(dimt[1]+1, 2 + dimm[2] + dimm[2] - 1 + dimm[2])
     dima <- dim(addout)
     addout[-c(1:2), 1] <- "@@" %|% dimnames(M)[[1]]
@@ -216,11 +217,11 @@ generate_standard_tables <- function(
     addout[2, 1] <- if(is.null(xlab)){label(d2[[1]])}else{xlab}
     addout[2, 2] <- "N (%)"
     addout[1,1:dimm[2] + 2] <- dimnames(M)[[2]]
-
+    
     miss <- formatpct(rbind(colSums(M),tbl[dimt[1],-dimt[2]]))
     addout[1, (dima[2] - dimm[2]+1):dima[2]] <- "Missing: " %|% dimnames(M)[[2]]
     addout[2, (dima[2] - dimm[2]+1):dima[2]] <- miss[2,]
-
+    
     for(j in 2:dimm[2]){
       addout[1, dimt[2] + j] <- "p-value: " %|%
         dimnames(M)[[2]][1] %|% " vs " %|% dimnames(M)[[2]][j]
@@ -228,7 +229,7 @@ generate_standard_tables <- function(
       if(sum(M_compare)==0 | !pvalue) next
       E_compare <- rowSums(M_compare) %*% t(colSums(M_compare)) / sum(M_compare)
       smallest_expected_cell <- min(E_compare)
-
+      
       if(smallest_expected_cell >= 1){
         withCallingHandlers(cst <- chisq.test(M_compare, correct = FALSE),
                             warning = chi_approx)
@@ -241,12 +242,12 @@ generate_standard_tables <- function(
       }
       addout[2, dimt[2] + j] <- pvalue_fmt(pval, test_method)
     }
-
+    
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
     return(out)
   }
-
+  
   n_unique <- function(out, x, y = y_in, dt = data, xlab = NULL){
     #y = y_in
     #browser()
@@ -254,28 +255,28 @@ generate_standard_tables <- function(
     dimt <- dim(dt1)
     M <- dt1[-dimt[1],-dimt[2], drop = FALSE]
     dimm <- dim(M)
-
+    
     addout <- get_out(2, 2 + dimm[2] + dimm[2] - 1 + dimm[2])
     dima <- dim(addout)
     addout[1,1:dimm[2] + 2] <- dimnames(M)[[2]]
     addout[2,1:dimm[2] + 2] <- M[1,]
     addout[2,1] <- if(!is.null(xlab)){xlab}else{eval(substitute(label(dt[,.(x)][[1]])))}
-
+    
     addout[1, (dima[2] - dimm[2] + 1):dima[2]] <- "Missing: " %|% dimnames(M)[[2]]
     addout[2, (dima[2] - dimm[2] + 1):dima[2]] <- dt1[dimt[1],-dimt[2]]
     addout[2,2] <- "N"
-
+    
     for(j in 2:dimm[2]){
       addout[1, 2 + dimm[2] + j - 1] <- "p-value: " %|%
         addout[1, 2 + 1] %|% " vs " %|%  addout[1, 2 + j]
     }
-
+    
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
     return(out)
   }
-
-
+  
+  
   cont_entry <- function(out, x, y = y_in, dt = data, xlab = NULL,
                          pvalue_fmt = function(x, test_method) {
                            formatp(x, digits = 3) %|% "<sup>" %|% test_method %|%
@@ -288,7 +289,7 @@ generate_standard_tables <- function(
     d3 <- eval(substitute(d2[, .(N = .N, Mean = as.numeric(mean(x)),
                                  SD = sd(x), Q1 = as.numeric(quantile(x, 0.25)), Median = as.numeric(median(x)),
                                  Q3 = as.numeric(quantile(x, 0.75))), y] %>% arrange(y)))
-
+    
     e1 <- eval(substitute(d2[,table(y)]))
     empty_idx <- which(e1 == 0)
     empty_names <- names(e1)[empty_idx]
@@ -297,7 +298,7 @@ generate_standard_tables <- function(
     e2[] <- NA
     eval(substitute(e2[,y := empty_names]))
     e2[,N := 0]
-
+    
     if(dim(e2)[1] > 0){
       for(i in 2:ncol(d3)){
         d3[[i]] <- as.numeric(d3[[i]])
@@ -326,7 +327,7 @@ generate_standard_tables <- function(
     addout[2, (dima[2] - dimt[1] + 1):(dima[2])] <- formatpct(miss)[2,
                                                                     ]
     addout[1:(dimt[2] - 1) + 2, 2] <- names(d3)[-1]
-
+    
     for(j in 2:dimt[1]){
       holdin <- d3[[1]][c(1,j)]
       d4 <- eval(substitute(d2 %>% filter(y %in% holdin)))
@@ -336,15 +337,15 @@ generate_standard_tables <- function(
       addout[1, 2 + dimt[1] + j - 1] <- "p-value: " %|%
         addout[1, 2 + 1] %|% " vs " %|%  addout[1, 2 + j]
     }
-
-
+    
+    
     if (length(out) > 0)
       addout <- addout[-1, ]
     out[[length(out) + 1]] <- addout
     return(out)
   }
-
-
+  
+  
   binary_entry <- function(
     out
     , x
@@ -370,7 +371,7 @@ generate_standard_tables <- function(
       , fmt = fmt
       , pvalue_fmt = pvalue_fmt
     )))
-
+    
     ny <- length(eval(substitute(dt[,table(y)])))
     count_cols <- 1:ny + 2
     matches <- cat[[1]][-c(1:2),1] %in% c("@@" %|% level)
@@ -378,12 +379,12 @@ generate_standard_tables <- function(
     cat[[1]][2,count_cols] <- cat[[1]][2 + row, count_cols]
     addout <- cat[[1]][1:2,]
     addout[2,2] <- ""
-
+    
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
     return(out)
   }
-
+  
   binary_entry_ <- function(
     out
     , x
@@ -405,12 +406,12 @@ generate_standard_tables <- function(
     cat[[1]][2,count_cols] <- cat[[1]][2 + row, count_cols]
     addout <- cat[[1]][1:2,]
     addout[2,2] <- ""
-
+    
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
     return(out)
   }
-
+  
   empty_entry <- function(
     out
     , y = y_in
@@ -423,15 +424,15 @@ generate_standard_tables <- function(
     addout <- eval(substitute(cat_entry(list(),j,y, d2)))[[1]][1:2, ]
     addout[2,] <- ""
     for(j in 1:min(length(fill),ncol(addout))) addout[2, j] <- fill[j]
-
+    
     if(length(out)>0) addout <- addout[-1,]
     out[[length(out)+1]] <- addout
     return(out)
   }
-
-
-
-
+  
+  
+  
+  
   ##########################################
   ## start function coding here
   if(missing(y)) stop("Provide a y variable")
@@ -440,7 +441,7 @@ generate_standard_tables <- function(
   if(format %ni% c("shiny","rmd")) stop("format must be either \"shiny\" or \"rmd\"")
   if(module %ni% c("ventral","inguinal")) stop("module must be either \"ventral\" or \"inguinal\" ")
   #dt <- deparse(substitute(data))
-
+  
   if(class(data[[y]]) != "factor") stop("y must be a factor")
   
   if(module == "ventral"){
@@ -458,7 +459,7 @@ generate_standard_tables <- function(
         assign(paste0("tbl",table),
                eval(parse(text = get_standard_table(table, data = data, print=TRUE, pval = pvalue))))    }
     }
-
+    
     if(format %in% "shiny"){
       return_list <- list()
       for(tbl in 1:9){
@@ -473,7 +474,7 @@ generate_standard_tables <- function(
             `[`(,!lgrep(tbln %>% names, "p-value")) %>%
             rename(" " = ".1")
         }
-
+        
         ncols <- ncol(tbln)
         align <- c("l",rep("r", ncols - 1))
         return_list[tbl] <- kable(
@@ -486,12 +487,13 @@ generate_standard_tables <- function(
           , caption = paste0("Table",tbl,": ", title)
         ) %>%
           toString
-
+        
       }
       return(return_list)
     }
-
+    
     if(format %in% "rmd"){
+      out <- list()
       for (tbl in 1:9) {
         file <- get(paste0("tbl", tbl))
         tbln <- file
@@ -499,7 +501,7 @@ generate_standard_tables <- function(
               "\n\n")
         names(tbln) <- tbln[1, ]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
-                                                       1])
+                                                           1])
         
         if(!pvalue){
           tbln <- tbln %>%
@@ -510,13 +512,22 @@ generate_standard_tables <- function(
         
         ncols <- ncol(tbln)
         align <- c("l", rep("r", ncols - 1))
-        kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
-              table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
-          print
+        if(display){
+          kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
+                table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
+            print
+        } else{
+          out[[i]] <- list()
+          out[[i]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
+                                 row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
+                                 escape = FALSE)
+          out[[i]][[2]] <- attr(tbln, "title")
+        }
       }
+      return(invisible(out))
     }
   }
-
+  
   if(module == "inguinal"){
     if(changes == TRUE){
       for(table in 1:9){
@@ -532,7 +543,7 @@ generate_standard_tables <- function(
         assign(paste0("ing_tbl",table),
                eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE, pval = pvalue))))    }
     }
-
+    
     if(format %in% "shiny"){
       return_list <- list()
       for(tbl in 1:9){
@@ -541,7 +552,7 @@ generate_standard_tables <- function(
         title <- attr(tbln, "title")
         names(tbln) <- tbln[1,]
         tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
-
+        
         ncols <- ncol(tbln)
         align <- c("l",rep("r", ncols - 1))
         
@@ -562,11 +573,11 @@ generate_standard_tables <- function(
           , caption = paste0("Table",tbl,": ", title)
         ) %>%
           toString
-
+        
       }
       return(return_list)
     }
-
+    
     if(format %in% "rmd"){
       for (tbl in 1:9) {
         file <- get(paste0("ing_tbl", tbl))
@@ -584,12 +595,21 @@ generate_standard_tables <- function(
             `[`(,!lgrep(tbln %>% names, "p-value")) %>%
             rename(" " = ".1")
         }
-         
-        kable(tbln, align = align, format = "html", row.names = FALSE,
-              table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
-          print
+        
+        if(display){
+          kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
+                table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
+            print
+        } else{
+          out[[i]] <- list()
+          out[[i]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
+                                 row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
+                                 escape = FALSE)
+          out[[i]][[2]] <- attr(tbln, "title")
+        }
       }
+      return(invisible(out))
     }
   }
-
+  
 }
