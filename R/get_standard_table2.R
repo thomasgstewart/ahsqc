@@ -918,7 +918,7 @@ get_standard_table2 <- function(tbl = NULL
     empty_entry(
     fill = c(\"Reoperation type<sup>cata</sup>\", \"N\")) %>%
     binary_entry(
-    array_reop_type_unrecognized_bowel_injury %>% factor(levels = factor(levels = c(\"No\",\"Yes\"))
+    array_reop_type_unrecognized_bowel_injury %>% factor(levels = c(\"No\",\"Yes\")))
     , xlab = \"@@Unrecognized bowel injury\"
     , dt = data %>% dplyr:::filter(flg_reoperation == \"Yes\")
     , pvalue = FALSE
