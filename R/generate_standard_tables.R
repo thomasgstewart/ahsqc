@@ -30,6 +30,7 @@ generate_standard_tables <- function(
   changes = FALSE
   , y
   , data
+  , date
   , format = "rmd"
   , module = "ventral"
   , pvalue = FALSE
@@ -435,6 +436,11 @@ generate_standard_tables <- function(
   
   ##########################################
   ## start function coding here
+  if(missing(date)) {
+    stop("Must provide date of data pull")
+  } else {
+    date = as.Date(date)
+  }
   if(missing(y)) stop("Provide a y variable")
   if(missing(data)) stop("Provide a data table")
   if(is.character(data)) stop("data should be a data table, not a character string")
@@ -450,14 +456,25 @@ generate_standard_tables <- function(
         if(paste0("tbl",table,".R") %in% list.files()){
           source(paste0("tbl",table,".R"), local = T)
         } else {
-          assign(paste0("tbl",table),
-                 eval(parse(text = get_standard_table(table, data = data, print=TRUE, pval = pvalue))))
+          if(as.Date(date) - as.Date("2019-04-02") < 0){
+            assign(paste0("tbl",table),
+                   eval(parse(text = get_standard_table(table, data = data, print=TRUE, pval = pvalue))))
+          } else {
+            assign(paste0("tbl",table),
+                   eval(parse(text = get_standard_table2(table, data = data, print=TRUE, pval = pvalue))))
+          }
         }
       }
     } else {
       for(table in 1:9){
-        assign(paste0("tbl",table),
-               eval(parse(text = get_standard_table(table, data = data, print=TRUE, pval = pvalue))))    }
+        if(as.Date(date) - as.Date("2019-04-02") < 0){
+          assign(paste0("tbl",table),
+                 eval(parse(text = get_standard_table(table, data = data, print=TRUE, pval = pvalue))))    
+        } else {
+          assign(paste0("tbl",table),
+                 eval(parse(text = get_standard_table2(table, data = data, print=TRUE, pval = pvalue))))  
+        }
+      }
     }
     
     if(format %in% "shiny"){
@@ -534,14 +551,25 @@ generate_standard_tables <- function(
         if(paste0("ing_tbl",table,".R") %in% list.files()){
           source(paste0("ing_tbl",table,".R"))
         } else{
-          assign(paste0("ing_tbl",table),
-                 eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE, pval = pvalue))))
+          if(as.Date(date) - as.Date("2019-04-02") < 0){
+            assign(paste0("ing_tbl",table),
+                   eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE, pval = pvalue))))
+          } else {
+            assign(paste0("ing_tbl",table),
+                   eval(parse(text = get_standard_table_inguinal2(table, data = data, print=TRUE, pval = pvalue))))
+          }
         }
       }
     } else {
       for(table in 1:9){
+        if(as.Date(date) - as.Date("2019-04-02") < 0){
         assign(paste0("ing_tbl",table),
-               eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE, pval = pvalue))))    }
+               eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE, pval = pvalue))))    
+        } else {
+          assign(paste0("ing_tbl",table),
+                 eval(parse(text = get_standard_table_inguinal2(table, data = data, print=TRUE, pval = pvalue))))    
+        }
+      }
     }
     
     if(format %in% "shiny"){
@@ -610,6 +638,7 @@ generate_standard_tables <- function(
       }
       return(invisible(out))
     }
-  }
+  }lsl
+  
   
 }
