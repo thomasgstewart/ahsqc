@@ -41,7 +41,8 @@ binary_entry <- function(
     , fmt = fmt
     , pvalue_fmt = pvalue_fmt
   )))
-  ny <- eval(substitute(dt[,length(unique(y))]))
+  if(class(eval(substitute(dt[,y]))) %in% "factor") stop("y must be a factor")
+  ny <- eval(substitute(dt[,length(levels(y))]))
   count_cols <- 1:ny + 2
   matches <- cat[[1]][-c(1:2),1] %in% c("@@" %|% level)
   row <- if(sum(matches)==1){ which(matches) }else{1}

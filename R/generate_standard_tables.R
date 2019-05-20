@@ -638,7 +638,7 @@ generate_standard_tables <- function(
       }
       return(invisible(out))
     }
-  }lsl
+  }
   
   
 }
