@@ -571,8 +571,7 @@ get_standard_table2 <- function(tbl = NULL
     binary_entry(
     ssi_treatment %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Surgical site infection requiring treatment\"
-    , dt = data %>%
-    dplyr:::mutate(ssi_treatment = nazero(ssi_treatment) %>% samena(flg_cmp_postop_ssi))
+    , dt = data 
     #, pvalue = FALSE
     #, fmt = count_fmt
     , pvalue_fmt = garbage_pvalue
@@ -580,8 +579,7 @@ get_standard_table2 <- function(tbl = NULL
     binary_entry(
     ssi_pi %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Surgical site infection requiring procedural intervention\"
-    , dt = data %>%
-    dplyr:::mutate(ssi_pi = nazero(ssi_pi) %>% samena(flg_cmp_postop_ssi))
+    , dt = data 
     #, pvalue = FALSE
     #, fmt = count_fmt
     , pvalue_fmt = garbage_pvalue
@@ -677,8 +675,7 @@ get_standard_table2 <- function(tbl = NULL
     binary_entry(
     sso_treatment %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"SSO-EI requiring treatment\"
-    , dt = data %>%
-    dplyr:::mutate(sso_treatment = nazero(sso_treatment) %>% samena(flg_sso_comps))
+    , dt = data 
     , pvalue = FALSE
     # #, fmt = count_fmt
     , pvalue_fmt = garbage_pvalue
@@ -686,7 +683,7 @@ get_standard_table2 <- function(tbl = NULL
     binary_entry(
     sso_pi %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"SSO-EI requiring procedural intervention\"
-    , dt = data %>% dplyr:::mutate(sso_pi = samena(nazero(sso_pi),flg_sso_comps))
+    , dt = data 
     , pvalue = FALSE
     #, fmt = count_fmt
     , pvalue_fmt = garbage_pvalue
@@ -766,8 +763,7 @@ get_standard_table2 <- function(tbl = NULL
     ssi_sso_treatment %>% factor(levels = c(\"No\",\"Yes\"))
     , xlab = \"SSI/O requiring treatment\"
     , pvalue = FALSE
-    , dt = data %>%
-    dplyr:::mutate(ssi_sso_treatment = samena(nazero(ssi_sso_treatment),flg_cmp_postop_sso_ssi))
+    , dt = data 
     # #, fmt = count_fmt
     , pvalue_fmt = garbage_pvalue
     ) %>%
@@ -775,8 +771,7 @@ get_standard_table2 <- function(tbl = NULL
     ssi_sso_pi %>% factor(levels = c(\"No\",\"Yes\"))
     , xlab = \"SSI/O requiring procedural intervention\"
     , pvalue = FALSE
-    , dt = data %>%
-    mutate(ssi_sso_pi = nazero(ssi_sso_pi) %>% samena(flg_cmp_postop_sso_ssi))
+    , dt = data 
     #, fmt = count_fmt
     , pvalue_fmt = garbage_pvalue
     ) %>%
