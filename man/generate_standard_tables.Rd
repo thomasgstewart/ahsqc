@@ -15,6 +15,8 @@ generate_standard_tables(changes = FALSE, y, data, date,
 
 \item{data}{a data table.}
 
+\item{date}{a character string of the date of data download.  Use "YYYY-MM-DD" format.}
+
 \item{format}{a string that describes the output format. Currently only "shiny" or
 "rmd". Default is "rmd"}
 
@@ -23,6 +25,8 @@ tables. Set to "ventral" for ventral module and "inguinal" for inguinal table. O
 generate tables for ventral and inguinal modules together.}
 
 \item{pvalue}{a boolean. Set to TRUE if pvalues are desired for all tables.}
+
+\item{display}{a boolean.  Set to TRUE to print tables to output.}
 }
 \description{
 Generates standard AHSQC tables in HTML for .Rmd files. \code{generate_standard_tables}

@@ -7,12 +7,14 @@
 #' @param changes a boolean. Set to TRUE to indicate that changes have been made to at least one table.
 #' @param y a character string to indicate group variable for tables.
 #' @param data a data table.
+#' @param date a character string of the date of data download.  Use "YYYY-MM-DD" format.
 #' @param format a string that describes the output format. Currently only "shiny" or
 #'  "rmd". Default is "rmd"
 #' @param module a string that indicates which data module, ventral or inguinal, is used to create
 #' tables. Set to "ventral" for ventral module and "inguinal" for inguinal table. Once cannot
 #' generate tables for ventral and inguinal modules together.
 #' @param pvalue a boolean. Set to TRUE if pvalues are desired for all tables.
+#' @param display a boolean.  Set to TRUE to print tables to output.
 #' @details Function returns the standard set of tables for the AHSQC in HTML code.
 #'
 #' If \code{changes = TRUE}, the code for each table should be in individual .R files
@@ -534,11 +536,11 @@ generate_standard_tables <- function(
                 table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
             print
         } else{
-          out[[i]] <- list()
-          out[[i]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
+          out[[tbl]] <- list()
+          out[[tbl]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
                                  row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
                                  escape = FALSE)
-          out[[i]][[2]] <- attr(tbln, "title")
+          out[[tbl]][[2]] <- attr(tbln, "title")
         }
       }
       return(invisible(out))
@@ -607,6 +609,7 @@ generate_standard_tables <- function(
     }
     
     if(format %in% "rmd"){
+      out <- list()
       for (tbl in 1:9) {
         file <- get(paste0("ing_tbl", tbl))
         tbln <- file
@@ -629,11 +632,11 @@ generate_standard_tables <- function(
                 table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
             print
         } else{
-          out[[i]] <- list()
-          out[[i]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
+          out[[tbl]] <- list()
+          out[[tbl]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
                                  row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
                                  escape = FALSE)
-          out[[i]][[2]] <- attr(tbln, "title")
+          out[[tbl]][[2]] <- attr(tbln, "title")
         }
       }
       return(invisible(out))
