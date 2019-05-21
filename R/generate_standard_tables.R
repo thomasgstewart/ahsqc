@@ -516,8 +516,6 @@ generate_standard_tables <- function(
       for (tbl in 1:9) {
         file <- get(paste0("tbl", tbl))
         tbln <- file
-        cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
-              "\n\n")
         names(tbln) <- tbln[1, ]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
                                                            1])
@@ -532,6 +530,8 @@ generate_standard_tables <- function(
         ncols <- ncol(tbln)
         align <- c("l", rep("r", ncols - 1))
         if(display){
+          cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
+                "\n\n")
           kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
                 table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
             print
@@ -540,7 +540,7 @@ generate_standard_tables <- function(
           out[[tbl]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
                                  row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
                                  escape = FALSE)
-          out[[tbl]][[2]] <- attr(tbln, "title")
+          out[[tbl]][[2]] <- attr(file, "title")
         }
       }
       return(invisible(out))
@@ -613,8 +613,6 @@ generate_standard_tables <- function(
       for (tbl in 1:9) {
         file <- get(paste0("ing_tbl", tbl))
         tbln <- file
-        cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
-              "\n\n")
         names(tbln) <- tbln[1, ]
         tbln <- tbln[-1,]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
@@ -628,6 +626,8 @@ generate_standard_tables <- function(
         }
         
         if(display){
+          cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
+                "\n\n")
           kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
                 table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
             print
@@ -636,7 +636,7 @@ generate_standard_tables <- function(
           out[[tbl]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
                                  row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
                                  escape = FALSE)
-          out[[tbl]][[2]] <- attr(tbln, "title")
+          out[[tbl]][[2]] <- attr(file, "title")
         }
       }
       return(invisible(out))
