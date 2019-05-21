@@ -29,6 +29,11 @@ cont_entry <- function(
     formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
   }
 ){
+  
+  '%nin%' <- function(x,y) !('%in%'(x,y))
+  if(class(eval(substitute(dt[,y]))) %nin% "factor") stop("y must be a factor")
+  
+  
   d1 <- eval(substitute(dt[,.(x,y)])) ## mao: changed data[,.(x,y)] to dt[.(x,y)]
   d2 <- d1[complete.cases(d1)]
   d3 <- eval(substitute(

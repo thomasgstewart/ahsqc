@@ -29,6 +29,11 @@ binary_entry <- function(
     formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
   }
 ){
+  '%nin%' <- function(x,y) !('%in%'(x,y))
+  
+  if(class(eval(substitute(dt[,y]))) %nin% "factor") stop("y must be a factor")
+  
+  
   if(fmt == "norm_fmt") fmt <- "%1.0f (%s)%s"
   if(fmt == "count_fmt" ) fmt <- "%1.0f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
   cat <- eval(substitute(cat_entry(
@@ -41,7 +46,7 @@ binary_entry <- function(
     , fmt = fmt
     , pvalue_fmt = pvalue_fmt
   )))
-  if(class(eval(substitute(dt[,y]))) %in% "factor") stop("y must be a factor")
+
   ny <- eval(substitute(dt[,length(levels(y))]))
   count_cols <- 1:ny + 2
   matches <- cat[[1]][-c(1:2),1] %in% c("@@" %|% level)

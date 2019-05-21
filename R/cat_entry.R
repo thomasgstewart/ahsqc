@@ -28,8 +28,16 @@ cat_entry <- function(
     formatp(x, digits = 3) %|% "<sup>" %|% test_method %|% "</sup>"
   }
 ){
+  
+  '%nin%' <- function(x,y) !('%in%'(x,y))
+  if(class(eval(substitute(dt[,y]))) %nin% "factor") stop("y must be a factor")
+  
+  
   if(fmt == "norm_fmt") fmt <- "%1.0f (%s)%s"
   if(fmt == "count_fmt" ) fmt <- "%1.0f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+  
+  
+  
   d2 <- eval(substitute(dt[,.(x,y)]))
   tbl <- table(d2[[1]], d2[[2]], useNA = "always")
   dimt <- dim(tbl)
