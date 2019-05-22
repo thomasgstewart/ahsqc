@@ -969,8 +969,9 @@ get_standard_table <- function(tbl = NULL
     binary_entry(
     flg_recurrence %>% factor(levels = c(\"No\", \"Yes\"))
     , pvalue_fmt = garbage_pvalue
-    , pvalue = FALSE
-    ) %>%
+    , pvalue = FALSE 
+    , xlab = \"Hernia recurrence\"
+       ) %>%
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Post-operative through 30 day outcomes\")"

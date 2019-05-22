@@ -965,6 +965,7 @@ get_standard_table2 <- function(tbl = NULL
     flg_recurrence %>% factor(levels = c(\"No\", \"Yes\"))
     , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
+    , xlab = \"Hernia recurrence\"
     ) %>%
     rbindlist %>%
     as.data.frame %>%
