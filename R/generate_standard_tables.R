@@ -151,7 +151,6 @@ generate_standard_tables <- function(
     y = y_in
     d2 <- eval(substitute(dt[,.(x,y)]))
     tbl <- table(d2[[1]], d2[[2]], useNA = "always")
-    #browser()
     dimt <- dim(tbl)
     M <- tbl[-dimt[1], -dimt[2]]
     
@@ -253,7 +252,7 @@ generate_standard_tables <- function(
   
   n_unique <- function(out, x, y = y_in, dt = data, xlab = NULL){
     #y = y_in
-    #browser()
+    #
     dt1 <- eval(substitute(dt[,.(unique(x), N = "N"), y][,table(N,y, useNA = "always")]))
     dimt <- dim(dt1)
     M <- dt1[-dimt[1],-dimt[2], drop = FALSE]
@@ -288,7 +287,7 @@ generate_standard_tables <- function(
     y = y_in
     d1 <- eval(substitute(dt[, .(x, y)]))
     d2 <- d1[complete.cases(d1)]
-    #browser()
+    #
     d3 <- eval(substitute(d2[, .(N = .N, Mean = as.numeric(mean(x)),
                                  SD = sd(x), Q1 = as.numeric(quantile(x, 0.25)), Median = as.numeric(median(x)),
                                  Q3 = as.numeric(quantile(x, 0.75))), y] %>% arrange(y)))
@@ -363,7 +362,7 @@ generate_standard_tables <- function(
     }
   ){
     y = y_in
-    # browser()
+    # 
     cat <- eval(substitute(cat_entry(
       list()
       , x
@@ -477,7 +476,7 @@ generate_standard_tables <- function(
                  eval(parse(text = get_standard_table2(table, data = data, print=TRUE, pval = pvalue))))  
         }
       }
-      browser()
+      
     }
     
     if(format %in% "shiny"){
