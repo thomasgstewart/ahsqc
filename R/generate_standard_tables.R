@@ -538,7 +538,7 @@ generate_standard_tables <- function(
           out[[tbl]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
                                  row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
                                  escape = FALSE)
-          out[[tbl]][[2]] <- attr(file, "title")
+          out[[tbl]][[2]] <- attr(tbln, "title")
         }
       }
       return(invisible(out))
@@ -632,7 +632,7 @@ generate_standard_tables <- function(
           out[[tbl]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
                                  row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
                                  escape = FALSE)
-          out[[tbl]][[2]] <- attr(file, "title")
+          out[[tbl]][[2]] <- attr(tbln, "title")
         }
       }
       return(invisible(out))
