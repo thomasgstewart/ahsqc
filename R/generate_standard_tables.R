@@ -477,13 +477,13 @@ generate_standard_tables <- function(
                  eval(parse(text = get_standard_table2(table, data = data, print=TRUE, pval = pvalue))))  
         }
       }
+      browser()
     }
     
     if(format %in% "shiny"){
       return_list <- list()
       for(tbl in 1:9){
-        file <- get(paste0("tbl" ,tbl))
-        tbln <- file
+        tbln <- get(paste0("tbl" ,tbl))
         title <- attr(tbln, "title")
         names(tbln) <- tbln[1,]
         tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
@@ -514,8 +514,7 @@ generate_standard_tables <- function(
     if(format %in% "rmd"){
       out <- list()
       for (tbl in 1:9) {
-        file <- get(paste0("tbl", tbl))
-        tbln <- file
+        tbln <- get(paste0("tbl", tbl))
         names(tbln) <- tbln[1, ]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
                                                            1])
@@ -577,8 +576,7 @@ generate_standard_tables <- function(
     if(format %in% "shiny"){
       return_list <- list()
       for(tbl in 1:9){
-        file <- get(paste0("ing_tbl" ,tbl))
-        tbln <- file
+        tbln <- get(paste0("ing_tbl" ,tbl))
         title <- attr(tbln, "title")
         names(tbln) <- tbln[1,]
         tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
@@ -611,8 +609,7 @@ generate_standard_tables <- function(
     if(format %in% "rmd"){
       out <- list()
       for (tbl in 1:9) {
-        file <- get(paste0("ing_tbl", tbl))
-        tbln <- file
+        tbln <- get(paste0("ing_tbl", tbl))
         names(tbln) <- tbln[1, ]
         tbln <- tbln[-1,]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
