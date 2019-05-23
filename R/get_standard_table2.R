@@ -318,9 +318,6 @@ get_standard_table2 <- function(tbl = NULL
     , pvalue = FALSE) %>%
     rbindlist
     
-    tbl5[V1 == \"Conversion to open\", V2 := \"N (%)\"]
-    tbl5[V1 == \"Conversion to open\", V4 := \"N/A\"]
-    tbl5[V1 == \"Conversion to open\", V6 := \"N/A\"]
     
     
     
