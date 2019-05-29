@@ -23,7 +23,7 @@
 #' # get_table(tbl = 9, d1, print = FALSE) ## will write tbl9.R
 #' # get_table(tbl = 9, d1, print = FALSE, overwrite = TRUE) ## will overwrite tbl9.R
 
-get_standard_table2 <- function(tbl = NULL
+get_standard_table_all2 <- function(tbl = NULL
                                 , data
                                 , print = FALSE
                                 , overwrite = FALSE

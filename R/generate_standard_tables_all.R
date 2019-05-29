@@ -320,8 +320,6 @@ generate_standard_tables_all <- function(
   if(module %ni% c("ventral")) stop("module must be either \"ventral\". Inguinal currently not available.")
   #dt <- deparse(substitute(data))
   
-  if(class(data[[y]]) != "factor") stop("y must be a factor")
-  
   if(module == "ventral"){
     if(changes == TRUE){
       for(table in 1:9){
