@@ -180,7 +180,12 @@ generate_standard_tables <- function(
         withCallingHandlers(cst <- chisq.test(M_compare, correct = FALSE), warning = chi_approx)
         stat <- cst$statistic * (sum(M_compare) - 1)/sum(M_compare)
         pval <- pchisq(stat, cst$parameter, lower.tail = FALSE)
-        test_method <- "EP"
+        if(is.nan(pval)){
+          pval <- fisher.test(M_compare, workspace = 2e+07)$p.value
+          test_method <- "FE"
+        } else{
+          test_method <- "EP"
+        }
       }else{
         pval <- fisher.test(M_compare, workspace = 2e7)$p.value
         test_method <- "FE"
@@ -238,7 +243,12 @@ generate_standard_tables <- function(
                             warning = chi_approx)
         stat <- cst$statistic * (sum(M_compare) - 1)/sum(M_compare)
         pval <- pchisq(stat, cst$parameter, lower.tail = FALSE)
-        test_method <- "EP"
+        if(is.nan(pval)){
+          pval <- fisher.test(M_compare, workspace = 2e+07)$p.value
+          test_method <- "FE"
+        } else{
+          test_method <- "EP"
+        }
       }else{
         pval <- fisher.test(M_compare, workspace = 2e7)$p.value
         test_method <- "FE"
