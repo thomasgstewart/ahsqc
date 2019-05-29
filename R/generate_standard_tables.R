@@ -182,7 +182,7 @@ generate_standard_tables <- function(
         pval <- pchisq(stat, cst$parameter, lower.tail = FALSE)
         test_method <- "EP"
       }else{
-        pval <- fisher.test(M_compare)$p.value
+        pval <- fisher.test(M_compare, workspace = 2e7)$p.value
         test_method <- "FE"
       }
       
@@ -240,7 +240,7 @@ generate_standard_tables <- function(
         pval <- pchisq(stat, cst$parameter, lower.tail = FALSE)
         test_method <- "EP"
       }else{
-        pval <- fisher.test(M_compare)$p.value
+        pval <- fisher.test(M_compare, workspace = 2e7)$p.value
         test_method <- "FE"
       }
       addout[2, dimt[2] + j] <- pvalue_fmt(pval, test_method)

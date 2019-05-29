@@ -70,7 +70,7 @@ cat_entry <- function(
       pval <- pchisq(stat, cst$parameter, lower.tail = FALSE)
       test_method <- "EP"
     }else{
-      pval <- fisher.test(M_compare)$p.value
+      pval <- fisher.test(M_compare, workspace = 2e7)$p.value
       test_method <- "FE"
     }
     

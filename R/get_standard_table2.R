@@ -857,6 +857,7 @@ get_standard_table2 <- function(tbl = NULL
     binary_entry(
     flg_readmission %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Re-admission within 30 days\"
+    , pvalue = FALSE
     # , pvalue_fmt = garbage_pvalue
     ) %>%
     empty_entry(fill = c(\"Reported reasons for re-admission<sup>cata</sup>\",\"N\")) %>%
@@ -906,6 +907,7 @@ get_standard_table2 <- function(tbl = NULL
     flg_reoperation %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Reoperation\"
     # , pvalue_fmt = garbage_pvalue
+    , pvalue = FALSE
     ) %>%
     empty_entry(
     fill = c(\"Reoperation type<sup>cata</sup>\", \"N\")) %>%
