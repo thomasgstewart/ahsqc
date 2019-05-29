@@ -28,9 +28,11 @@
 generate_standard_tables_all <- function(
   changes = FALSE
   , data
+  , date
   , format = "rmd"
   , module = "ventral"
   , pvalue = FALSE
+  , display = TRUE
 ){
   
   ##########################################
@@ -109,24 +111,7 @@ generate_standard_tables_all <- function(
                                        p %|% sig_marker[2], p))
     return(p)
   }
-  # ---- samena
-  samena <- function(x,y){
-    x[is.na(y)] <- NA
-    x
-  }
-  
-  # ---- nazero
-  nazero <- function(x){
-    if(is.factor(x)){
-      lx <- levels(x)
-      if(!"0" %in% lx) stop("0 is not a factor level of a variable processed by nazero")
-      out <- as.character(x) %>%
-        (function(x) ifelse(is.na(x), "0", x)) %>%
-        factor(lx)
-      return(out)
-    }
-    if(is.numeric(x)) return(ifelse(is.na(x),0,x))
-  }
+
   
   
   
@@ -320,30 +305,49 @@ generate_standard_tables_all <- function(
   }
   
   
-
+  
   
   ##########################################
   ## start function coding here
+  if(missing(date)) {
+    stop("Must provide date of data pull")
+  } else {
+    date = as.Date(date)
+  }
+  if(missing(y)) stop("Provide a y variable")
   if(missing(data)) stop("Provide a data table")
   if(is.character(data)) stop("data should be a data table, not a character string")
   if(format %ni% c("shiny","rmd")) stop("format must be either \"shiny\" or \"rmd\"")
-  if(module %ni% c("ventral","inguinal")) stop("module must be either \"ventral\" or \"inguinal\" ")
+  if(module %ni% c("ventral")) stop("module must be either \"ventral\". Inguinal currently not available.")
   #dt <- deparse(substitute(data))
+  
+  if(class(data[[y]]) != "factor") stop("y must be a factor")
   
   if(module == "ventral"){
     if(changes == TRUE){
       for(table in 1:9){
         if(paste0("tbl",table,".R") %in% list.files()){
-          source(paste0("tbl",table,".R"))
-        } else{
-          assign(paste0("tbl",table),
-                 eval(parse(text = get_standard_table_all(table, data = data, print=TRUE, pval = pvalue))))
+          source(paste0("tbl",table,".R"), local = T)
+        } else {
+          if(as.Date(date) - as.Date("2019-04-02") < 0){
+            assign(paste0("tbl",table),
+                   eval(parse(text = get_standard_table_all(table, data = data, print=TRUE, pval = pvalue))))
+          } else {
+            assign(paste0("tbl",table),
+                   eval(parse(text = get_standard_table_all2(table, data = data, print=TRUE, pval = pvalue))))
+          }
         }
       }
     } else {
       for(table in 1:9){
-        assign(paste0("tbl",table),
-               eval(parse(text = get_standard_table_all(table, data = data, print=TRUE, pval = pvalue))))    }
+        if(as.Date(date) - as.Date("2019-04-02") < 0){
+          assign(paste0("tbl",table),
+                 eval(parse(text = get_standard_table_all(table, data = data, print=TRUE, pval = pvalue))))    
+        } else {
+          assign(paste0("tbl",table),
+                 eval(parse(text = get_standard_table_all2(table, data = data, print=TRUE, pval = pvalue))))  
+        }
+      }
     }
     
     if(format %in% "shiny"){
@@ -351,11 +355,15 @@ generate_standard_tables_all <- function(
       for(tbl in 1:9){
         file <- get(paste0("tbl" ,tbl))
         tbln <- file
-        title <- attr(tbln, "title")
+        title <- attr(file, "title")
         names(tbln) <- tbln[1,]
         tbln[,1] <- gsub("@@","&nbsp;&nbsp;&nbsp;", tbln[,1])
         
-        if(ncol(tbln) == 5) tbln <- tbln[-5]
+        if(!pvalue){
+          tbln <- tbln %>%
+            `[`(,!lgrep(tbln %>% names, "p-value")) %>%
+            rename(" " = ".1")
+        }
         
         ncols <- ncol(tbln)
         align <- c("l",rep("r", ncols - 1))
@@ -374,24 +382,39 @@ generate_standard_tables_all <- function(
       return(return_list)
     }
     
-   # browser()
     if(format %in% "rmd"){
+      out <- list()
       for (tbl in 1:9) {
         file <- get(paste0("tbl", tbl))
         tbln <- file
-        cat("\n### Table " %|% tbl %|% ": " %|% attr(tbln, "title") %|%
-              "\n\n")
         names(tbln) <- tbln[1, ]
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
                                                            1])
-        if(ncol(tbln) == 5) tbln <- tbln[-5]
+        
+        if(!pvalue){
+          tbln <- tbln %>%
+            `[`(,!lgrep(tbln %>% names, "p-value")) %>%
+            rename(" " = ".1")
+        }
+        
         
         ncols <- ncol(tbln)
         align <- c("l", rep("r", ncols - 1))
-        kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
-              table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
-          print
+        if(display){
+          cat("\n### Table " %|% tbl %|% ": " %|% attr(file, "title") %|%
+                "\n\n")
+          kable(tbln[-1, ], align = align, format = "html", row.names = FALSE,
+                table.attr = "class=\"table table-condensed\"", escape = FALSE) %>%
+            print
+        } else{
+          out[[tbl]] <- list()
+          out[[tbl]][[1]] <- kable(tbln[-1, ], align = align, format = "html", 
+                                   row.names = FALSE, table.attr = "class=\"table table-condensed\"", 
+                                   escape = FALSE)
+          out[[tbl]][[2]] <- attr(file, "title")
+        }
       }
+      return(invisible(out))
     }
   }
   

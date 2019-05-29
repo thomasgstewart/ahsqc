@@ -4,8 +4,9 @@
 \alias{generate_standard_tables_all}
 \title{Generate standard AHSQC tables}
 \usage{
-generate_standard_tables_all(changes = FALSE, data, format = "rmd",
-  module = "ventral", pvalue = FALSE)
+generate_standard_tables_all(changes = FALSE, data, date,
+  format = "rmd", module = "ventral", pvalue = FALSE,
+  display = TRUE)
 }
 \arguments{
 \item{changes}{a boolean. Set to TRUE to indicate that changes have been made to at least one table.}
