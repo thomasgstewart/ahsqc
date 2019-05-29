@@ -334,6 +334,7 @@ generate_standard_tables_all <- function(
                    eval(parse(text = get_standard_table_all2(table, data = data, print=TRUE, pval = pvalue))))
           }
         }
+        browser()
       }
     } else {
       for(table in 1:9){
@@ -359,8 +360,7 @@ generate_standard_tables_all <- function(
         if(!pvalue){
           tbln <- tbln %>%
             `[`(,!lgrep(tbln %>% names, "p-value")) %>%
-            rename(" " = ".1") %>%
-            rename(" " = ".2")
+            rename(" " = ".1")
         }
         
         ncols <- ncol(tbln)
@@ -392,8 +392,7 @@ generate_standard_tables_all <- function(
         if(!pvalue){
           tbln <- tbln %>%
             `[`(,!lgrep(tbln %>% names, "p-value")) %>%
-            rename(" " = ".1")%>%
-            rename(" " = ".2")
+            rename(" " = ".1")
         }
         
         
