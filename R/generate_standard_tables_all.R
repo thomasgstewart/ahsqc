@@ -11,7 +11,6 @@
 #' @param module a string that indicates which data module, ventral or inguinal, is used to create
 #' tables. Set to "ventral" for ventral module and "inguinal" for inguinal table. Once cannot
 #' generate tables for ventral and inguinal modules together.
-#' @param pvalue a boolean. Set to TRUE if pvalues are desired for all tables.
 #' @details Function returns the standard set of tables for the AHSQC in HTML code.
 #'
 #' If \code{changes = TRUE}, the code for each table should be in individual .R files
@@ -31,7 +30,6 @@ generate_standard_tables_all <- function(
   , date
   , format = "rmd"
   , module = "ventral"
-  , pvalue = FALSE
   , display = TRUE
 ){
   
@@ -121,7 +119,7 @@ generate_standard_tables_all <- function(
     , dt = data
     , xlab = NULL
     , level = c("Yes", "1")
-    , pvalue = TRUE
+    , pvalue = FALSE
     , fmt = "norm_fmt"
   ){
     if(fmt == "norm_fmt") fmt <- "%1.0f (%s)%s"
@@ -153,7 +151,7 @@ generate_standard_tables_all <- function(
     , x
     , dt = data
     , xlab = NULL
-    , pvalue = TRUE
+    , pvalue = FALSE
   ){
     d1 <- eval(substitute(dt[,.(x)])) ## mao: changed data[,.(x,y)] to dt[.(x,y)]
     d2 <- d1[complete.cases(d1)]
@@ -246,7 +244,7 @@ generate_standard_tables_all <- function(
     , x
     , dt = data
     , xlab = NULL
-    , pvalue = TRUE
+    , pvalue = FALSE
     , fmt = "norm_fmt"
   ){
     if(fmt == "norm_fmt") fmt <- "%1.0f (%s)%s"
@@ -328,22 +326,21 @@ generate_standard_tables_all <- function(
         } else {
           if(as.Date(date) - as.Date("2019-04-02") < 0){
             assign(paste0("tbl",table),
-                   eval(parse(text = get_standard_table_all(table, data = data, print=TRUE, pval = pvalue))))
+                   eval(parse(text = get_standard_table_all(table, data = data, print=TRUE))))
           } else {
             assign(paste0("tbl",table),
-                   eval(parse(text = get_standard_table_all2(table, data = data, print=TRUE, pval = pvalue))))
+                   eval(parse(text = get_standard_table_all2(table, data = data, print=TRUE))))
           }
         }
-        browser()
       }
     } else {
       for(table in 1:9){
         if(as.Date(date) - as.Date("2019-04-02") < 0){
           assign(paste0("tbl",table),
-                 eval(parse(text = get_standard_table_all(table, data = data, print=TRUE, pval = pvalue))))    
+                 eval(parse(text = get_standard_table_all(table, data = data, print=TRUE))))    
         } else {
           assign(paste0("tbl",table),
-                 eval(parse(text = get_standard_table_all2(table, data = data, print=TRUE, pval = pvalue))))  
+                 eval(parse(text = get_standard_table_all2(table, data = data, print=TRUE))))  
         }
       }
     }
@@ -389,12 +386,6 @@ generate_standard_tables_all <- function(
         tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
                                                            1])
         
-        if(!pvalue){
-          tbln <- tbln %>%
-            `[`(,!lgrep(tbln %>% names, "p-value")) %>%
-            rename(" " = ".1")
-        }
-        
         
         ncols <- ncol(tbln)
         align <- c("l", rep("r", ncols - 1))
@@ -423,13 +414,13 @@ generate_standard_tables_all <- function(
   #         source(paste0("ing_tbl",table,".R"))
   #       } else{
   #         assign(paste0("ing_tbl",table),
-  #                eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE, pval = pvalue))))
+  #                eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE))))
   #       }
   #     }
   #   } else {
   #     for(table in 1:9){
   #       assign(paste0("ing_tbl",table),
-  #              eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE, pval = pvalue))))    }
+  #              eval(parse(text = get_standard_table_inguinal(table, data = data, print=TRUE))))    }
   #   }
   #   
   #   if(format %in% "shiny"){

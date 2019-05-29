@@ -8,7 +8,6 @@
 #' in a tet string. If FALSE, the code for specified table will be written to a
 #' separate .R file in the working directory with \code{tbl}n\code{.R} nomenclature.
 #' @param overwrite a boolean. If a .R file already exists for the table specified and set to TRUE, the file will be overwritten with original code.
-#' @param pval a boolean. Set to TRUE if pvalues are desired for table.
 #' @details If \code{overwrite} = FALSE and a .R file exists for the specified table, the function will throw an error.
 #'
 #'If \code{print} = TRUE, the \code{overwrite} argument will be ignored.
@@ -27,7 +26,7 @@ get_standard_table_all <- function(tbl = NULL
                                , data
                                , print = FALSE
                                , overwrite = FALSE
-                               , pval = FALSE){
+                               ){
   
   if(is.character(data)) stop("data should be a data table, not a character string")
   
@@ -914,8 +913,7 @@ get_standard_table_all <- function(tbl = NULL
   
   
   
-  table_list <- lapply(table_list, gsub, pattern = "= dt", replacement = paste0("= ", dt))
-  table_list <- lapply(table_list, gsub, pattern = "pvalue = FALSE", replacement = paste0("pvalue = ", pval," "))
+  # table_list <- lapply(table_list, gsub, pattern = "= dt", replacement = paste0("= ", dt))
   if(print == FALSE){
     assign(paste0("tbl",tbl), as.character(table_list[tbl]))
     if((paste0("tbl",tbl,".R") %in% list.files()) & overwrite == FALSE){
