@@ -359,7 +359,8 @@ generate_standard_tables_all <- function(
         if(!pvalue){
           tbln <- tbln %>%
             `[`(,!lgrep(tbln %>% names, "p-value")) %>%
-            rename(" " = ".1")
+            rename(" " = ".1") %>%
+            rename(" " = ".2")
         }
         
         ncols <- ncol(tbln)
@@ -391,7 +392,8 @@ generate_standard_tables_all <- function(
         if(!pvalue){
           tbln <- tbln %>%
             `[`(,!lgrep(tbln %>% names, "p-value")) %>%
-            rename(" " = ".1")
+            rename(" " = ".1")%>%
+            rename(" " = ".2")
         }
         
         
