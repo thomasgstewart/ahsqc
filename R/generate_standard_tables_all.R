@@ -314,7 +314,6 @@ generate_standard_tables_all <- function(
   } else {
     date = as.Date(date)
   }
-  if(missing(y)) stop("Provide a y variable")
   if(missing(data)) stop("Provide a data table")
   if(is.character(data)) stop("data should be a data table, not a character string")
   if(format %ni% c("shiny","rmd")) stop("format must be either \"shiny\" or \"rmd\"")
