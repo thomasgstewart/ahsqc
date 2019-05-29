@@ -171,7 +171,6 @@ get_standard_table_all2 <- function(tbl = NULL
     
     , "tbl5 <- list() %>%
     cat_entry_all(operative_time
-    , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
     , xlab = \"Operative time\") %>%
     binary_entry_all(planned_concomitant_procedure %>% factor(levels = c(\"No\", \"Yes\"))
@@ -314,7 +313,6 @@ get_standard_table_all2 <- function(tbl = NULL
     ) %>%
     binary_entry_all(convert_to_open %>% factor(levels = c(\"No\",\"Yes\"))
     , xlab = \"Conversion to open\"
-    , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE) %>%
     rbindlist
     
@@ -403,7 +401,6 @@ get_standard_table_all2 <- function(tbl = NULL
     binary_entry_all(
     flg_cmp_postop_any %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Subjects reporting any complication\"
-    , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
     ) %>%
     empty_entry_all(
@@ -504,7 +501,6 @@ get_standard_table_all2 <- function(tbl = NULL
     , xlab = \"@@Post-op bleeding transfusion\"
     , pvalue = FALSE
     , fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     binary_entry_all(
     flg_graft_prosthesis_flap_fail %>% factor(levels = c(\"No\", \"Yes\"))
@@ -537,7 +533,6 @@ get_standard_table_all2 <- function(tbl = NULL
     , "tbl8 <- list() %>%
     binary_entry_all(
     flg_cmp_postop_ssi %>% factor(levels = c(\"No\", \"Yes\"))
-    , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
     , xlab = \"Surgical site infection (SSI)\"
     ) %>%
@@ -571,7 +566,6 @@ get_standard_table_all2 <- function(tbl = NULL
     , dt = data 
     #, pvalue = FALSE
     #, fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     binary_entry_all(
     ssi_pi %>% factor(levels = c(\"No\", \"Yes\"))
@@ -579,7 +573,6 @@ get_standard_table_all2 <- function(tbl = NULL
     , dt = data 
     #, pvalue = FALSE
     #, fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     empty_entry_all(
     fill = c(\"Treatments administered for SSI<sup>cata</sup>\",\"N\")) %>%
@@ -642,7 +635,6 @@ get_standard_table_all2 <- function(tbl = NULL
     binary_entry_all(
     flg_sso_comps %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Surgical site occurrences exclusive of SSI (SSO-EI)\"
-    , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
     ) %>%
     empty_entry_all(
@@ -675,7 +667,6 @@ get_standard_table_all2 <- function(tbl = NULL
     , dt = data 
     , pvalue = FALSE
     # #, fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     binary_entry_all(
     sso_pi %>% factor(levels = c(\"No\", \"Yes\"))
@@ -683,7 +674,6 @@ get_standard_table_all2 <- function(tbl = NULL
     , dt = data 
     , pvalue = FALSE
     #, fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     binary_entry_all(
     array_sso_comp_type_infected_hematoma %>% factor(levels = c(\"No\", \"Yes\"))
@@ -753,7 +743,6 @@ get_standard_table_all2 <- function(tbl = NULL
     binary_entry_all(
     flg_cmp_postop_sso_ssi %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Surgical site infection or occurrence (SSI/O)\"
-    , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
     ) %>%
     binary_entry_all(
@@ -762,7 +751,6 @@ get_standard_table_all2 <- function(tbl = NULL
     , pvalue = FALSE
     , dt = data 
     # #, fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     binary_entry_all(
     ssi_sso_pi %>% factor(levels = c(\"No\",\"Yes\"))
@@ -770,7 +758,6 @@ get_standard_table_all2 <- function(tbl = NULL
     , pvalue = FALSE
     , dt = data 
     #, fmt = count_fmt
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     empty_entry_all(
     fill = c(\"Treatments administered for SSI/O<sup>cata</sup>\",\"N\")) %>%
@@ -847,17 +834,14 @@ get_standard_table_all2 <- function(tbl = NULL
     binary_entry_all(
     e_between_visit_clinic %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Clinic\"
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     binary_entry_all(
     e_between_visit_emergency_room %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"@@Emergency room\"
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     binary_entry_all(
     flg_readmission %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Re-admission within 30 days\"
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     empty_entry_all(fill = c(\"Reported reasons for re-admission<sup>cata</sup>\",\"N\")) %>%
     binary_entry_all(
@@ -905,7 +889,6 @@ get_standard_table_all2 <- function(tbl = NULL
     binary_entry_all(
     flg_reoperation %>% factor(levels = c(\"No\", \"Yes\"))
     , xlab = \"Reoperation\"
-    , pvalue_fmt = garbage_pvalue
     ) %>%
     empty_entry_all(
     fill = c(\"Reoperation type<sup>cata</sup>\", \"N\")) %>%
@@ -960,7 +943,6 @@ get_standard_table_all2 <- function(tbl = NULL
     ) %>%
     binary_entry_all(
     flg_recurrence %>% factor(levels = c(\"No\", \"Yes\"))
-    , pvalue_fmt = garbage_pvalue
     , pvalue = FALSE
     , xlab = \"Hernia recurrence\"
     ) %>%
