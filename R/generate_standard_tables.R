@@ -527,13 +527,12 @@ generate_standard_tables <- function(
         file <- get(paste0("tbl", tbl))
         tbln <- file
         names(tbln) <- tbln[1, ]
-        tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,
-                                                           1])
-        
+        tbln[, 1] <- gsub("@@", "&nbsp;&nbsp;&nbsp;", tbln[,1])
+
         if(!pvalue){
           tbln <- tbln %>%
-            `[`(,!lgrep(tbln %>% names, "p-value")) %>%
-            rename(" " = ".1")
+            `[`(,!lgrep(tbln %>% names, "p-value")) 
+          names(tbln) <- gsub("\\.[1-9]", " ", names(tbln))
         }
         
         
