@@ -18,7 +18,6 @@ n_unique_all <- function(out,
                      x, 
                      dt,  
                      xlab = NULL){
-  browser()
   dt1 <- eval(substitute(dt[,.(unique(x), N = "N")][,table(N, useNA = "always")])) %>% 
     as.matrix %>% as.table()
   dimt <- dim(dt1)

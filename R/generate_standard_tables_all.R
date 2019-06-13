@@ -194,7 +194,7 @@ generate_standard_tables_all <- function(
   #' @examples
   #' # Not run:
   
-  
+
   n_unique_all <- function(out,
                            x, 
                            dt = data,  
