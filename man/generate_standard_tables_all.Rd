@@ -5,8 +5,7 @@
 \title{Generate standard AHSQC tables}
 \usage{
 generate_standard_tables_all(changes = FALSE, data, date,
-  format = "rmd", module = "ventral", pvalue = FALSE,
-  display = TRUE)
+  format = "rmd", module = "ventral", display = TRUE)
 }
 \arguments{
 \item{changes}{a boolean. Set to TRUE to indicate that changes have been made to at least one table.}
@@ -19,8 +18,6 @@ generate_standard_tables_all(changes = FALSE, data, date,
 \item{module}{a string that indicates which data module, ventral or inguinal, is used to create
 tables. Set to "ventral" for ventral module and "inguinal" for inguinal table. Once cannot
 generate tables for ventral and inguinal modules together.}
-
-\item{pvalue}{a boolean. Set to TRUE if pvalues are desired for all tables.}
 
 \item{out}{empty vector}
 
