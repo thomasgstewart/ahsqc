@@ -8,7 +8,7 @@ get_standard_table(tbl = NULL, data, print = FALSE,
   overwrite = FALSE, pval = FALSE)
 }
 \arguments{
-\item{tbl}{NULL or integer (1-9) to identify which table to return.}
+\item{tbl}{NULL or integer 1-9 to identify which table to return.}
 
 \item{data}{a data table}
 

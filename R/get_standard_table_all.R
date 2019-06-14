@@ -2,7 +2,7 @@
 #'
 #' Retrieves the code for the standard AHSQC table specified and returns it in either
 #' a separate file or through a text string.
-#' @param tbl NULL or integer (1-9) to identify which table to return.
+#' @param tbl NULL or integer 1-9 to identify which table to return.
 #' @param data a data table
 #' @param print a boolean. If TRUE, the code for specified table will be returned
 #' in a tet string. If FALSE, the code for specified table will be written to a
