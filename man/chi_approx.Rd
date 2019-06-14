@@ -19,6 +19,6 @@ Use as argument for warning in `chisq.test` to muffle warning of "Chi-squared ap
 # Not run:
 data(iris)
 Mat <- table(iris$Species == "setosa", iris$Petal.Width > 1)
-chisq.test(Mat, correct = FALSE), warning = chi_approx)
+chisq.test(Mat, correct = FALSE, warning = chi_approx)
 }
 \keyword{AHSQC}

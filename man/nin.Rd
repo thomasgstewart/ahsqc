@@ -2,7 +2,7 @@
 % Please edit documentation in R/nin.R
 \name{nin}
 \alias{nin}
-\title{%nin%}
+\title{\%nin\%}
 \usage{
 nin(x, table)
 }
@@ -15,7 +15,7 @@ nin(x, table)
 boolean
 }
 \description{
-Opposite of %in%
+Opposite of \%in\%
 }
 \examples{
 # Not run:

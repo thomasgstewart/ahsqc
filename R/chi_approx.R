@@ -10,7 +10,7 @@
 #' # Not run:
 #' data(iris)
 #' Mat <- table(iris$Species == "setosa", iris$Petal.Width > 1)
-#' chisq.test(Mat, correct = FALSE), warning = chi_approx)
+#' chisq.test(Mat, correct = FALSE, warning = chi_approx)
 
 chi_approx <- function(w){
   if(any(grepl( "Chi-squared approximation may be incorrect", w))){
