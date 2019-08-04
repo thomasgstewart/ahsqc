@@ -39,8 +39,8 @@ output:
     margin-right:none;
   }
   p{
-  max-width:70ex;
-  font-size:16pt;
+  max-width:120ex;
+  font-size:11pt;
   }
   p img{
   max-width:none;
@@ -75,6 +75,7 @@ require(data.table)
 require(dplyr)
 require(dtplyr)
 require(tableone)
+require(here)
 ```
 
 
@@ -82,3 +83,13 @@ require(tableone)
 
 
 # Study Population: Inclusion/Exclusion Criteria
+
+
+
+# R Session info
+```{r}
+sessionInfo()
+
+citation()
+```
+
