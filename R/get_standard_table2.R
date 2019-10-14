@@ -96,6 +96,9 @@ get_standard_table2 <- function(tbl = NULL
     cont_entry(val_hern_width
     , xlab = \"Hernia width (cm)\"
     , pvalue = FALSE) %>%
+    cat_entry(e_cmb_functionalstatus %>% factor(levels = c(\"Independent\",\"Partially Dependent\",\"Totally Dependent\",\"Unknown\"))
+    , xlab = \"Functional Status\"
+    , pvalue = FALSE) %>%
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Demographics\")"
