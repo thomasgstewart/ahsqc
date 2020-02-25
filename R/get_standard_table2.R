@@ -37,10 +37,32 @@ get_standard_table2 <- function(tbl = NULL
   table_list <- list(
     "tbl1 <- list() %>%
     n_unique(patientid, xlab = \"N\") %>%
-    cat_entry(e_procedure_category
+    
+    empty_entry(fill = c(\"Procedure Category<sup>cata</sup>\",\"N (%)\")) %>%
+    binary_entry(array_procedure_category_e_incisional
     , pvalue = FALSE
-    , xlab = \"Procedure category\"
-    ) %>%
+    , xlab = \"@@Incisional\") %>%
+    binary_entry(array_procedure_category_e_parastomal
+    , pvalue = FALSE
+    , xlab = \"@@Parastomal\") %>%
+    binary_entry(array_procedure_category_e_epigastric_primary_ventral
+    , pvalue = FALSE
+    , xlab = \"@@Epigastric (primary)\") %>%
+    binary_entry(array_procedure_category_e_umbilical_primary_ventral
+    , pvalue = FALSE
+    , xlab = \"@@Umbilical (primary)\") %>%
+    binary_entry(array_procedure_category_e_spigelian
+    , pvalue = FALSE
+    , xlab = \"@@Spigelian\") %>%
+    binary_entry(array_procedure_category_e_lumbar
+    , pvalue = FALSE
+    , xlab = \"@@Lumbar\") %>%
+    binary_entry(array_procedure_category_e_diastasis_recti
+    , pvalue = FALSE
+    , xlab = \"@@Diastasis Recti\") %>%
+    
+    
+    
     cat_entry(recurrent %>% factor(levels = c(\"Primary\", \"Recurrent\"))
     , pvalue = FALSE
     , xlab = \"Primary or recurrent hernia\") %>%
