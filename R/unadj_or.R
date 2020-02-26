@@ -13,13 +13,19 @@
 
 unadj_or <- function(v1, v2, d1){
   require(epitools)
-  or <- oddsratio(table(d1[[v1]], d1[[v2]]) %>% as.matrix)$measure[2,]
+  or <- oddsratio(table(d1[[v1]], d1[[v2]]) %>% as.matrix)$measure
+  or <- or[2:nrow(or),] %>% as.matrix()
   out <- data.frame(
     var = label(d1[[v2]]),
-    est = or[1],
-    lb = or[2],
-    ub = or[3],
-    ci = signif(or[1],3)  %|% " (" %|% signif(or[2], 3) %|% ", " %|% signif(or[3], 3) %|% ")",
+    est = or[1,],
+    lb = or[2,],
+    ub = or[3,],
+    ci = format(round(or[1,], 2), nsmall = 2) %|% 
+      " (" %|% 
+      format(round(or[2,],2), nsmall = 2) %|% 
+      ", " %|% 
+      format(round(or[3,], 2), nsmall = 2) %|%
+      ")",
     N = sum(!is.na(d1[[v2]])),
     stringsAsFactors = FALSE,
     row.names = NULL
