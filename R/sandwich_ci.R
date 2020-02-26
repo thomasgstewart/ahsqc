@@ -57,7 +57,9 @@ sandwich_ci <- function(fit,
     est = round(est,2),
     lb = round(lb,2),
     ub = round(ub,2),
-    ci = signif(est,3)  %|% " (" %|% signif(lb, 3) %|% ", " %|% signif(ub, 3) %|% ")",
+    ci = format(round(est, 2), nsmall = 2) %|% " (" %|% 
+      format(round(lb, 2), nsmall = 2) %|% ", " %|% 
+      format(round(ub, 2), nsmall = 2) %|% ")", 
     N = fit[["stats"]][1],
     stringsAsFactors = FALSE,
     row.names = NULL
