@@ -60,9 +60,6 @@ get_standard_table2 <- function(tbl = NULL
     binary_entry(array_procedure_category_e_diastasis_recti
     , pvalue = FALSE
     , xlab = \"@@Diastasis Recti\") %>%
-    
-    
-    
     cat_entry(recurrent %>% factor(levels = c(\"Primary\", \"Recurrent\"))
     , pvalue = FALSE
     , xlab = \"Primary or recurrent hernia\") %>%
@@ -186,10 +183,6 @@ get_standard_table2 <- function(tbl = NULL
     , xlab = \"@@Current steroid use\"
     , fmt = count_fmt
     ) %>%
-    cat_entry(e_prior_mesh_excision %>% factor(levels = c(\"Complete\", \"Partial\", \"None\"))
-    , xlab = \"Prior mesh excision\"
-    , pvalue = FALSE
-    ) %>% 
     rbindlist %>%
     as.data.frame %>%
     `attr<-`(\"title\",\"Comorbidities\")"
@@ -332,6 +325,17 @@ get_standard_table2 <- function(tbl = NULL
     , dt = data %>% dplyr:::filter(flg_fixation == \"Yes\")
     , fmt = count_fmt
     ) %>%
+    binary_entry(
+    flg_prior_mesh %>% factor(levels = c(\"No\", \"Yes\"))
+    , xlab = \"Prior mesh present\"
+    , dt = data 
+    , pvalue = FALSE
+    ) %>%
+    cat_entry(e_prior_mesh_excision %>% factor(levels = c(\"Complete\", \"Partial\", \"None\"))
+    , xlab = \"Prior mesh excision\"
+    , pvalue = FALSE
+    , dt = data %>% filter(flg_prior_mesh %in% \"Yes\")
+    ) %>% 
     cont_entry(
     val_util_los
     , xlab = \"Length of stay (days)\"
