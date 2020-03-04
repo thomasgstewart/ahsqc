@@ -7,6 +7,7 @@ output:
       collapsed: yes
     number_sections: false
     code_folding: hide
+    toc_depth: 5
     css: https://biostatdata.app.vumc.org/tgs/misc/rmarkdown.css
 ---
 
@@ -36,17 +37,14 @@ output:
   div.container-fluid.main-container{
     max-width:none;
     margin-left:0px;
+
     margin-right:none;
-  }
-  p{
-  max-width:120ex;
-  font-size:11pt;
   }
   p img{
   max-width:none;
   }
   .title{
-  max-width:65ex;
+  max-width:100ex;
   }
 </style>
 
@@ -58,32 +56,107 @@ $("#TOC").toggle();
 }
 </script>
 
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 knitr::opts_chunk$set(error = FALSE)
 ```
 
 ```{r, packages, message=FALSE, echo=FALSE}
-require(ahsqc)
-require(tgsify)
-require(Hmisc)
-require(rms)
-require(kableExtra)
-require(knitr)
-require(boot)
-require(data.table)
-require(dplyr)
-require(dtplyr)
-require(tableone)
-require(here)
+library(ahsqc)
+library(tgsify)
+library(Hmisc)
+library(rms)
+library(kableExtra)
+library(knitr)
+library(boot)
+library(data.table)
+library(tidyr)
+library(tableone)
+library(here)
 ```
 
 
 # Project Proposal
 
 
+# Executive Summary
+
+
 # Study Population: Inclusion/Exclusion Criteria
 
+# Statistical Analysis Plan
+
+# Unadjusted Analysis 
+
+
+*List of Abbreviations*
+
+| Abbreviation | Description                                                                                                                     |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------|
+| FE           | Fisher’s two-sided exact test                                                                                                   |
+| EP           | E Pearson’s chi-square test also known as the (N-1) chi-square, the randomization chi-square, or the Mantel-Haenszel chi-square |
+| WR           | Wilcoxon rank sum test                                                                                                          |
+| cata         | When responding to survey prompt, surgeons were asked to check all options that apply       
+
+# FAQ
+
+**Q. What is validation and the optimism corrected statistics?**
+A. When a model is fit to a data set, it will often predict that dataset better than a new one,
+and therefore statistics and predictions generated from the model are considered "optimistic."
+There are some techniques to correct for this optimism, and the values obtained from those methods
+are referred to as "optimism corrected" values. If you're interested in a deeper explanation, I
+think this blog post explains the idea fairly well.
+
+**Q. What are Brier scores?**
+A. The Brier score measures the accuracy of predictions or the calibration of the predictions
+in binary or categorical outcomes. It measures the mean squared difference between the predicted
+probability and the observed outcome. The score ranges from 0 to 1 and a Brier score closer to 0
+shows better calibration.
+
+**Q. What is a g-index (g)?**
+A.  It’s predictive discrimination measure based on Gini’s mean difference. This means it’s based
+on the typical difference in the prediction on the original scale that the regression model produces.
+A good statistical model will have a wide range of predictions (whereas a not-so-good one might have
+predictions that are very similar and hard to discriminate). The greater the g-index is, more
+discrimination you have. Intuitively, the g-index can be thought of as "If I pick two patients at
+random, what would the expected difference in their prediction be?"
+
+For time-to-event outcomes:
+A good G-index for a time-to-event outcome would be a large number - there isn't a clear "base" value,
+just that we want the average predictions to be "far apart". For example, suppose a discrimination
+g-index (g) = 0.4. This would mean that the average difference in the log relative hazard is 0.4, or
+the average difference in the hazard ratio is 1.5.
+
+For binary and ordinal outcomes:
+g-index represent "typical" log odds ratios. If you were to choose two patients at random, what
+would the typical log odds ratio be?
+gr would be on the odds ratio scale.
+
+For continuous outcomes:
+g-index represents the typical difference in the predicted value. If you were to choose two
+patients at random, what would their typical difference in predicted value be?
+
+g is on the original scale
+gr is on the ratio scale (e.g. odds/hazard)
+gp is on the probability or risk scale
+
+**Q. What is DXY?**
+A. Dxy, also called Somers' Dxy, is a statistical index to quantify model discrimination ability
+and it ranges from -1 to 1. There are a lot of ways to calculate and describe this measure, so
+here's my shot at it. One way to describe it is a rank measure that only measures how well
+predicted values can rank-order responses. Another way to describe it is the difference between
+the number of concordant pairs and the number of discordant pairs divided by the total number of
+pairs not tied on the independent variable. When the outcome is binary, Dxy = 2 * (c-index - 0.5).
+When Dxy = 0, the model is making random predictions and when Dxy = 1, the predictions are perfectly
+discriminating.
+When the outcome is time-to-event, Dxy is the rank correlation between the predicted log relative
+hazard and observed survival time (you can think of this as the rank version of an R^2).
+According to Dr. Frank Harrell, there are no acceptable values; it's all relative to what you are
+trying to do (I think he's suggesting that if you have something that's hard to predict - like death -
+we would be okay with lower values of Dxy). For example, a Dxy value = 0.5 means that 75% of pairs
+are concordant and 25% of pairs are discordant. If Dxy = 0.2, that would mean that 60% of pairs are
+concordant and 40% of pairs are discordant.
 
 
 # R Session info
