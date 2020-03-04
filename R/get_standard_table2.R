@@ -39,25 +39,25 @@ get_standard_table2 <- function(tbl = NULL
     n_unique(patientid, xlab = \"N\") %>%
     
     empty_entry(fill = c(\"Procedure Category<sup>cata</sup>\",\"N (%)\")) %>%
-    binary_entry(array_procedure_category_e_incisional
+    binary_entry(array_procedure_category_e_incisional %>% factor(levels = c(\"No\",\"Yes\"))
     , pvalue = FALSE
     , xlab = \"@@Incisional\") %>%
-    binary_entry(array_procedure_category_e_parastomal
+    binary_entry(array_procedure_category_e_parastomal %>% factor(levels = c(\"No\",\"Yes\"))
     , pvalue = FALSE
     , xlab = \"@@Parastomal\") %>%
-    binary_entry(array_procedure_category_e_epigastric_primary_ventral
+    binary_entry(array_procedure_category_e_epigastric_primary_ventral %>% factor(levels = c(\"No\",\"Yes\"))
     , pvalue = FALSE
     , xlab = \"@@Epigastric (primary)\") %>%
-    binary_entry(array_procedure_category_e_umbilical_primary_ventral
+    binary_entry(array_procedure_category_e_umbilical_primary_ventral %>% factor(levels = c(\"No\",\"Yes\"))
     , pvalue = FALSE
     , xlab = \"@@Umbilical (primary)\") %>%
-    binary_entry(array_procedure_category_e_spigelian
+    binary_entry(array_procedure_category_e_spigelian %>% factor(levels = c(\"No\",\"Yes\"))
     , pvalue = FALSE
     , xlab = \"@@Spigelian\") %>%
-    binary_entry(array_procedure_category_e_lumbar
+    binary_entry(array_procedure_category_e_lumbar %>% factor(levels = c(\"No\",\"Yes\"))
     , pvalue = FALSE
     , xlab = \"@@Lumbar\") %>%
-    binary_entry(array_procedure_category_e_diastasis_recti
+    binary_entry(array_procedure_category_e_diastasis_recti %>% factor(levels = c(\"No\",\"Yes\"))
     , pvalue = FALSE
     , xlab = \"@@Diastasis Recti\") %>%
     cat_entry(recurrent %>% factor(levels = c(\"Primary\", \"Recurrent\"))
