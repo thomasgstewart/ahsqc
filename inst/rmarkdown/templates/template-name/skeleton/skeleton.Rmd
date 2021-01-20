@@ -58,6 +58,7 @@ $("#TOC").toggle();
 
 
 ```{r, include = FALSE}
+## set echo to TRUE if want to include code-folding
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 knitr::opts_chunk$set(error = FALSE)
 ```
@@ -85,6 +86,8 @@ library(here)
 
 # Study Population: Inclusion/Exclusion Criteria
 
+![](`r here::here("figs","exclusion.png")`)
+
 # Statistical Analysis Plan
 
 # Unadjusted Analysis 
@@ -100,6 +103,14 @@ library(here)
 | cata         | When responding to survey prompt, surgeons were asked to check all options that apply       
 
 # FAQ
+
+**Q. I have a large (often >0.05) p-value. Now what?**
+
+A. This is a friendly reminder that absence of evidence does not mean evidence of absence. A large p-value simply means that we don't have a large enough sample size to accurately quantify the effect. In other words, when the null hypothesis is not rejected (p > 0.05), it implies that either the null hypothesis is actually true or that it is actually false but that there was not enough evidence observed to reject it. Confidence intervals can convey information about magnitude, direction, and accuracy of effects, however. The confidence interval will tell you how big the effect could be, if there is an effect. For example, let's consider a confidence interval for an odds ratio, (0.5, 2). The interval includes the odds ratio of 1 (no effect) and the associated p-value would not be statistically significant. However, the interval contains other plausible estimates given the data and tells us that the odds ratio could be as large as 2 or as small as 0.5 is there is an effect. Therefore, the confidence interval contains both "no effect" (OR = 1) and a potentially clinically important effect (OR = 2, 0.5). For these reasons, the conclusion of "effect or no effect" can't be made and is inconclusive. 
+
+**Q. Why do I have an odds ratio for a continuous outcome?**
+
+A. Non-parametric p-values from the Wilcoxon rank sum test for continuous outcomes are equivalent to p-values you would obtain from a cumulative probability model with logit link, or the proportional odds logistic regression model, with no covariates aside from the predictor of interest. The natural estimate and confidence interval to pair with these p-values are odds ratios obtained from this same model. 
 
 **Q. What is validation and the optimism corrected statistics?**
 A. When a model is fit to a data set, it will often predict that dataset better than a new one,
@@ -158,6 +169,16 @@ we would be okay with lower values of Dxy). For example, a Dxy value = 0.5 means
 are concordant and 25% of pairs are discordant. If Dxy = 0.2, that would mean that 60% of pairs are
 concordant and 40% of pairs are discordant.
 
+
+**Q. How do you interpret coefficients from a cumulative probability model with logit link, or a proportional odds logistic regression model in the odds-ratio scale?**
+
+A. The adjusted estimate is the odds ratio of the outcome $\geq$ j verus $<$ j for heavy weight compared to medium weight, for any j. Loosely, it's the odds of having a higher outcome (e.g. QoL score) for heavy weight compared to medium weight mesh.
+
+For PROMIS T-score, a coefficient (odds ratio) less than one will show "favor" for heavy weight mesh as the odds of a higher QoL score (i.e. less favorable score) are lower. This is also true for length of stay. The opposite is true for HerQLes - a coefficient greater than one will favor heavy weight weight mesh as the odds of a higher QoL score (i.e. more favorable score) are higher.    
+
+**Q. What is a restricted cubic splines? What are knots?**
+
+A. Restricted cubic splines are a way of modeling continuous variables that may not be linear and allow flexibility in the relationship between the variable and outcome. Knots are the locations where these flexibile curves can change direction.  
 
 # R Session info
 ```{r}
